@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لوحة تحكم المخيم · Admin</title>
+<link rel="icon" href="../favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cyan:#00b1d5; --cyan-b:#22d3f0; --navy:#295b98; --navy-d:#0a2a52;
+    --ink:#030c1e; --surface:#0c2447; --surface2:#103159;
+    --line:rgba(0,177,213,.28); --line2:rgba(255,255,255,.08);
+    --text:#eaf6fb; --soft:#a9c6e0; --mute:#6d8fb5;
+    --ok:#35d0a5; --alert:#ff6b8a; --gold:#ffc857;
+    --grad:linear-gradient(135deg,#00b1d5,#22d3f0);
+    --f:'Tajawal',system-ui,sans-serif; --fe:'Oswald',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--f);background:var(--ink);color:var(--text);line-height:1.7;padding-bottom:80px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+  header{background:linear-gradient(135deg,var(--navy-d),var(--ink));border-bottom:3px solid var(--cyan);padding:26px 0;position:sticky;top:0;z-index:50;backdrop-filter:blur(10px)}
+  .hd{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  h1{font-size:22px;font-weight:900}
+  h1 span{display:block;font-family:var(--fe);font-size:11px;color:var(--cyan-b);letter-spacing:2px}
+  .save-bar{display:flex;gap:10px;align-items:center}
+  .btn{font-family:var(--f);font-weight:800;font-size:13px;padding:10px 18px;border-radius:10px;border:none;cursor:pointer;transition:.2s}
+  .btn-main{background:var(--grad);color:var(--ink)}
+  .btn-main:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,177,213,.6)}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--cyan-b)}
+  .btn-ghost:hover{background:rgba(0,177,213,.1)}
+  .btn-sm{padding:6px 12px;font-size:12px}
+  .btn-del{background:rgba(255,107,138,.15);color:var(--alert);border:1px solid rgba(255,107,138,.3)}
+
+  /* tabs */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}
+  .tab{font-family:var(--f);font-weight:800;font-size:13.5px;padding:11px 20px;border-radius:12px;
+    background:var(--surface);border:1px solid var(--line2);color:var(--soft);cursor:pointer;transition:.2s}
+  .tab:hover{border-color:var(--line);color:#fff}
+  .tab.on{background:var(--grad);color:var(--ink);border-color:transparent}
+
+  .panel{display:none;animation:fade .3s}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--line2);
+    border-radius:16px;padding:22px;margin-bottom:16px;position:relative}
+  .card h3{font-size:16px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .card-x{position:absolute;top:16px;inset-inline-start:16px}
+
+  label{display:block;font-size:12.5px;font-weight:800;color:var(--soft);margin:12px 0 6px}
+  input[type=text],input[type=number],textarea,select{
+    width:100%;background:rgba(3,12,30,.5);border:1.5px solid var(--line2);border-radius:10px;
+    padding:11px 14px;color:#fff;font-family:var(--f);font-size:14px;transition:.2s}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--cyan)}
+  textarea{min-height:80px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .hint{font-size:11.5px;color:var(--mute);margin-top:4px}
+
+  .add-btn{width:100%;background:rgba(0,177,213,.08);border:1.5px dashed var(--line);
+    border-radius:14px;padding:16px;color:var(--cyan-b);font-family:var(--f);font-weight:800;
+    font-size:14px;cursor:pointer;transition:.2s}
+  .add-btn:hover{background:rgba(0,177,213,.15)}
+
+  .note{background:rgba(255,200,87,.08);border:1px solid rgba(255,200,87,.3);border-radius:12px;
+    padding:14px 18px;font-size:13.5px;margin-bottom:18px}
+  .note b{color:var(--gold)}
+  .note.ok{background:rgba(53,208,165,.08);border-color:rgba(53,208,165,.3)}
+  .note.ok b{color:var(--ok)}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px}
+  .stat{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--line2);
+    border-radius:14px;padding:20px;text-align:center;position:relative;overflow:hidden}
+  .stat::after{content:'';position:absolute;inset:0 auto auto 0;width:100%;height:3px;background:var(--grad)}
+  .stat .n{font-family:var(--fe);font-size:34px;font-weight:700;color:var(--cyan-b);line-height:1}
+  .stat .l{font-size:12px;color:var(--soft);font-weight:700;margin-top:4px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{background:rgba(0,177,213,.1);padding:11px;text-align:start;font-weight:800;color:var(--cyan-b);font-size:12px}
+  td{padding:11px;border-bottom:1px solid var(--line2);color:var(--soft)}
+  .empty{text-align:center;padding:40px;color:var(--mute);font-size:14px}
+
+  .toast{position:fixed;bottom:24px;inset-inline-start:24px;background:var(--ok);color:var(--ink);
+    padding:14px 22px;border-radius:12px;font-weight:900;font-size:14px;z-index:100;
+    transform:translateY(120px);transition:.3s;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+  .toast.show{transform:none}
+
+  /* ─── رفع الصور بالسحب ─── */
+  .drop{border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center;
+    background:rgba(0,177,213,.04);cursor:pointer;transition:.2s;margin-top:6px}
+  .drop:hover,.drop.over{background:rgba(0,177,213,.14);border-color:var(--cyan)}
+  .drop .di{font-size:30px;display:block;margin-bottom:6px}
+  .drop .dt{font-size:13px;font-weight:800;color:var(--cyan-b)}
+  .drop .dh{font-size:11.5px;color:var(--mute);margin-top:4px}
+  .drop input[type=file]{display:none}
+  .prev{position:relative;margin-top:10px;border-radius:12px;overflow:hidden;border:1px solid var(--line2)}
+  .prev img{width:100%;max-height:180px;object-fit:cover;display:block}
+  .prev .rm{position:absolute;top:8px;inset-inline-end:8px;background:rgba(255,107,138,.9);
+    color:#fff;border:none;border-radius:8px;padding:5px 10px;font-size:11px;font-weight:800;cursor:pointer;font-family:var(--f)}
+  .imgname{font-size:11.5px;color:var(--mute);margin-top:6px;direction:ltr;text-align:start;word-break:break-all}
+
+  /* ─── ترتيب العناصر ─── */
+  .item-tools{position:absolute;top:16px;inset-inline-start:16px;display:flex;gap:6px;align-items:center}
+  .ord{background:rgba(0,177,213,.15);border:1px solid var(--line);color:var(--cyan-b);
+    width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:900;
+    display:grid;place-items:center;transition:.15s;font-family:var(--f)}
+  .ord:hover:not(:disabled){background:var(--cyan);color:var(--ink)}
+  .ord:disabled{opacity:.3;cursor:not-allowed}
+  .rank-badge{background:var(--grad);color:var(--ink);font-weight:900;font-size:12px;
+    padding:4px 10px;border-radius:8px;font-family:var(--fe)}
+
+  /* ─── شبكة ألبوم اليوم ─── */
+  .album-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:14px}
+  .alb{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line2);background:var(--surface2)}
+  .alb img{width:100%;height:100px;object-fit:cover;display:block}
+  .alb .tools{display:flex;gap:4px;padding:6px;background:rgba(3,12,30,.6)}
+  .alb .tools button{flex:1;background:rgba(0,177,213,.15);border:1px solid var(--line);color:var(--cyan-b);
+    border-radius:6px;padding:4px;font-size:11px;cursor:pointer;font-family:var(--f);font-weight:800}
+  .alb .tools button:hover:not(:disabled){background:var(--cyan);color:var(--ink)}
+  .alb .tools button:disabled{opacity:.3;cursor:not-allowed}
+  .alb .tools .x{background:rgba(255,107,138,.2);border-color:rgba(255,107,138,.4);color:var(--alert)}
+  .alb .tools .x:hover{background:var(--alert);color:#fff}
+  .alb input{width:100%;border:none;border-top:1px solid var(--line2);border-radius:0;
+    padding:6px 8px;font-size:11.5px;background:rgba(3,12,30,.4)}
+  .alb .n{position:absolute;top:6px;inset-inline-start:6px;background:rgba(3,12,30,.8);
+    color:var(--cyan-b);font-family:var(--fe);font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px}
+
+  /* ─── بوابة الدخول ─── */
+  .gate{position:fixed;inset:0;z-index:200;background:linear-gradient(135deg,#0a2a52,#030c1e);
+    display:grid;place-items:center;padding:20px}
+  .gate.hide{display:none}
+  .gate-box{width:100%;max-width:380px;background:linear-gradient(180deg,var(--surface),var(--surface2));
+    border:1px solid var(--line);border-radius:20px;padding:38px 30px;text-align:center;
+    box-shadow:0 30px 80px -20px rgba(0,0,0,.7);animation:gateIn .4s}
+  @keyframes gateIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .gate-logo{font-size:44px;margin-bottom:10px}
+  .gate-box h2{font-size:22px;font-weight:900;color:#fff}
+  .gate-sub{font-size:13px;color:var(--mute);margin:6px 0 20px}
+  .gate-box input[type=password]{width:100%;background:rgba(3,12,30,.6);border:1.5px solid var(--line2);
+    border-radius:12px;padding:14px 16px;color:#fff;font-family:var(--f);font-size:15px;text-align:center;
+    letter-spacing:2px;transition:.2s}
+  .gate-box input[type=password]:focus{outline:none;border-color:var(--cyan)}
+  .gate-err{background:rgba(255,107,138,.14);border:1px solid var(--alert);color:#ffb3c4;
+    border-radius:10px;padding:10px;font-size:12.5px;font-weight:700;margin-top:12px}
+  .gate-remember{display:flex;align-items:center;justify-content:center;gap:8px;
+    font-size:12px;color:var(--mute);margin-top:16px;cursor:pointer}
+  .gate-remember input{accent-color:var(--cyan);cursor:pointer}
+  .logout{background:rgba(255,107,138,.15);border:1px solid rgba(255,107,138,.3);color:var(--alert)}
+  .logout:hover{background:rgba(255,107,138,.28)}
+
+  /* ─── جدول اليوم ─── */
+  .sched-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+  .stab{font-family:var(--f);font-weight:800;font-size:12.5px;padding:9px 6px;border-radius:10px;
+    background:var(--surface);border:1px solid var(--line2);color:var(--soft);cursor:pointer;transition:.2s}
+  .stab:hover{border-color:var(--line);color:#fff}
+  .stab.on{background:var(--grad);color:var(--ink);border-color:transparent}
+  .sess{display:grid;grid-template-columns:88px 1fr 120px auto;gap:8px;align-items:center;
+    background:rgba(0,177,213,.04);border:1px solid var(--line2);border-radius:10px;
+    padding:8px;margin-bottom:7px}
+  .sess input,.sess select{padding:8px 10px;font-size:13px;border-radius:8px}
+  .sess .stools{display:flex;gap:4px}
+  .sess .stools button{width:26px;height:26px;border-radius:6px;font-size:12px;padding:0;
+    background:rgba(0,177,213,.15);border:1px solid var(--line);color:var(--cyan-b);
+    cursor:pointer;font-family:var(--f);font-weight:900}
+  .sess .stools button:hover:not(:disabled){background:var(--cyan);color:var(--ink)}
+  .sess .stools button:disabled{opacity:.3;cursor:not-allowed}
+  .sess .stools .x{background:rgba(255,107,138,.2);border-color:rgba(255,107,138,.4);color:var(--alert)}
+  .sess .stools .x:hover{background:var(--alert);color:#fff}
+  @media(max-width:700px){
+    .row{grid-template-columns:1fr} .hd{flex-direction:column;align-items:stretch}
+    .sched-tabs{grid-template-columns:repeat(2,1fr)}
+    .sess{grid-template-columns:1fr 1fr;gap:6px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ بوابة الدخول ═══ -->
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <div class="gate-logo">🔐</div>
+    <h2>لوحة تحكم المخيم</h2>
+    <p class="gate-sub">أدخلي كلمة المرور للمتابعة</p>
+    <input type="password" id="gatePw" placeholder="كلمة المرور" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')tryLogin()">
+    <div class="gate-err" id="gateErr" hidden></div>
+    <button class="btn btn-main" style="width:100%;margin-top:12px" onclick="tryLogin()">دخول</button>
+    <label class="gate-remember">
+      <input type="checkbox" id="gateRemember" checked> إبقائي مسجّلة لمدة 8 ساعات
+    </label>
+  </div>
+</div>
+
+<div id="panelRoot" hidden>
+<header>
+  <div class="wrap hd">
+    <h1>لوحة تحكم المخيم<span>CAMP ADMIN PANEL</span></h1>
+    <div class="save-bar">
+      <button class="btn btn-ghost" onclick="loadAll()">↻ تحديث</button>
+      <button class="btn btn-main" onclick="saveAll()">💾 حفظ وتنزيل الملف</button>
+      <button class="btn btn-sm logout" onclick="logout()" title="خروج">🚪 خروج</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab on" data-p="content">✏️ محتوى اليوم</button>
+    <button class="tab" data-p="data">📊 البيانات والزيارات</button>
+    <button class="tab" data-p="report">📑 التقرير الأسبوعي</button>
+    <button class="tab" data-p="help">❓ كيف أستخدمها</button>
+  </div>
+
+  <!-- ═══ محتوى اليوم ═══ -->
+  <div class="panel on" id="p-content">
+    <div class="note">
+      <b>كيف تعمل:</b> عدّلي المحتوى هنا، ثم اضغطي <b>«حفظ وتنزيل الملف»</b> — سينزل ملف
+      <code>days-content.json</code>. ارفعيه إلى مجلد <code>content/</code> في GitHub (اسحبيه وأفلتيه)، واعملي Commit.
+    </div>
+
+    <div class="card">
+      <h3>📅 اليوم المُحرَّر</h3>
+      <label>اختاري اليوم</label>
+      <select id="daySel" onchange="switchDay()"></select>
+      <div class="hint">المحتوى يُحفظ لكل يوم على حدة. الجمعة والسبت عطلة (غير مدرجين).</div>
+    </div>
+
+    <!-- أبرز اللحظات -->
+    <div class="card">
+      <h3>⭐ أبرز اللحظات</h3>
+      <div id="hlList"></div>
+      <button class="add-btn" onclick="addHighlight()">+ إضافة لحظة</button>
+    </div>
+
+    <!-- الإعلانات -->
+    <div class="card">
+      <h3>📢 الإعلانات</h3>
+      <div id="annList"></div>
+      <button class="add-btn" onclick="addAnn()">+ إضافة إعلان</button>
+    </div>
+
+    <!-- الطلاب المتفوقون -->
+    <div class="card">
+      <h3>🏅 الطلاب المتفوقون</h3>
+      <div id="stuList"></div>
+      <button class="add-btn" onclick="addStudent()">+ إضافة طالب</button>
+    </div>
+
+    <!-- التغذية الراجعة -->
+    <div class="card">
+      <h3>💬 التغذية الراجعة</h3>
+      <div id="fbBox"></div>
+    </div>
+
+    <!-- جدول اليوم -->
+    <div class="card">
+      <h3>🗓️ جدول اليوم</h3>
+      <div class="note" style="margin-bottom:14px">
+        <b>الأولوية للوحة:</b> ما تدخلينه هنا يظهر في الموقع مباشرة ويتجاوز شيت Google.
+        اتركي مجموعة فارغة لتستخدم الجدول الاحتياطي.
+      </div>
+      <div class="sched-tabs" id="schedTabs">
+        <button class="stab on" data-g="girls_13">بنات ١٣–١٤</button>
+        <button class="stab" data-g="girls_15">بنات ١٥–١٧</button>
+        <button class="stab" data-g="boys_13">أولاد ١٣–١٤</button>
+        <button class="stab" data-g="boys_15">أولاد ١٥–١٧</button>
+      </div>
+      <div id="schedList"></div>
+      <button class="add-btn" onclick="addSession()">+ إضافة جلسة</button>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="copyFromGroup()">📋 نسخ من مجموعة أخرى</button>
+        <button class="btn btn-ghost btn-sm" onclick="copyFromPrevDay()">⏪ نسخ جدول يوم سابق</button>
+        <button class="btn btn-sm btn-del" onclick="clearSchedule()">🗑 مسح جدول هذه المجموعة</button>
+      </div>
+    </div>
+
+    <!-- نظرة الغد -->
+    <div class="card">
+      <h3>🔭 نظرة إلى الغد</h3>
+      <div id="tmrBox"></div>
+    </div>
+
+    <!-- ألبوم اليوم -->
+    <div class="card">
+      <h3>📸 ألبوم اليوم</h3>
+      <div class="note" id="sizeWarn" style="display:none"></div>
+      <div id="albDrop"></div>
+      <div class="album-grid" id="albGrid"></div>
+    </div>
+  </div>
+
+  <!-- ═══ البيانات ═══ -->
+  <div class="panel" id="p-data">
+    <div class="note">
+      <b>ملاحظة مهمة:</b> إحصائيات الزيارات تحتاج ربط خدمة تحليلات مجانية (مثل Plausible أو Google Analytics).
+      انظري تبويب «كيف أستخدمها». بيانات المشاركة في التحدّي تحتاج قاعدة بيانات (Firebase) — لم تُفعّل بعد.
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="n" id="sVisits">—</div><div class="l">زيارات اليوم</div></div>
+      <div class="stat"><div class="n" id="sTotal">—</div><div class="l">إجمالي الزيارات</div></div>
+      <div class="stat"><div class="n" id="sDays">—</div><div class="l">أيام مضت</div></div>
+      <div class="stat"><div class="n" id="sLeft">—</div><div class="l">أيام متبقية</div></div>
+    </div>
+    <div class="card">
+      <h3>🛡️ مشاركات التحدّي</h3>
+      <div class="empty">
+        تتطلّب قاعدة بيانات (Firebase) لتسجيل من شارك ونوع المشاركة.<br>
+        عند تفعيلها ستظهر هنا: نوع المشارك (أسرة/زائر)، ورقم الطالب، وحالة الإجابة.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ التقرير ═══ -->
+  <div class="panel" id="p-report">
+    <div class="note ok">
+      <b>التقرير الأسبوعي:</b> اضغطي الزر لتوليد ملف PowerPoint يلخّص المخيم — جاهز للإرسال أو العرض.
+    </div>
+    <div class="card">
+      <h3>📑 توليد تقرير</h3>
+      <label>الأسبوع</label>
+      <select id="repWeek">
+        <option value="1">الأسبوع الأول</option>
+        <option value="2">الأسبوع الثاني</option>
+        <option value="3">الأسبوع الثالث</option>
+        <option value="all">المخيم كامل</option>
+      </select>
+      <label>ملاحظات إضافية (اختياري)</label>
+      <textarea id="repNotes" placeholder="أي ملاحظات تريدين إضافتها للتقرير..."></textarea>
+      <br>
+      <button class="btn btn-main" style="width:100%;margin-top:8px" onclick="genReport()">📥 توليد وتنزيل التقرير (PPTX)</button>
+      <div class="hint">سينزل الملف على جهازك مباشرة. لإرساله بالبريد، أرفقيه في رسالة عادية.</div>
+    </div>
+  </div>
+
+  <!-- ═══ المساعدة ═══ -->
+  <div class="panel" id="p-help">
+    <div class="card">
+      <h3>❓ كيف أستخدم اللوحة</h3>
+      <p style="font-size:14px;color:var(--soft);line-height:2">
+        <b style="color:var(--cyan-b)">1.</b> افتحي تبويب «محتوى اليوم» واختاري اليوم.<br>
+        <b style="color:var(--cyan-b)">2.</b> عدّلي أو أضيفي أو احذفي أي عنصر — بدون كود.<br>
+        <b style="color:var(--cyan-b)">3.</b> اضغطي «حفظ وتنزيل الملف» — ينزل <code>days-content.json</code>.<br>
+        <b style="color:var(--cyan-b)">4.</b> في GitHub: افتحي مجلد <code>content/</code> ▸ اسحبي الملف ▸ Commit.<br>
+        <b style="color:var(--cyan-b)">5.</b> خلال دقيقة يتحدّث الموقع. ✅
+      </p>
+    </div>
+    <div class="card">
+      <h3>📊 تفعيل إحصائيات الزيارات (مجاني)</h3>
+      <p style="font-size:14px;color:var(--soft);line-height:2">
+        <b style="color:var(--cyan-b)">أ.</b> أنشئي حساباً على <a href="https://plausible.io" style="color:var(--cyan-b)">Plausible</a> أو
+        <a href="https://analytics.google.com" style="color:var(--cyan-b)">Google Analytics</a> (مجاني).<br>
+        <b style="color:var(--cyan-b)">ب.</b> انسخي كود التتبّع الذي يعطونك إياه.<br>
+        <b style="color:var(--cyan-b)">ج.</b> الصقيه في <code>index.html</code> قبل <code>&lt;/head&gt;</code>.<br>
+        <b style="color:var(--cyan-b)">د.</b> ستظهر الزيارات في لوحتهم (وليس هنا) — لأن الموقع بلا خادم.
+      </p>
+    </div>
+    <div class="card">
+      <h3>🖼️ إضافة الصور</h3>
+      <p style="font-size:14px;color:var(--soft);line-height:2">
+        اسحبي الصورة وأفلتيها في المربّع المنقّط، أو اضغطي عليه لاختيار صورة من جهازك.<br>
+        الصورة تُصغَّر تلقائياً وتُحفظ <b style="color:var(--cyan-b)">داخل الملف نفسه</b> — لا حاجة لرفعها إلى مجلد الصور.<br>
+        <span style="color:var(--gold)">نصيحة:</span> استخدمي صوراً معقولة الحجم. الصور الكثيرة جداً تكبّر حجم الملف وتبطّئ الموقع.
+      </p>
+    </div>
+    <div class="card">
+      <h3>↕️ الترتيب والحذف</h3>
+      <p style="font-size:14px;color:var(--soft);line-height:2">
+        استخدمي زرَّي <b style="color:var(--cyan-b)">↑ ↓</b> لتغيير ترتيب أي عنصر (اللحظات، الإعلانات، الطلاب).<br>
+        <b style="color:var(--cyan-b)">الطلاب المتفوقون:</b> يظهرون بالضبط كما أضفتِهم وبالترتيب الذي رتّبتِهم — الأول يحصل على 🥇.<br>
+        لا يختفون إلا إذا حذفتِهم من هنا. إن لم تضيفي أحداً، يظهر «يُعلن قريباً» في الموقع.
+      </p>
+    </div>
+    <div class="card">
+      <h3>🗓️ تعديل جدول اليوم</h3>
+      <p style="font-size:14px;color:var(--soft);line-height:2">
+        اختاري المجموعة من التبويبات (بنات ١٣–١٤ ... إلخ)، ثم أضيفي الجلسات:<br>
+        <b style="color:var(--cyan-b)">الوقت</b> — يظهر منتقي وقت (24 ساعة)<br>
+        <b style="color:var(--cyan-b)">اسم الجلسة</b> — مثل «حصة تعليمية» أو «نشاط: اهرب من الفيروس»<br>
+        <b style="color:var(--cyan-b)">النوع</b> — يحدّد لون الوسم في الموقع<br>
+        <b style="color:var(--cyan-b)">التفاصيل</b> — وصف أو مكان (اختياري)<br><br>
+        <b style="color:var(--gold)">اختصارات مفيدة:</b><br>
+        📋 <b>نسخ من مجموعة أخرى</b> — لو الجدول متشابه<br>
+        ⏪ <b>نسخ جدول يوم سابق</b> — لو اليوم يشبه أمس، انسخي ثم عدّلي<br><br>
+        <b style="color:var(--ok)">الأولوية:</b> ما تدخلينه هنا يتجاوز شيت Google. اتركي المجموعة فارغة ليعمل الجدول الاحتياطي.
+      </p>
+    </div>
+    <div class="card">
+      <h3>🔐 تغيير كلمة المرور</h3>
+      <p style="font-size:14px;color:var(--soft);line-height:2">
+        كلمة المرور الحالية الافتراضية: <code>camp2026</code> — <b style="color:var(--gold)">يُنصح بتغييرها فوراً.</b><br><br>
+        <b style="color:var(--cyan-b)">1.</b> في هذه الصفحة، اضغطي <code>F12</code> ثم افتحي تبويب <code>Console</code>.<br>
+        <b style="color:var(--cyan-b)">2.</b> اكتبي هذا الأمر (مع كلمة المرور الجديدة) واضغطي Enter:<br>
+        <code style="display:block;margin:8px 0;padding:10px;direction:ltr;text-align:left">await makeHash('كلمة-المرور-الجديدة')</code>
+        <b style="color:var(--cyan-b)">3.</b> انسخي النص الأزرق الطويل الذي يظهر.<br>
+        <b style="color:var(--cyan-b)">4.</b> في GitHub، افتحي <code>admin/panel.html</code> واضغطي ✏️ للتحرير.<br>
+        <b style="color:var(--cyan-b)">5.</b> ابحثي عن <code>PW_HASH</code> واستبدلي النص بين علامتَي التنصيص بما نسختِه.<br>
+        <b style="color:var(--cyan-b)">6.</b> اضغطي Commit. ✅
+      </p>
+    </div>
+    <div class="card">
+      <h3>⚠️ عن مستوى الحماية</h3>
+      <p style="font-size:14px;color:var(--soft);line-height:2">
+        كلمة المرور هنا تمنع <b>الزوار العابرين والفضوليين</b> — وهذا هدفها.<br>
+        لكنها <b style="color:var(--gold)">ليست حماية مطلقة</b>: الصفحة تعمل في المتصفح بلا خادم، فشخص تقني مصمّم قد يتجاوزها.<br><br>
+        <b style="color:var(--ok)">لماذا هذا مقبول؟</b> لأن اللوحة لا تنشر شيئاً على الموقع بنفسها — هي فقط تُنزّل ملفاً على جهازك.
+        النشر يتطلّب حساب GitHub الخاص بكِ، وهو المحمي فعلياً. أسوأ ما قد يحدث أن يرى أحدهم الواجهة، لا أن يغيّر موقعكِ.
+      </p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panelRoot -->
+
+<div class="toast" id="toast">تم الحفظ ✓</div>
+
+<script src="pptxgen.bundle.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   بوابة الدخول
+   ─────────────────────────────────────────────────────────
+   ⚠️ ملاحظة صريحة: هذه حماية على مستوى المتصفح فقط.
+   تمنع الفضوليين والزوار العابرين، لكنها لا تصمد أمام شخص
+   تقني مصمّم (لأن الصفحة تعمل كلياً في المتصفح بلا خادم).
+   الأمان الحقيقي في حساب GitHub — فاللوحة لا تنشر شيئاً
+   بنفسها، بل تُنزّل ملفاً على جهازك فقط.
+
+   ✏️ لتغيير كلمة المرور:
+   1) افتحي وحدة تحكم المتصفح (F12 ▸ Console) في هذه الصفحة
+   2) اكتبي:  await makeHash('كلمة-المرور-الجديدة')
+   3) انسخي الناتج وضعيه مكان PW_HASH أدناه
+═══════════════════════════════════════════════════════════ */
+const PW_SALT = 'ncsa-camp-v1';
+// كلمة المرور الافتراضية: camp2026  ← ✏️ غيّريها!
+let PW_HASH = 'b651a5b947a53877daba322ee890af5a2af05c942cc90c2bb47fb76150741c79';
+
+const SESSION_KEY='camp-admin-session';
+const SESSION_HOURS=8;
+const MAX_TRIES=5;
+let tries=0;
+
+/* أداة توليد الهاش (استخدميها من الـ Console) */
+async function makeHash(pw){
+  const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(PW_SALT+pw));
+  const hex=[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  console.log('%c'+hex,'font-size:14px;color:#00b1d5;font-weight:bold');
+  console.log('انسخي السطر أعلاه وضعيه مكان PW_HASH في الملف');
+  return hex;
+}
+
+async function sha(pw){
+  const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(PW_SALT+pw));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function sessionValid(){
+  try{
+    const s=JSON.parse(localStorage.getItem(SESSION_KEY)||'null');
+    return s && s.exp && Date.now()<s.exp;
+  }catch(e){ return false; }
+}
+
+function openPanel(){
+  const g=document.getElementById('gate'); if(g) g.classList.add('hide');
+  const r=document.getElementById('panelRoot'); if(r) r.hidden=false;   // يُظهر المحتوى فعلياً
+  if(!window._panelStarted){ window._panelStarted=true; loadAll(); }
+}
+
+async function tryLogin(){
+  const inp=document.getElementById('gatePw');
+  const err=document.getElementById('gateErr');
+  const pw=inp.value;
+  if(!pw){ err.hidden=false; err.textContent='أدخلي كلمة المرور'; return; }
+  if(tries>=MAX_TRIES){
+    err.hidden=false; err.textContent='محاولات كثيرة. أعيدي تحميل الصفحة للمحاولة مجدداً.';
+    inp.disabled=true; return;
+  }
+  const h=await sha(pw);
+  if(h===PW_HASH){
+    if(document.getElementById('gateRemember').checked){
+      try{ localStorage.setItem(SESSION_KEY, JSON.stringify({exp:Date.now()+SESSION_HOURS*3600e3})); }catch(e){}
+    }
+    openPanel();
+  } else {
+    tries++;
+    inp.value=''; err.hidden=false;
+    const left=MAX_TRIES-tries;
+    err.textContent = left>0 ? `كلمة المرور غير صحيحة (${left} محاولات متبقية)` : 'محاولات كثيرة. أعيدي تحميل الصفحة.';
+    if(left<=0) inp.disabled=true;
+  }
+}
+
+function logout(){
+  try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
+  location.reload();
+}
+
+/* افتحي مباشرة إن كانت الجلسة صالحة */
+if(sessionValid()){ openPanel(); }
+else { setTimeout(()=>{ const i=document.getElementById('gatePw'); if(i) i.focus(); },300); }
+</script>
+<script>
+/* ═══════ حالة ═══════ */
+let CAMP=null, CONTENT={}, CUR='';
+
+const $=id=>document.getElementById(id);
+const esc=s=>(s||'').replace(/"/g,'&quot;');
+
+/* ═══════ تبويبات ═══════ */
+/* تبويبات مجموعات الجدول */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('#schedTabs .stab');
+  if(!b) return;
+  CUR_SGROUP=b.dataset.g; renderSchedule();
+});
+
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on'); $('p-'+t.dataset.p).classList.add('on');
+}));
+
+/* ═══════ تحميل ═══════ */
+async function loadAll(){
+  try{
+    const r1=await fetch('../content/camp-days.json?t='+Date.now(),{cache:'no-store'});
+    CAMP=await r1.json();
+  }catch(e){ CAMP=null; }
+  try{
+    const r2=await fetch('../content/days-content.json?t='+Date.now(),{cache:'no-store'});
+    CONTENT=await r2.json();
+  }catch(e){ CONTENT={}; }
+
+  // ملء قائمة الأيام
+  const sel=$('daySel'); sel.innerHTML='';
+  if(CAMP&&CAMP.days){
+    CAMP.days.forEach(d=>{
+      const o=document.createElement('option');
+      o.value=d.date; o.textContent=`اليوم ${d.n} — ${d.date}`;
+      sel.appendChild(o);
+    });
+    // اختر اليوم الحالي أو الأول
+    const today=new Date().toISOString().slice(0,10);
+    const match=CAMP.days.find(d=>d.date===today);
+    CUR = match ? match.date : CAMP.days[0].date;
+    sel.value=CUR;
+  }
+  switchDay();
+  updateStats();
+}
+
+function dayData(){
+  if(!CONTENT[CUR]) CONTENT[CUR]={highlights:[],announcements:[],topStudents:[],feedback:{},tomorrow:{},gallery:[]};
+  const d=CONTENT[CUR];
+  d.highlights=d.highlights||[]; d.announcements=d.announcements||[];
+  d.topStudents=d.topStudents||[]; d.feedback=d.feedback||{}; d.tomorrow=d.tomorrow||{};
+  d.gallery=d.gallery||[];
+  d.schedule=d.schedule||{girls_13:[],girls_15:[],boys_13:[],boys_15:[]};
+  return d;
+}
+
+function switchDay(){
+  CUR=$('daySel').value||CUR;
+  rerenderAll();
+  checkSize();
+}
+
+/* ═══════ رفع الصور (سحب وإفلات) ═══════
+   الصور تُحوَّل إلى صيغة مدمجة (base64) وتُحفظ داخل الملف مباشرة،
+   فلا تحتاجين رفعها يدوياً إلى مجلد الصور. */
+const MAX_IMG = 900;   // أقصى عرض للصورة (تصغير تلقائي)
+const MAX_KB  = 700;   // تحذير إن كبر الحجم
+
+function dropZone(id, current, onSet){
+  const has = current && current.length>6;
+  return `
+    <div class="drop" id="dz-${id}"
+         ondragover="event.preventDefault();this.classList.add('over')"
+         ondragleave="this.classList.remove('over')"
+         ondrop="handleDrop(event,'${id}')"
+         onclick="document.getElementById('fi-${id}').click()">
+      <span class="di">🖼️</span>
+      <span class="dt">اسحبي الصورة هنا أو اضغطي للاختيار</span>
+      <span class="dh">JPG أو PNG — تُصغَّر تلقائياً</span>
+      <input type="file" id="fi-${id}" accept="image/*" onchange="handlePick(event,'${id}')">
+    </div>
+    ${has?`<div class="prev">
+        <img src="${current}" alt="">
+        <button class="rm" onclick="clearImg('${id}')">✕ إزالة</button>
+      </div>`:''}
+  `;
+}
+
+/* مسجّل دوال ضبط الصور لكل حقل */
+const IMG_SETTERS={};
+function regImg(id, setter){ IMG_SETTERS[id]=setter; }
+function clearImg(id){ if(IMG_SETTERS[id]){ IMG_SETTERS[id](''); rerenderAll(); } }
+
+/* ─── منطقة رفع متعددة (للألبوم) ─── */
+const MAX_ALBUM = 20;
+function multiDrop(id, count){
+  return `
+    <div class="drop" id="dz-${id}"
+         ondragover="event.preventDefault();this.classList.add('over')"
+         ondragleave="this.classList.remove('over')"
+         ondrop="handleMultiDrop(event,'${id}')"
+         onclick="document.getElementById('fi-${id}').click()">
+      <span class="di">📸</span>
+      <span class="dt">اسحبي حتى ${MAX_ALBUM} صورة هنا أو اضغطي للاختيار</span>
+      <span class="dh">${count}/${MAX_ALBUM} صورة · يمكن اختيار عدة صور معاً</span>
+      <input type="file" id="fi-${id}" accept="image/*" multiple onchange="handleMultiPick(event,'${id}')">
+    </div>`;
+}
+function handleMultiDrop(e,id){
+  e.preventDefault();
+  const dz=document.getElementById('dz-'+id); if(dz) dz.classList.remove('over');
+  addAlbumFiles(e.dataTransfer.files);
+}
+function handleMultiPick(e,id){ addAlbumFiles(e.target.files); }
+
+async function addAlbumFiles(files){
+  const d=dayData(); d.gallery=d.gallery||[];
+  const arr=[...files].filter(f=>f.type.startsWith('image/'));
+  if(!arr.length){ toast('⚠️ لم يتم اختيار صور'); return; }
+  const room=MAX_ALBUM-d.gallery.length;
+  if(room<=0){ toast(`⚠️ الحد الأقصى ${MAX_ALBUM} صورة`); return; }
+  const take=arr.slice(0,room);
+  toast(`جارٍ معالجة ${take.length} صورة...`);
+  for(const f of take){
+    const data=await shrinkImage(f, 1100, 0.78);
+    d.gallery.push({src:data, captionAr:'', captionEn:''});
+  }
+  renderAlbum();
+  if(arr.length>room) toast(`أُضيفت ${room} فقط — بلغتِ الحد الأقصى`);
+  else toast(`تمت إضافة ${take.length} صورة ✓`);
+  checkSize();
+}
+
+/* تصغير الصورة وإرجاعها كنص مدمج */
+function shrinkImage(file, maxW=900, q=0.82){
+  return new Promise(res=>{
+    const fr=new FileReader();
+    fr.onload=()=>{
+      const img=new Image();
+      img.onload=()=>{
+        let w=img.width,h=img.height;
+        if(w>maxW){ h=Math.round(h*maxW/w); w=maxW; }
+        const c=document.createElement('canvas'); c.width=w; c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        res(c.toDataURL('image/jpeg',q));
+      };
+      img.onerror=()=>res('');
+      img.src=fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+/* تحذير عند كبر حجم الملف */
+function checkSize(){
+  const kb=Math.round(JSON.stringify(CONTENT).length*0.75/1024);
+  const w=$('sizeWarn');
+  if(w){
+    if(kb>2500){ w.style.display='block'; w.innerHTML=`<b>⚠️ تنبيه:</b> حجم المحتوى ${(kb/1024).toFixed(1)} ميجابايت — قد يبطئ الموقع على الجوال. فكّري في تقليل عدد الصور.`; }
+    else if(kb>1200){ w.style.display='block'; w.innerHTML=`<b>ℹ️ ملاحظة:</b> حجم المحتوى ${(kb/1024).toFixed(1)} ميجابايت. لا يزال مقبولاً.`; }
+    else w.style.display='none';
+  }
+}
+
+function handleDrop(e,id){
+  e.preventDefault();
+  const dz=document.getElementById('dz-'+id); if(dz) dz.classList.remove('over');
+  const f=e.dataTransfer.files&&e.dataTransfer.files[0];
+  if(f) readImage(f,id);
+}
+function handlePick(e,id){ const f=e.target.files&&e.target.files[0]; if(f) readImage(f,id); }
+
+function readImage(file,id){
+  if(!file.type.startsWith('image/')){ toast('⚠️ الملف ليس صورة'); return; }
+  const fr=new FileReader();
+  fr.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      // تصغير تلقائي للحفاظ على حجم الملف
+      let w=img.width,h=img.height;
+      if(w>MAX_IMG){ h=Math.round(h*MAX_IMG/w); w=MAX_IMG; }
+      const c=document.createElement('canvas'); c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      const data=c.toDataURL('image/jpeg',0.82);
+      const kb=Math.round(data.length*0.75/1024);
+      if(IMG_SETTERS[id]) IMG_SETTERS[id](data);
+      rerenderAll();
+      toast(kb>MAX_KB ? `تم — لكن الصورة كبيرة (${kb}KB)` : `تم رفع الصورة ✓ (${kb}KB)`);
+    };
+    img.onerror=()=>toast('⚠️ تعذّرت قراءة الصورة');
+    img.src=fr.result;
+  };
+  fr.readAsDataURL(file);
+}
+
+/* ═══════ ألبوم اليوم ═══════ */
+function renderAlbum(){
+  const d=dayData(); d.gallery=d.gallery||[];
+  const drop=$('albDrop'); if(drop) drop.innerHTML=multiDrop('alb', d.gallery.length);
+  const g=$('albGrid'); if(!g) return;
+  if(!d.gallery.length){ g.innerHTML='<div class="empty">لا توجد صور — اسحبي صوراً للأعلى</div>'; return; }
+  g.innerHTML=d.gallery.map((p,i)=>`
+    <div class="alb">
+      <span class="n">${i+1}</span>
+      <img src="${p.src}" alt="">
+      <div class="tools">
+        <button onclick="moveAlb(${i},-1)" ${i===0?'disabled':''} title="للخلف">←</button>
+        <button onclick="moveAlb(${i},1)" ${i===d.gallery.length-1?'disabled':''} title="للأمام">→</button>
+        <button class="x" onclick="delAlb(${i})" title="حذف">✕</button>
+      </div>
+      <input type="text" placeholder="تعليق (اختياري)" value="${esc(p.captionAr)}" oninput="albCap(${i},'captionAr',this.value)">
+      <input type="text" placeholder="Caption (optional)" value="${esc(p.captionEn)}" oninput="albCap(${i},'captionEn',this.value)" dir="ltr">
+    </div>`).join('');
+}
+function moveAlb(i,dir){
+  const a=dayData().gallery; const j=i+dir;
+  if(j<0||j>=a.length) return;
+  [a[i],a[j]]=[a[j],a[i]]; renderAlbum();
+}
+function delAlb(i){
+  if(!confirm('حذف هذه الصورة؟')) return;
+  dayData().gallery.splice(i,1); renderAlbum(); checkSize();
+}
+function albCap(i,key,val){ dayData().gallery[i][key]=val; }
+
+/* ═══════ جدول اليوم ═══════ */
+const GROUP_LABELS={girls_13:'بنات ١٣–١٤',girls_15:'بنات ١٥–١٧',boys_13:'أولاد ١٣–١٤',boys_15:'أولاد ١٥–١٧'};
+const SESS_TYPES=[
+  {v:'session',  t:'حصة تعليمية'},
+  {v:'activity', t:'نشاط / تحدٍّ'},
+  {v:'break',    t:'استراحة'},
+  {v:'ceremony', t:'حضور / ذهاب'},
+  {v:'expert',   t:'جلسة مع خبير'},
+  {v:'trip',     t:'رحلة'},
+];
+let CUR_SGROUP='girls_13';
+
+function schedData(){
+  const d=dayData();
+  d.schedule = d.schedule || {girls_13:[],girls_15:[],boys_13:[],boys_15:[]};
+  ['girls_13','girls_15','boys_13','boys_15'].forEach(k=>{ d.schedule[k]=d.schedule[k]||[]; });
+  return d.schedule;
+}
+
+function renderSchedule(){
+  // تبويبات المجموعات
+  document.querySelectorAll('#schedTabs .stab').forEach(b=>{
+    b.classList.toggle('on', b.dataset.g===CUR_SGROUP);
+    const n=schedData()[b.dataset.g].length;
+    b.textContent = GROUP_LABELS[b.dataset.g] + (n?` (${n})`:'');
+  });
+  const list=schedData()[CUR_SGROUP];
+  const box=$('schedList'); if(!box) return;
+  if(!list.length){
+    box.innerHTML='<div class="empty">لا توجد جلسات لهذه المجموعة<br><span style="font-size:12px">(سيُستخدم الجدول الاحتياطي في الموقع)</span></div>';
+    return;
+  }
+  box.innerHTML=list.map((s,i)=>`
+    <div class="sess">
+      <input type="time" value="${esc(s.time)}" onchange="updSess(${i},'time',this.value)" title="الوقت">
+      <input type="text" value="${esc(s.title)}" oninput="updSess(${i},'title',this.value)" placeholder="اسم الجلسة">
+      <select onchange="updSess(${i},'type',this.value)" title="النوع">
+        ${SESS_TYPES.map(t=>`<option value="${t.v}" ${s.type===t.v?'selected':''}>${t.t}</option>`).join('')}
+      </select>
+      <div class="stools">
+        <button onclick="moveSess(${i},-1)" ${i===0?'disabled':''} title="أعلى">↑</button>
+        <button onclick="moveSess(${i},1)" ${i===list.length-1?'disabled':''} title="أسفل">↓</button>
+        <button class="x" onclick="delSess(${i})" title="حذف">✕</button>
+      </div>
+      <input type="text" value="${esc(s.meta)}" oninput="updSess(${i},'meta',this.value)"
+             placeholder="تفاصيل / مكان (اختياري)" style="grid-column:1/-1">
+    </div>`).join('');
+}
+function addSession(){
+  const list=schedData()[CUR_SGROUP];
+  const last=list[list.length-1];
+  // اقترح وقتاً بعد آخر جلسة بساعة
+  let t='08:00';
+  if(last&&last.time){ const [h,m]=last.time.split(':').map(Number);
+    t=String(Math.min(h+1,23)).padStart(2,'0')+':'+String(m).padStart(2,'0'); }
+  list.push({time:t,title:'',type:'session',meta:''});
+  renderSchedule();
+}
+function updSess(i,k,v){ schedData()[CUR_SGROUP][i][k]=v; if(k==='time') renderSchedule(); }
+function moveSess(i,d){
+  const a=schedData()[CUR_SGROUP], j=i+d;
+  if(j<0||j>=a.length) return;
+  [a[i],a[j]]=[a[j],a[i]]; renderSchedule();
+}
+function delSess(i){
+  if(!confirm('حذف هذه الجلسة؟')) return;
+  schedData()[CUR_SGROUP].splice(i,1); renderSchedule();
+}
+function clearSchedule(){
+  if(!confirm(`مسح كل جلسات ${GROUP_LABELS[CUR_SGROUP]}؟`)) return;
+  schedData()[CUR_SGROUP]=[]; renderSchedule();
+}
+function copyFromGroup(){
+  const others=Object.keys(GROUP_LABELS).filter(k=>k!==CUR_SGROUP && schedData()[k].length);
+  if(!others.length){ toast('⚠️ لا توجد مجموعة أخرى بها جلسات'); return; }
+  const names=others.map((k,i)=>`${i+1}) ${GROUP_LABELS[k]} (${schedData()[k].length})`).join('\n');
+  const pick=prompt('انسخي من:\n'+names+'\n\nاكتبي الرقم:');
+  const idx=parseInt(pick,10)-1;
+  if(isNaN(idx)||!others[idx]) return;
+  schedData()[CUR_SGROUP]=JSON.parse(JSON.stringify(schedData()[others[idx]]));
+  renderSchedule(); toast('تم النسخ ✓');
+}
+function copyFromPrevDay(){
+  if(!CAMP||!CAMP.days) return;
+  const i=CAMP.days.findIndex(d=>d.date===CUR);
+  // ابحث عن أقرب يوم سابق فيه جدول لهذه المجموعة
+  for(let j=i-1;j>=0;j--){
+    const dd=CONTENT[CAMP.days[j].date];
+    if(dd&&dd.schedule&&(dd.schedule[CUR_SGROUP]||[]).length){
+      if(!confirm(`نسخ جدول ${GROUP_LABELS[CUR_SGROUP]} من ${CAMP.days[j].date}؟`)) return;
+      schedData()[CUR_SGROUP]=JSON.parse(JSON.stringify(dd.schedule[CUR_SGROUP]));
+      renderSchedule(); toast('تم النسخ ✓'); return;
+    }
+  }
+  toast('⚠️ لا يوجد يوم سابق بجدول لهذه المجموعة');
+}
+
+/* ═══════ ترتيب العناصر ═══════ */
+function moveItem(list,i,dir){
+  const arr=dayData()[list];
+  const j=i+dir;
+  if(j<0||j>=arr.length) return;
+  [arr[i],arr[j]]=[arr[j],arr[i]];
+  rerenderAll();
+}
+function rerenderAll(){ renderHighlights(); renderAnns(); renderStudents(); renderFeedback(); renderTomorrow(); renderAlbum(); renderSchedule(); }
+
+/* ═══════ أبرز اللحظات ═══════ */
+function renderHighlights(){
+  const d=dayData(), box=$('hlList'); box.innerHTML='';
+  d.highlights.forEach((h,i)=>{
+    const iid='hl'+i;
+    regImg(iid, v=>{ d.highlights[i].image=v; });
+    box.insertAdjacentHTML('beforeend',`
+      <div class="card" style="background:rgba(0,177,213,.04)">
+        <div class="item-tools">
+          <button class="ord" onclick="moveItem('highlights',${i},-1)" ${i===0?'disabled':''} title="أعلى">↑</button>
+          <button class="ord" onclick="moveItem('highlights',${i},1)" ${i===d.highlights.length-1?'disabled':''} title="أسفل">↓</button>
+          <button class="btn btn-sm btn-del" onclick="delItem('highlights',${i})">حذف</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="row">
+          <div><label>الوسم (عربي)</label><input type="text" value="${esc(h.tag)}" oninput="upd('highlights',${i},'tag',this.value)"></div>
+          <div><label>الوسم (إنجليزي)</label><input type="text" value="${esc(h.tagEn)}" oninput="upd('highlights',${i},'tagEn',this.value)"></div>
+        </div>
+        <label>لون الوسم</label>
+        <select onchange="upd('highlights',${i},'tagStyle',this.value)">
+          <option value="info" ${h.tagStyle==='info'?'selected':''}>أزرق (معلومة)</option>
+          <option value="win" ${h.tagStyle==='win'?'selected':''}>ذهبي (إنجاز)</option>
+          <option value="warn" ${h.tagStyle==='warn'?'selected':''}>وردي (تنبيه)</option>
+        </select>
+        <label>العنوان (عربي)</label><input type="text" value="${esc(h.titleAr)}" oninput="upd('highlights',${i},'titleAr',this.value)">
+        <label>العنوان (إنجليزي)</label><input type="text" value="${esc(h.titleEn)}" oninput="upd('highlights',${i},'titleEn',this.value)">
+        <label>النص (عربي)</label><textarea oninput="upd('highlights',${i},'textAr',this.value)">${h.textAr||''}</textarea>
+        <label>النص (إنجليزي)</label><textarea oninput="upd('highlights',${i},'textEn',this.value)">${h.textEn||''}</textarea>
+        <label>بطاقة مميّزة (أكبر حجماً)</label>
+        <select onchange="upd('highlights',${i},'featured',this.value==='yes')">
+          <option value="no" ${!h.featured?'selected':''}>لا</option>
+          <option value="yes" ${h.featured?'selected':''}>نعم</option>
+        </select>
+        <label>الصورة</label>
+        ${dropZone(iid, h.image, null)}
+        <label>أو فيديو — رابط يوتيوب (اختياري)</label>
+        <input type="text" value="${esc(h.video)}" oninput="upd('highlights',${i},'video',this.value)"
+               placeholder="https://youtube.com/watch?v=..." dir="ltr">
+        <div class="hint">إن وضعتِ فيديو، سيظهر بدل الصورة. الأفضل رفع الفيديو على يوتيوب ولصق الرابط هنا (أخفّ على الموقع).</div>
+      </div>`);
+  });
+  if(!d.highlights.length) box.innerHTML='<div class="empty">لا توجد لحظات — أضيفي واحدة</div>';
+}
+function addHighlight(){ dayData().highlights.push({tag:'',tagEn:'',tagStyle:'info',titleAr:'',titleEn:'',textAr:'',textEn:'',image:'',video:'',featured:false}); renderHighlights(); }
+
+/* ═══════ الإعلانات ═══════ */
+function renderAnns(){
+  const d=dayData(), box=$('annList'); box.innerHTML='';
+  d.announcements.forEach((a,i)=>{
+    box.insertAdjacentHTML('beforeend',`
+      <div class="card" style="background:rgba(0,177,213,.04)">
+        <div class="item-tools">
+          <button class="ord" onclick="moveItem('announcements',${i},-1)" ${i===0?'disabled':''} title="أعلى">↑</button>
+          <button class="ord" onclick="moveItem('announcements',${i},1)" ${i===d.announcements.length-1?'disabled':''} title="أسفل">↓</button>
+          <button class="btn btn-sm btn-del" onclick="delItem('announcements',${i})">حذف</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="row">
+          <div><label>النوع</label><select onchange="upd('announcements',${i},'type',this.value)">
+            <option value="urgent" ${a.type==='urgent'?'selected':''}>عاجل</option>
+            <option value="info" ${a.type==='info'?'selected':''}>معلومة</option>
+            <option value="success" ${a.type==='success'?'selected':''}>نجاح</option>
+          </select></div>
+          <div><label>الأيقونة</label><input type="text" value="${esc(a.icon)}" oninput="upd('announcements',${i},'icon',this.value)" placeholder="📢"></div>
+        </div>
+        <label>العنوان (عربي)</label><input type="text" value="${esc(a.titleAr)}" oninput="upd('announcements',${i},'titleAr',this.value)">
+        <label>العنوان (إنجليزي)</label><input type="text" value="${esc(a.titleEn)}" oninput="upd('announcements',${i},'titleEn',this.value)">
+        <label>النص (عربي)</label><textarea oninput="upd('announcements',${i},'textAr',this.value)">${a.textAr||''}</textarea>
+        <label>النص (إنجليزي)</label><textarea oninput="upd('announcements',${i},'textEn',this.value)">${a.textEn||''}</textarea>
+      </div>`);
+  });
+  if(!d.announcements.length) box.innerHTML='<div class="empty">لا توجد إعلانات — أضيفي واحداً</div>';
+}
+function addAnn(){ dayData().announcements.push({type:'info',icon:'📢',titleAr:'',titleEn:'',textAr:'',textEn:'',time:'اليوم',timeEn:'Today'}); renderAnns(); }
+
+/* ═══════ الطلاب ═══════ */
+const TEAM_LIST=["Hackers","Defenders","0101","Kali","Scanners","Java","Python","Hydra","Ghosts","Hunters"];
+const MEDALS=['🥇','🥈','🥉','⭐','🎖️','🏆'];
+function renderStudents(){
+  const d=dayData(), box=$('stuList'); box.innerHTML='';
+  d.topStudents.forEach((s,i)=>{
+    const pid='stu'+i;
+    regImg(pid, v=>{ d.topStudents[i].photo=v; });
+    box.insertAdjacentHTML('beforeend',`
+      <div class="card" style="background:rgba(0,177,213,.04)">
+        <div class="item-tools">
+          <span class="rank-badge">${MEDALS[i]||'🏅'} ${i+1}</span>
+          <button class="ord" onclick="moveItem('topStudents',${i},-1)" ${i===0?'disabled':''} title="أعلى">↑</button>
+          <button class="ord" onclick="moveItem('topStudents',${i},1)" ${i===d.topStudents.length-1?'disabled':''} title="أسفل">↓</button>
+          <button class="btn btn-sm btn-del" onclick="delItem('topStudents',${i})">حذف</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="row">
+          <div><label>الاسم (عربي)</label><input type="text" value="${esc(s.nameAr)}" oninput="upd('topStudents',${i},'nameAr',this.value)"></div>
+          <div><label>الاسم (إنجليزي)</label><input type="text" value="${esc(s.nameEn)}" oninput="upd('topStudents',${i},'nameEn',this.value)"></div>
+        </div>
+        <div class="row">
+          <div><label>الفريق</label><select onchange="upd('topStudents',${i},'team',this.value)">
+            ${TEAM_LIST.map(t=>`<option ${s.team===t?'selected':''}>${t}</option>`).join('')}
+          </select></div>
+          <div><label>النقاط</label><input type="number" value="${s.points||0}" oninput="upd('topStudents',${i},'points',+this.value)"></div>
+        </div>
+        <label>سبب التميّز (عربي)</label><input type="text" value="${esc(s.whyAr)}" oninput="upd('topStudents',${i},'whyAr',this.value)">
+        <label>سبب التميّز (إنجليزي)</label><input type="text" value="${esc(s.whyEn)}" oninput="upd('topStudents',${i},'whyEn',this.value)">
+        <label>صورة الطالب (اختياري)</label>
+        ${dropZone(pid, s.photo, null)}
+      </div>`);
+  });
+  if(!d.topStudents.length) box.innerHTML='<div class="empty">لا يوجد طلاب — أضيفي واحداً<br><span style="font-size:12px">(سيظهر «يُعلن قريباً» في الموقع)</span></div>';
+}
+function addStudent(){ dayData().topStudents.push({nameAr:'',nameEn:'',team:'Hackers',whyAr:'',whyEn:'',points:0,photo:''}); renderStudents(); }
+
+/* ═══════ التغذية الراجعة ═══════ */
+function renderFeedback(){
+  const f=dayData().feedback;
+  regImg('fbPhoto', v=>{ dayData().feedback.photo=v; });
+  $('fbBox').innerHTML=`
+    <label>الرأي (عربي)</label><textarea oninput="updObj('feedback','quoteAr',this.value)">${f.quoteAr||''}</textarea>
+    <label>الرأي (إنجليزي)</label><textarea oninput="updObj('feedback','quoteEn',this.value)">${f.quoteEn||''}</textarea>
+    <div class="row">
+      <div><label>الاسم والفريق (عربي)</label><input type="text" value="${esc(f.studentAr)}" oninput="updObj('feedback','studentAr',this.value)"></div>
+      <div><label>الاسم والفريق (إنجليزي)</label><input type="text" value="${esc(f.studentEn)}" oninput="updObj('feedback','studentEn',this.value)"></div>
+    </div>
+    <label>عدد النجوم (1-5)</label><input type="number" min="1" max="5" value="${f.stars||5}" oninput="updObj('feedback','stars',+this.value)">
+    <label>صورة الطالب</label>
+    ${dropZone('fbPhoto', f.photo, null)}`;
+}
+
+/* ═══════ نظرة الغد ═══════ */
+function renderTomorrow(){
+  const t=dayData().tomorrow;
+  $('tmrBox').innerHTML=`
+    <div class="row">
+      <div><label>العنوان (عربي)</label><input type="text" value="${esc(t.titleAr)}" oninput="updObj('tomorrow','titleAr',this.value)"></div>
+      <div><label>العنوان (إنجليزي)</label><input type="text" value="${esc(t.titleEn)}" oninput="updObj('tomorrow','titleEn',this.value)"></div>
+    </div>
+    <label>البنود (عربي) — سطر لكل بند</label>
+    <textarea oninput="updList('tomorrow','itemsAr',this.value)">${(t.itemsAr||[]).join('\\n')}</textarea>
+    <label>البنود (إنجليزي) — سطر لكل بند</label>
+    <textarea oninput="updList('tomorrow','itemsEn',this.value)">${(t.itemsEn||[]).join('\\n')}</textarea>`;
+}
+
+/* ═══════ تحديث ═══════ */
+function upd(list,i,key,val){ dayData()[list][i][key]=val; }
+function updObj(obj,key,val){ dayData()[obj][key]=val; }
+function updList(obj,key,val){ dayData()[obj][key]=val.split('\n').filter(x=>x.trim()); }
+function delItem(list,i){
+  if(!confirm('حذف هذا العنصر؟')) return;
+  dayData()[list].splice(i,1);
+  rerenderAll();
+}
+
+/* ═══════ حفظ ═══════ */
+function saveAll(){
+  const out=JSON.stringify(CONTENT,null,2);
+  const blob=new Blob([out],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='days-content.json'; a.click();
+  toast('تم تنزيل الملف ✓ ارفعيه إلى مجلد content/');
+}
+function toast(msg){
+  const t=$('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+/* ═══════ إحصائيات ═══════ */
+function updateStats(){
+  if(!CAMP||!CAMP.days) return;
+  const today=new Date(); today.setHours(0,0,0,0);
+  const past=CAMP.days.filter(d=>new Date(d.date+'T00:00:00')<today).length;
+  const left=CAMP.days.length-past;
+  $('sDays').textContent=past;
+  $('sLeft').textContent=left>0?left:0;
+  // الزيارات: تحتاج خدمة تحليلات — نعرض شرطة
+  $('sVisits').textContent='—';
+  $('sTotal').textContent='—';
+}
+
+/* ═══════ تقرير PPTX ═══════ */
+function genReport(){
+  if(typeof PptxGenJS==='undefined'){ alert('تعذّر تحميل مكتبة التقارير. تحققي من الاتصال.'); return; }
+  const week=$('repWeek').value, notes=$('repNotes').value.trim();
+  const pptx=new PptxGenJS();
+  pptx.layout='LAYOUT_WIDE';
+  const NAVY='0A2A52', CYAN='00B1D5', WHITE='FFFFFF';
+
+  // غلاف
+  let s=pptx.addSlide(); s.background={color:NAVY};
+  s.addText('المخيم الشبابي للأمن السيبراني 2026',{x:0.5,y:2.2,w:12.3,align:'center',fontSize:40,bold:true,color:WHITE});
+  s.addText('CYBER SECURITY YOUTH CAMP 2026',{x:0.5,y:3.1,w:12.3,align:'center',fontSize:18,color:CYAN});
+  const wt = week==='all' ? 'تقرير المخيم الكامل' : 'تقرير الأسبوع '+({1:'الأول',2:'الثاني',3:'الثالث'}[week]||week);
+  s.addText(wt,{x:0.5,y:4.0,w:12.3,align:'center',fontSize:22,color:WHITE});
+  s.addText(new Date().toLocaleDateString('ar'),{x:0.5,y:4.8,w:12.3,align:'center',fontSize:14,color:CYAN});
+
+  // نظرة عامة
+  s=pptx.addSlide(); s.background={color:'F4F8FD'};
+  s.addText('نظرة عامة',{x:0.5,y:0.4,fontSize:30,bold:true,color:NAVY});
+  const past=CAMP?CAMP.days.filter(d=>new Date(d.date+'T00:00:00')<new Date()).length:0;
+  const rows=[
+    [{text:'المؤشّر',options:{bold:true,color:WHITE,fill:NAVY}},{text:'القيمة',options:{bold:true,color:WHITE,fill:NAVY}}],
+    ['إجمالي الطلاب','400 (200 بنت · 200 ولد)'],
+    ['عدد الفرق','10'],
+    ['أيام المخيم','15 يوم عمل (الأحد–الخميس)'],
+    ['أيام مضت',String(past)],
+    ['فترة المخيم','19 يوليو – 6 أغسطس 2026'],
+  ];
+  s.addTable(rows,{x:0.6,y:1.3,w:12,fontSize:15,border:{pt:1,color:'DDDDDD'},rowH:0.5});
+
+  // المحتوى المنشور
+  s=pptx.addSlide(); s.background={color:'F4F8FD'};
+  s.addText('المحتوى المنشور',{x:0.5,y:0.4,fontSize:30,bold:true,color:NAVY});
+  let hl=0,an=0,st=0;
+  Object.values(CONTENT).forEach(d=>{ hl+=(d.highlights||[]).length; an+=(d.announcements||[]).length; st+=(d.topStudents||[]).length; });
+  s.addTable([
+    [{text:'القسم',options:{bold:true,color:WHITE,fill:NAVY}},{text:'العدد',options:{bold:true,color:WHITE,fill:NAVY}}],
+    ['أبرز اللحظات',String(hl)],
+    ['الإعلانات',String(an)],
+    ['الطلاب المتفوقون',String(st)],
+    ['أسئلة التحدّي','15'],
+  ],{x:0.6,y:1.3,w:12,fontSize:15,border:{pt:1,color:'DDDDDD'},rowH:0.5});
+
+  // ملاحظات
+  if(notes){
+    s=pptx.addSlide(); s.background={color:'F4F8FD'};
+    s.addText('ملاحظات',{x:0.5,y:0.4,fontSize:30,bold:true,color:NAVY});
+    s.addText(notes,{x:0.6,y:1.3,w:12,h:4,fontSize:16,color:'333333',valign:'top'});
+  }
+
+  // ختام
+  s=pptx.addSlide(); s.background={color:NAVY};
+  s.addText('شكراً',{x:0.5,y:2.8,w:12.3,align:'center',fontSize:44,bold:true,color:WHITE});
+  s.addText('الوكالة الوطنية للأمن السيبراني · الأكاديمية الوطنية للأمن السيبراني',
+    {x:0.5,y:3.9,w:12.3,align:'center',fontSize:14,color:CYAN});
+
+  pptx.writeFile({fileName:'camp-report-'+week+'.pptx'});
+  toast('جارٍ تنزيل التقرير...');
+}
+
+/* التحميل يبدأ بعد الدخول (انظري openPanel) */
+</script>
+</body>
+</html>

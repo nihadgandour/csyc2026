@@ -1,0 +1,350 @@
+{
+  "_instructions": "أسئلة التحدّي اليومي — لغة بسيطة لغير المتخصصين. لكل سؤال إجابة صحيحة واحدة فقط. correct يبدأ من 0.",
+  "questions": [
+    {
+      "date": "2026-07-19",
+      "topic": "كلمات المرور",
+      "topicEn": "Passwords",
+      "q": "أي كلمة مرور تعتبر الأقوى والأصعب على المخترقين؟",
+      "qEn": "Which password is the strongest and hardest to break?",
+      "options": [
+        "اسمك وسنة ميلادك",
+        "Qatar2026",
+        "شمس#7Bahr!2026",
+        "123456789"
+      ],
+      "optionsEn": [
+        "Your name and birth year",
+        "Qatar2026",
+        "Sun#7Sea!2026",
+        "123456789"
+      ],
+      "correct": 2,
+      "explain": "كلمة المرور القوية طويلة وتجمع بين حروف وأرقام ورموز، ولا ترتبط بمعلوماتك الشخصية. المعلومات الشخصية والكلمات الشائعة يسهل تخمينها.",
+      "explainEn": "A strong password is long and mixes letters, numbers and symbols, with nothing tied to your personal info. Personal details and common words are easy to guess.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-20",
+      "topic": "الرسائل المشبوهة",
+      "topicEn": "Suspicious Messages",
+      "q": "وصلتك رسالة: «تهانينا! ربحت جائزة. اضغط الرابط لاستلامها». ماذا تفعل؟",
+      "qEn": "You receive: \"Congratulations! You won a prize. Click the link to claim it.\" What do you do?",
+      "options": [
+        "تضغط الرابط لترى الجائزة",
+        "تحذفها ولا تضغط الرابط",
+        "ترسلها لأهلك ليربحوا أيضاً",
+        "تردّ عليها وتسأل عن الجائزة"
+      ],
+      "optionsEn": [
+        "Click the link to see the prize",
+        "Delete it and don't click",
+        "Forward it to family so they win too",
+        "Reply and ask about the prize"
+      ],
+      "correct": 1,
+      "explain": "رسائل الجوائز المفاجئة من أشهر أساليب الاحتيال. الضغط على الرابط قد يسرق بياناتك. احذفها ولا تتفاعل معها إطلاقاً.",
+      "explainEn": "Surprise prize messages are a classic scam. Clicking can steal your data. Delete it and don't interact at all.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-21",
+      "topic": "تحديث الأجهزة",
+      "topicEn": "Device Updates",
+      "q": "يظهر إشعار «يتوفّر تحديث للنظام». ما التصرّف الأفضل؟",
+      "qEn": "A notice says \"A system update is available.\" What's best?",
+      "options": [
+        "تثبّته لأنه يسدّ ثغرات أمنية",
+        "تؤجّله دائماً لأنه يستهلك وقتاً",
+        "تتجاهله لأن جهازك يعمل جيداً",
+        "تثبّته فقط لو تغيّر الشكل"
+      ],
+      "optionsEn": [
+        "Install it because it closes security gaps",
+        "Always postpone it — it takes time",
+        "Ignore it since your device works fine",
+        "Install only if the look changes"
+      ],
+      "correct": 0,
+      "explain": "التحديثات تصلح ثغرات أمنية اكتشفتها الشركة. تأجيلها يترك الباب مفتوحاً أمام المخترقين حتى لو بدا جهازك سليماً.",
+      "explainEn": "Updates fix security holes the company discovered. Postponing leaves a door open for attackers even if your device seems fine.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-22",
+      "topic": "التحقّق بخطوتين",
+      "topicEn": "Two-Step Verification",
+      "q": "ما فائدة «التحقّق بخطوتين» (رمز يصلك على جوالك عند الدخول)؟",
+      "qEn": "What's the benefit of two-step verification (a code sent to your phone at login)?",
+      "options": [
+        "يلغي الحاجة لكلمة المرور",
+        "يحمي حسابك حتى لو عرف أحدهم كلمة مرورك",
+        "يجعل الحساب أسرع في الفتح",
+        "يشارك حسابك مع أفراد العائلة"
+      ],
+      "optionsEn": [
+        "It removes the need for a password",
+        "It protects you even if someone knows your password",
+        "It makes the account open faster",
+        "It shares your account with family"
+      ],
+      "correct": 1,
+      "explain": "حتى لو سُرقت كلمة مرورك، لن يستطيع أحد الدخول بدون الرمز الذي يصل إلى جوالك. إنها طبقة حماية إضافية وليست بديلاً عن كلمة المرور.",
+      "explainEn": "Even if your password is stolen, no one can get in without the code on your phone. It's an extra layer, not a replacement.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-23",
+      "topic": "الخصوصية",
+      "topicEn": "Privacy",
+      "q": "ابنك يريد نشر صورة أمام المدرسة مع اسمها. ما رأيك؟",
+      "qEn": "Your child wants to post a photo in front of the school showing its name. Your view?",
+      "options": [
+        "لا مانع، إنها مجرد صورة",
+        "الأفضل عدم كشف المدرسة أو العنوان",
+        "انشرها لكن أضف موقعك أيضاً",
+        "انشرها للعامة ليراها الجميع"
+      ],
+      "optionsEn": [
+        "It's fine, just a photo",
+        "Better not to reveal the school or address",
+        "Post it and add your location too",
+        "Post it publicly so everyone sees"
+      ],
+      "correct": 1,
+      "explain": "كشف المدرسة أو العنوان يساعد الغرباء على معرفة مكان طفلك يومياً. الصور الشخصية آمنة، لكن تجنّب ما يكشف الأماكن التي يرتادها.",
+      "explainEn": "Revealing the school or address helps strangers learn where your child is daily. Photos are fine, but avoid revealing places they regularly go.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-26",
+      "topic": "الشبكات العامة",
+      "topicEn": "Public Wi-Fi",
+      "q": "أنت في مقهى وتريد الدخول إلى حسابك البنكي عبر واي-فاي المقهى. ما الأنسب؟",
+      "qEn": "You're at a café and want to open your bank account over the café Wi-Fi. What's best?",
+      "options": [
+        "تنتظر حتى تستخدم شبكة موثوقة أو بيانات جوالك",
+        "تدخل عادي، الشبكة تعمل جيداً",
+        "تدخل بسرعة قبل أن ينقطع الاتصال",
+        "تسأل الموظف عن كلمة سر الشبكة أولاً"
+      ],
+      "optionsEn": [
+        "Wait for a trusted network or use mobile data",
+        "Go ahead, the network works fine",
+        "Log in quickly before it disconnects",
+        "Ask staff for the Wi-Fi password first"
+      ],
+      "correct": 0,
+      "explain": "الشبكات العامة قد يتنصّت عليها آخرون. أجّل العمليات الحسّاسة كالبنوك حتى تستخدم شبكة تثق بها أو بيانات جوالك.",
+      "explainEn": "Public networks can be snooped on. Postpone sensitive things like banking until you're on a trusted network or mobile data.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-27",
+      "topic": "الملفات والتطبيقات",
+      "topicEn": "Files & Apps",
+      "q": "من أين يُفضّل تحميل التطبيقات على جوالك؟",
+      "qEn": "Where should you download phone apps from?",
+      "options": [
+        "من موقع يقدّمها مجاناً بدل المدفوعة",
+        "من أي رابط يصلك على واتساب",
+        "من متجر التطبيقات الرسمي",
+        "من إعلان ظهر أثناء التصفّح"
+      ],
+      "optionsEn": [
+        "A site offering paid apps for free",
+        "Any link sent on WhatsApp",
+        "The official app store",
+        "An ad that popped up while browsing"
+      ],
+      "correct": 2,
+      "explain": "المتاجر الرسمية تفحص التطبيقات قبل نشرها. التطبيقات من روابط أو مواقع مجهولة قد تحتوي برامج ضارة تسرق بياناتك.",
+      "explainEn": "Official stores screen apps before publishing. Apps from unknown links or sites may contain malware that steals your data.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-28",
+      "topic": "المكالمات الاحتيالية",
+      "topicEn": "Scam Calls",
+      "q": "اتصل بك شخص: «أنا من البنك، أحتاج رمز التحقّق الذي وصلك الآن». ماذا تفعل؟",
+      "qEn": "Someone calls: \"I'm from the bank, I need the verification code you just received.\" What do you do?",
+      "options": [
+        "تعطيه الرمز لأنه من البنك",
+        "تعطيه نصف الرمز للتأكد",
+        "ترفض وتغلق، وتتصل بالبنك بنفسك",
+        "تسأله عن اسمه ثم تعطيه الرمز"
+      ],
+      "optionsEn": [
+        "Give the code — he's from the bank",
+        "Give half the code to verify",
+        "Refuse, hang up, and call the bank yourself",
+        "Ask his name, then give the code"
+      ],
+      "correct": 2,
+      "explain": "البنك الحقيقي لا يطلب رمز التحقّق أبداً. من يطلبه هو محتال. أغلق واتصل بالبنك على رقمه الرسمي للتأكد.",
+      "explainEn": "A real bank never asks for your verification code. Anyone who does is a scammer. Hang up and call the bank's official number.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-29",
+      "topic": "النسخ الاحتياطي",
+      "topicEn": "Backups",
+      "q": "ضاع جوالك وفيه صور العائلة. ما الذي كان سيحميك من فقدانها؟",
+      "qEn": "You lost your phone with family photos on it. What would have protected you?",
+      "options": [
+        "كلمة مرور قوية للجوال",
+        "استخدام جوال أغلى",
+        "إغلاق الجوال دائماً",
+        "نسخة احتياطية على السحابة أو الحاسوب"
+      ],
+      "optionsEn": [
+        "A strong phone password",
+        "Using a more expensive phone",
+        "Always turning the phone off",
+        "A backup on cloud or computer"
+      ],
+      "correct": 3,
+      "explain": "كلمة المرور تحمي من الاطّلاع، لكنها لا تُعيد الصور. النسخة الاحتياطية هي الوحيدة التي تستعيد بياناتك عند الفقدان أو العطل.",
+      "explainEn": "A password prevents snooping but won't bring photos back. Only a backup restores your data when things are lost or broken.",
+      "points": 10
+    },
+    {
+      "date": "2026-07-30",
+      "topic": "ما تتركه على الإنترنت",
+      "topicEn": "Your Online Trail",
+      "q": "ما المقصود بأن «الإنترنت لا ينسى»؟",
+      "qEn": "What does \"the internet never forgets\" mean?",
+      "options": [
+        "أن ما تنشره قد يبقى ويُنسخ حتى بعد حذفه",
+        "أن الإنترنت بطيء أحياناً",
+        "أن ذاكرة جهازك ممتلئة",
+        "أن المواقع تعمل دائماً"
+      ],
+      "optionsEn": [
+        "What you post may remain and be copied even after deletion",
+        "The internet is slow sometimes",
+        "Your device memory is full",
+        "Websites always work"
+      ],
+      "correct": 0,
+      "explain": "قد ينسخ أحدهم منشورك أو صورته قبل حذفك له. لذلك فكّر جيداً قبل النشر — الحذف لا يضمن الاختفاء.",
+      "explainEn": "Someone may copy or screenshot your post before you delete it. Think before posting — deleting doesn't guarantee it's gone.",
+      "points": 10
+    },
+    {
+      "date": "2026-08-02",
+      "topic": "برامج الابتزاز",
+      "topicEn": "Ransomware",
+      "q": "ظهرت رسالة على الحاسوب: «ملفاتك مقفلة، ادفع لفتحها». ما التصرّف الصحيح؟",
+      "qEn": "A message appears: \"Your files are locked, pay to unlock.\" What's right?",
+      "options": [
+        "تدفع فوراً لتستعيد ملفاتك",
+        "تدفع نصف المبلغ للتفاوض",
+        "تعيد تشغيل الجهاز وتتجاهل",
+        "تفصل الجهاز وتبلّغ المختصين ولا تدفع"
+      ],
+      "optionsEn": [
+        "Pay immediately to get files back",
+        "Pay half to negotiate",
+        "Restart and ignore it",
+        "Disconnect, report it, and don't pay"
+      ],
+      "correct": 3,
+      "explain": "الدفع لا يضمن استعادة ملفاتك ويشجّع المجرمين. افصل الجهاز عن الشبكة وأبلغ المختصين. النسخ الاحتياطي هو خط دفاعك الحقيقي.",
+      "explainEn": "Paying doesn't guarantee recovery and funds criminals. Disconnect and report it. Backups are your real defense.",
+      "points": 10
+    },
+    {
+      "date": "2026-08-03",
+      "topic": "المواقع الآمنة",
+      "topicEn": "Safe Websites",
+      "q": "ماذا يعني وجود قفل 🔒 بجانب عنوان الموقع في المتصفح؟",
+      "qEn": "What does the padlock 🔒 next to a website address mean?",
+      "options": [
+        "أن الموقع موثوق ومضمون تماماً",
+        "أن الموقع سريع",
+        "أن اتصالك بالموقع مشفّر ومحمي من التنصّت",
+        "أن الموقع مجاني"
+      ],
+      "optionsEn": [
+        "The site is fully trustworthy and guaranteed",
+        "The site is fast",
+        "Your connection to it is encrypted and protected",
+        "The site is free"
+      ],
+      "correct": 2,
+      "explain": "القفل يعني أن البيانات بينك وبين الموقع مشفّرة. لكنه لا يعني أن الموقع نفسه صادق — فحتى المواقع الاحتيالية قد تملك قفلاً!",
+      "explainEn": "The padlock means data between you and the site is encrypted. It does NOT mean the site is honest — scam sites can have one too!",
+      "points": 10
+    },
+    {
+      "date": "2026-08-04",
+      "topic": "أذونات التطبيقات",
+      "topicEn": "App Permissions",
+      "q": "طلبت لعبة بسيطة إذن الوصول إلى جهات اتصالك وكاميرتك. ماذا تفعل؟",
+      "qEn": "A simple game asks to access your contacts and camera. What do you do?",
+      "options": [
+        "ترفض، فاللعبة لا تحتاج هذه الأذونات",
+        "توافق، فكل التطبيقات تطلب ذلك",
+        "توافق ثم تحذف اللعبة لاحقاً",
+        "توافق على الكاميرا فقط"
+      ],
+      "optionsEn": [
+        "Refuse — a game doesn't need these",
+        "Approve — all apps ask for this",
+        "Approve, then delete the game later",
+        "Approve the camera only"
+      ],
+      "correct": 0,
+      "explain": "التطبيق يجب أن يطلب فقط ما يحتاجه فعلاً لعمله. لعبة لا تحتاج جهات اتصالك — طلبها المبالغ فيه إشارة تحذير.",
+      "explainEn": "An app should only request what it genuinely needs. A game doesn't need your contacts — excessive requests are a red flag.",
+      "points": 10
+    },
+    {
+      "date": "2026-08-05",
+      "topic": "الأخبار والشائعات",
+      "topicEn": "News & Rumors",
+      "q": "وصلك خبر مثير على واتساب من صديق. ماذا تفعل قبل إعادة إرساله؟",
+      "qEn": "A shocking news item arrives on WhatsApp from a friend. Before forwarding?",
+      "options": [
+        "ترسله فوراً لتحذير الجميع",
+        "تتحقّق من مصدر رسمي موثوق أولاً",
+        "تصدّقه لأن صديقك أرسله",
+        "ترسله لمجموعة واحدة فقط"
+      ],
+      "optionsEn": [
+        "Forward immediately to warn everyone",
+        "Verify with an official trusted source first",
+        "Believe it since a friend sent it",
+        "Forward to just one group"
+      ],
+      "correct": 1,
+      "explain": "صديقك قد يكون أعاد إرسال شائعة بحسن نيّة. تحقّق من مصدر رسمي قبل النشر — إعادة الإرسال تنشر الخطأ أسرع.",
+      "explainEn": "Your friend may have forwarded a rumor in good faith. Verify with an official source — forwarding spreads errors faster.",
+      "points": 10
+    },
+    {
+      "date": "2026-08-06",
+      "topic": "الخلاصة",
+      "topicEn": "Wrap-Up",
+      "q": "ما أهم عادة تحميك أنت وعائلتك على الإنترنت؟",
+      "qEn": "What's the most important habit that protects you and your family online?",
+      "options": [
+        "استخدام جهاز حديث",
+        "تثبيت تطبيقات كثيرة للحماية",
+        "تغيير كلمة المرور كل يوم",
+        "التوقّف والتفكير قبل الضغط أو المشاركة"
+      ],
+      "optionsEn": [
+        "Using a modern device",
+        "Installing many security apps",
+        "Changing your password daily",
+        "Stopping to think before you click or share"
+      ],
+      "correct": 3,
+      "explain": "الأجهزة والبرامج تساعد، لكن أقوى حماية هي وعيك. لحظة تفكير قبل الضغط أو المشاركة تمنع معظم المشاكل.",
+      "explainEn": "Devices and software help, but your awareness is the strongest protection. A moment's thought before clicking prevents most problems.",
+      "points": 10
+    }
+  ]
+}

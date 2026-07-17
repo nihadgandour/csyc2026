@@ -1,0 +1,8 @@
+{
+  "_instructions": "أضف صور اليوم هنا. لكل صورة: file (اسم الملف داخل images/gallery/) و caption (تعليق اختياري بالعربي) و captionEn (اختياري بالإنجليزي). الأحدث في الأعلى. بعد الرفع اعمل Commit.",
+  "photos": [
+    { "file": "sample-1.jpg", "caption": "لحظة من اليوم الأول", "captionEn": "A moment from Day 1" },
+    { "file": "sample-2.jpg", "caption": "تسجيل الحضور", "captionEn": "Registration" },
+    { "file": "sample-3.jpg", "caption": "نشاط الافتتاح", "captionEn": "Opening activity" }
+  ]
+}

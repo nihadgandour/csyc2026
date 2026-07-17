@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="المخيم الشبابي للأمن السيبراني 2026 — لوحة التحديثات اليومية المباشرة">
+<title>المخيم الشبابي للأمن السيبراني 2026 · التحديثات اليومية المباشرة</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="theme-color" content="#04122b">
+<!-- مشاركة اجتماعية (واتساب/تويتر) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="المخيم الشبابي للأمن السيبراني 2026 · مباشر">
+<meta property="og:description" content="لوحة التحديثات اليومية — الجلسات، التحديات، الإنجازات، والصور لحظة بلحظة.">
+<meta property="og:image" content="images/IMG_6272.jpeg">
+<meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Madani Arabic isn't on Google Fonts; Tajawal is the closest free geometric-humanist match for the brand's Arabic voice -->
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════
+     BRAND TOKENS — from CAMP_GUIDELINE.pdf
+     Primary cyan  #00B1D5  |  Primary navy #295B98
+     Gradient: deep navy → bright cyan
+  ═══════════════════════════════════════════════ */
+  :root {
+    --cyan:        #00b1d5;
+    --cyan-bright: #22d3f0;
+    --navy:        #295b98;
+    --navy-deep:   #0a2a52;
+    --navy-abyss:  #04122b;
+    --ink:         #030c1e;
+
+    --surface:     #0c2447;
+    --surface-2:   #103159;
+    --glass:       rgba(20, 55, 100, 0.45);
+    --glass-line:  rgba(0, 177, 213, 0.28);
+    --glass-line-2:rgba(255,255,255,0.08);
+
+    --text:        #eaf6fb;
+    --text-soft:   #a9c6e0;
+    --text-mute:   #6d8fb5;
+
+    /* semantic accents — kept within the blue family + minimal signals */
+    --ok:          #35d0a5;
+    --alert:       #ff6b8a;
+    --gold:        #ffc857;
+
+    --grad-brand:  linear-gradient(120deg, var(--navy-deep) 0%, var(--navy) 42%, var(--cyan) 100%);
+    --grad-cyan:   linear-gradient(135deg, var(--cyan) 0%, var(--cyan-bright) 100%);
+
+    --r-lg: 20px;
+    --r-md: 14px;
+    --r-sm: 10px;
+    --pill: 999px;
+
+    --shadow: 0 18px 50px -20px rgba(0,20,50,0.8);
+    --glow-cyan: 0 0 28px rgba(0,177,213,0.35);
+
+    --f-ar: 'Tajawal', system-ui, sans-serif;
+    --f-en: 'Oswald', 'Tajawal', sans-serif;
+
+    --maxw: 1240px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:var(--f-ar);
+    background:var(--ink);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* faint circuit grid — the guideline's "digital language" */
+  body::before{
+    content:'';
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(0,177,213,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,177,213,0.035) 1px, transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(ellipse 100% 80% at 50% 0%, #000 30%, transparent 90%);
+  }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 22px; position:relative; z-index:2; }
+  a{ color:inherit; }
+  img{ display:block; max-width:100%; }
+
+  .en{ font-family:var(--f-en); letter-spacing:.5px; }
+
+  /* ═══════════════════════════════════════════════
+     LIVE STATUS BAR
+  ═══════════════════════════════════════════════ */
+  .statusbar{
+    background:var(--grad-cyan);
+    color:var(--ink);
+    font-weight:800;
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    white-space:nowrap;
+    position:relative;
+    z-index:5;
+  }
+  .status-live{
+    display:flex; align-items:center; gap:8px;
+    background:var(--ink); color:#fff;
+    padding:8px 18px;
+    flex-shrink:0;
+    font-weight:900;
+    clip-path:polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+    padding-inline-end:26px;
+  }
+  .dot{ width:8px;height:8px;border-radius:50%;background:var(--alert);animation:blink 1.1s infinite; }
+  @keyframes blink{ 0%,100%{opacity:1;box-shadow:0 0 8px var(--alert)} 50%{opacity:.25;box-shadow:none} }
+  .ticker{ overflow:hidden; flex:1; }
+  .ticker-track{ display:inline-flex; gap:0; animation:slide 32s linear infinite; }
+  .ticker-track span{ padding:8px 34px; position:relative; }
+  .ticker-track span::after{ content:'◇'; position:absolute; left:0; opacity:.5; }
+  @keyframes slide{ from{transform:translateX(0)} to{transform:translateX(50%)} }
+  /* في الوضع الإنجليزي (LTR) يتحرك الشريط بالاتجاه المعاكس */
+  html[data-lang="en"] .ticker-track{ animation-name:slideLTR; }
+  @keyframes slideLTR{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ═══════════════════════════════════════════════
+     HEADER / NAV
+  ═══════════════════════════════════════════════ */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(4,18,43,0.82);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--glass-line);
+  }
+  .nav-in{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0; }
+  .lockmark{
+    width:38px;height:38px;border-radius:10px;
+    background:var(--grad-cyan);
+    display:grid;place-items:center;
+    box-shadow:var(--glow-cyan);
+    flex-shrink:0;
+  }
+  .lockmark svg{ width:20px;height:20px; }
+  .brand-lockup{ display:flex; align-items:center; gap:12px; }
+  .camp-logo-wrap{ position:relative; display:inline-block; line-height:0; }
+  .camp-logo{ height:46px; width:auto; object-fit:contain; display:block; }
+  /* لمعة تمرّ على شكل اللوقو نفسه (مقنّعة بصورة اللوقو) */
+  .camp-logo-shine{
+    position:absolute; inset:0; pointer-events:none;
+    -webkit-mask:url('images/logo-camp.png') no-repeat center / contain;
+            mask:url('images/logo-camp.png') no-repeat center / contain;
+    background:linear-gradient(115deg,
+      transparent 30%,
+      rgba(255,255,255,.15) 44%,
+      rgba(255,255,255,.85) 50%,
+      rgba(255,255,255,.15) 56%,
+      transparent 70%);
+    background-size:250% 100%;
+    background-position:250% 0;
+    animation:logoShine 5.5s ease-in-out infinite;
+  }
+  @keyframes logoShine{
+    0%   { background-position:250% 0; }
+    18%  { background-position:-120% 0; }  /* اللمعة تمرّ بسرعة */
+    100% { background-position:-120% 0; }  /* ثم توقّف حتى الدورة التالية */
+  }
+  @media (prefers-reduced-motion:reduce){ .camp-logo-shine{ animation:none; display:none; } }
+  .brand-lockup .t1{ font-size:14px; font-weight:900; color:#fff; line-height:1.25; }
+  .brand-lockup .t2{ font-size:11px; color:var(--cyan); font-weight:700; letter-spacing:.5px; }
+  .nav-orgs{ display:flex; align-items:center; gap:14px; font-size:11px; color:var(--text-mute); }
+  .nav-orgs b{ color:var(--text-soft); font-weight:700; display:block; }
+  .nav-logos{ display:flex; align-items:center; gap:14px; }
+  .nav-actions{ display:flex; align-items:center; gap:14px; }
+  .nav-link{ text-decoration:none; font-weight:800; font-size:12px; white-space:nowrap; }
+  .nav-link.gold{ color:var(--gold); }
+  .nav-link.cyan{ color:var(--cyan-bright); }
+  .nav-logo{ height:34px; width:auto; object-fit:contain; display:block; }
+  .nav-logo.agency{ height:36px; }
+  .nav-logo.academy{ height:34px; }
+  .nav-sep{ width:1px; height:30px; background:var(--glass-line); }
+
+  /* ═══════════════════════════════════════════════
+     HERO — the thesis: a live console with the camp cast
+  ═══════════════════════════════════════════════ */
+  .hero{
+    position:relative;
+    background:var(--grad-brand);
+    overflow:hidden;
+    padding:48px 0 0;
+  }
+  .hero::before{ /* binary/data shimmer */
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(0,177,213,0.35), transparent 60%),
+      radial-gradient(ellipse 50% 60% at 10% 90%, rgba(41,91,152,0.5), transparent 60%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative; z-index:2;
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:24px;
+    align-items:end;
+  }
+  .hero-copy{ padding-bottom:54px; }
+  .kicker{
+    display:inline-flex; align-items:center; gap:9px;
+    background:rgba(0,177,213,0.14);
+    border:1px solid var(--glass-line);
+    color:var(--cyan-bright);
+    padding:7px 16px; border-radius:var(--pill);
+    font-size:12px; font-weight:800; letter-spacing:.5px;
+    margin-bottom:18px;
+  }
+  .kicker .dot{ background:var(--cyan-bright); }
+  .hero h1{
+    font-size:clamp(30px,4.4vw,56px);
+    font-weight:900; line-height:1.15; color:#fff;
+    text-shadow:0 4px 40px rgba(0,0,0,.35);
+    margin-bottom:6px;
+  }
+  .hero h1 .en{ display:block; font-size:.5em; color:var(--cyan-bright); letter-spacing:2px; margin-top:4px; }
+  .hero-sub{ color:var(--text-soft); font-size:17px; margin:14px 0 26px; max-width:44ch; }
+  .hero-meta{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .day-chip{
+    position:relative;
+    background:#fff; color:var(--navy-deep);
+    border-radius:16px; padding:12px 22px 12px 22px;
+    box-shadow:0 12px 30px -8px rgba(0,177,213,.5);
+    display:flex; align-items:center; gap:12px;
+  }
+  .day-chip .n{ font-family:var(--f-en); font-size:40px; font-weight:700; line-height:.9; color:var(--cyan); }
+  .day-chip .l{ font-size:11px; font-weight:800; color:var(--navy); letter-spacing:1px; }
+  .day-chip .l b{ display:block; font-size:16px; color:var(--navy-deep); }
+  .hero-date{ color:var(--text-soft); font-size:14px; }
+  .hero-date strong{ display:block; color:#fff; font-size:19px; font-weight:800; }
+  .hero-date .wk{ color:var(--cyan-bright); font-size:12px; font-weight:700; }
+
+  /* hero cast stage */
+  .stage{
+    position:relative;
+    align-self:end;
+    min-height:500px;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .stage-glow{
+    position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:78%; height:78%;
+    background:radial-gradient(ellipse at center bottom, rgba(0,177,213,.45), transparent 68%);
+    filter:blur(6px);
+  }
+  .cast{ position:relative; z-index:2; display:flex; align-items:flex-end; gap:-10px; }
+  .cast img{
+    height:300px; width:auto;
+    filter:drop-shadow(0 16px 30px rgba(0,0,0,.5));
+  }
+  .cast img:nth-child(1){ margin-inline-end:-46px; height:262px; opacity:.96; animation:bob 6s ease-in-out infinite; }
+  .cast img:nth-child(2){ z-index:3; animation:bob 5s ease-in-out infinite .3s; }
+  .cast img:nth-child(3){ margin-inline-start:-46px; height:262px; opacity:.96; animation:bob 6.4s ease-in-out infinite .6s; }
+  /* رمز القفل/الدرع في نص الهيرو */
+  .cast .cast-lock{
+    height:230px; margin:0 6px -6px;
+    filter:drop-shadow(0 0 26px rgba(0,177,213,.55)) drop-shadow(0 14px 26px rgba(0,0,0,.4));
+    animation:bob 5s ease-in-out infinite .3s, lockPulse 3.2s ease-in-out infinite;
+  }
+  @keyframes lockPulse{
+    0%,100%{ filter:drop-shadow(0 0 22px rgba(0,177,213,.45)) drop-shadow(0 14px 26px rgba(0,0,0,.4)); }
+    50%    { filter:drop-shadow(0 0 40px rgba(0,177,213,.85)) drop-shadow(0 14px 26px rgba(0,0,0,.4)); }
+  }
+  .cast-solo{ justify-content:center; }
+  .cast.cast-solo img.cast-lock-big{ height:480px; margin:0; opacity:1; }
+  @media (max-width:920px){ .cast.cast-solo img.cast-lock-big{ height:380px; } }
+  @media (max-width:600px){ .cast.cast-solo img.cast-lock-big{ height:290px; } }
+  @keyframes bob{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  @media (prefers-reduced-motion:reduce){ .cast .cast-lock{ animation:none; } }
+  /* orbiting data chips around cast */
+  .orbit{
+    position:absolute; z-index:4;
+    background:var(--glass); border:1px solid var(--glass-line);
+    backdrop-filter:blur(8px);
+    border-radius:12px; padding:8px 12px;
+    font-size:12px; font-weight:800; color:#fff;
+    display:flex; align-items:center; gap:7px;
+    box-shadow:var(--shadow);
+  }
+  .orbit .em{ font-size:15px; }
+  .orbit.o1{ top:14%; right:-6px; animation:bob 5.5s ease-in-out infinite; }
+  .orbit.o2{ top:44%; left:-14px; animation:bob 6.2s ease-in-out infinite .4s; }
+  .orbit.o3{ bottom:22%; right:-18px; animation:bob 5.8s ease-in-out infinite .8s; }
+
+  /* diagonal cut into content */
+  .hero-cut{
+    position:relative; z-index:3;
+    height:56px; margin-top:-1px;
+    background:var(--ink);
+    clip-path:polygon(0 100%, 100% 100%, 100% 0, 0 62%);
+  }
+
+  /* ═══════════════════════════════════════════════
+     SECTION SHELL
+  ═══════════════════════════════════════════════ */
+  section{ padding:120px 0 44px; position:relative; z-index:2; }
+  .sec-head{ display:flex; align-items:center; gap:14px; margin-bottom:48px; padding-top:8px; }
+  .sec-num{
+    font-family:var(--f-en); font-size:13px; font-weight:700;
+    color:var(--cyan); border:1px solid var(--glass-line);
+    border-radius:8px; padding:4px 9px; letter-spacing:1px;
+  }
+  .sec-title{ font-size:clamp(21px,2.8vw,30px); font-weight:900; color:#fff; }
+  .sec-title .sub{ display:block; font-size:13px; font-weight:600; color:var(--text-mute); letter-spacing:0; }
+  .sec-line{ flex:1; height:1px; background:linear-gradient(to left, transparent, var(--glass-line)); }
+  .sec-live{ font-size:11px; font-weight:800; color:var(--alert); display:flex; align-items:center; gap:6px; }
+
+  .card{
+    background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border:1px solid var(--glass-line-2);
+    border-radius:var(--r-md);
+    box-shadow:var(--shadow);
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .card:hover{ transform:translateY(-4px); border-color:var(--glass-line); }
+
+  /* ─── STATS ─── */
+  .stats{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .stat{
+    padding:22px 18px; position:relative; overflow:hidden;
+    background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border:1px solid var(--glass-line-2); border-radius:var(--r-md);
+    transition:transform .25s, border-color .25s;
+  }
+  .stat:hover{ transform:translateY(-4px); border-color:var(--glass-line); }
+  .stat::after{ content:''; position:absolute; inset:0 auto auto 0; width:100%; height:3px; background:var(--grad-cyan); opacity:.9; }
+  .stat .em{ font-size:24px; }
+  .stat .num{ font-family:var(--f-en); font-size:44px; font-weight:700; line-height:1; color:var(--cyan-bright); letter-spacing:-1px; margin:6px 0 2px; }
+  .stat .lab{ font-size:13px; color:var(--text-soft); font-weight:600; }
+  .stat .delta{ font-size:11px; font-weight:800; color:var(--ok); margin-top:4px; }
+
+  /* ─── TIMELINE (horizontal scroll rail = live event feel) ─── */
+  .rail{
+    display:flex; gap:14px; overflow-x:auto; padding:6px 2px 16px;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:thin; scrollbar-color:var(--cyan) transparent;
+  }
+  .rail::-webkit-scrollbar{ height:6px; }
+  .rail::-webkit-scrollbar-thumb{ background:var(--cyan); border-radius:99px; }
+  .slot{
+    scroll-snap-align:start;
+    flex:0 0 236px;
+    background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border:1px solid var(--glass-line-2); border-radius:var(--r-md);
+    padding:16px; position:relative;
+    transition:border-color .25s, transform .25s;
+  }
+  .slot:hover{ transform:translateY(-3px); border-color:var(--glass-line); }
+  .slot.now{ border-color:var(--alert); box-shadow:0 0 24px -6px var(--alert); }
+  .slot.done{ opacity:.72; }
+  .slot .time{ font-family:var(--f-en); font-size:22px; font-weight:700; color:var(--cyan); }
+  .slot.now .time{ color:var(--alert); }
+  .slot .st{ font-size:11px; font-weight:800; padding:2px 9px; border-radius:var(--pill); margin-inline-start:8px; }
+  .st.workshop{ background:rgba(0,177,213,.16); color:var(--cyan-bright); }
+  .st.challenge{ background:rgba(255,107,138,.16); color:var(--alert); }
+  .st.break{ background:rgba(53,208,165,.14); color:var(--ok); }
+  .st.ceremony{ background:rgba(255,200,87,.16); color:var(--gold); }
+  .slot h4{ font-size:15px; color:#fff; margin:10px 0 5px; font-weight:800; }
+  .slot p{ font-size:12.5px; color:var(--text-mute); }
+  .slot .pin{ position:absolute; top:14px; left:14px; font-size:10px; font-weight:800; color:var(--text-mute); }
+  /* group switcher */
+  .grp-switch{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+  @media (max-width:600px){ .grp-switch{ grid-template-columns:repeat(2,1fr); } }
+  .grp-switch button{ font-family:var(--f-ar); font-weight:800; font-size:14px;
+    color:var(--text-soft); background:var(--surface); border:1px solid var(--glass-line-2);
+    padding:14px 18px; border-radius:14px; cursor:pointer; transition:all .2s; text-align:center; }
+  .grp-switch button:hover{ border-color:var(--glass-line); color:#fff; }
+  .grp-switch button.active{ background:var(--grad-cyan); color:var(--ink); border-color:transparent; box-shadow:var(--glow-cyan); }
+  .grp-meta{ font-size:13px; color:var(--text-mute); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .grp-meta b{ color:var(--cyan-bright); }
+  .slot.done .pin{ color:var(--ok); }
+  .slot.now .pin{ color:var(--alert); animation:blink 1.1s infinite; }
+
+  /* ─── HIGHLIGHTS ─── */
+  .hl-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .hl{ overflow:hidden; display:flex; flex-direction:column;
+       background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+       border:1px solid var(--glass-line-2); border-radius:var(--r-md); box-shadow:var(--shadow);
+       transition:transform .25s, border-color .25s; }
+  .hl:hover{ transform:translateY(-6px); border-color:var(--glass-line); }
+  .hl.feat{ grid-column:span 2; flex-direction:row; }
+  .hl-media{ position:relative; overflow:hidden;
+    background:radial-gradient(ellipse at center, rgba(0,177,213,.12), var(--surface-2)); }
+  .hl:not(.feat) .hl-media{ aspect-ratio:16/9; }
+  .hl.feat .hl-media{ flex:0 0 46%; }
+  .hl-media img{ width:100%; height:100%; object-fit:contain; object-position:center bottom; transition:transform .4s; }
+  .hl:hover .hl-media img{ transform:scale(1.05); }
+  .hl-media .tag{ position:absolute; top:12px; right:12px; font-size:11px; font-weight:800; padding:4px 12px; border-radius:var(--pill); backdrop-filter:blur(6px); }
+  .tag.win{ background:rgba(255,200,87,.9); color:#3a2a00; }
+  .tag.info{ background:rgba(0,177,213,.9); color:#00232b; }
+  .tag.warn{ background:rgba(255,107,138,.9); color:#3a0010; }
+  .hl-body{ padding:18px; display:flex; flex-direction:column; gap:9px; flex:1; }
+  .hl-body h3{ font-size:17px; color:#fff; font-weight:900; line-height:1.35; }
+  .hl-body p{ font-size:13.5px; color:var(--text-soft); flex:1; }
+  .more{ color:var(--cyan-bright); font-size:13px; font-weight:800; text-decoration:none; display:inline-flex; gap:6px; transition:gap .2s; }
+  .more:hover{ gap:11px; }
+
+  /* ─── GALLERY (auto masonry-ish, dynamic count) ─── */
+  .gal{ display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:150px; gap:12px; }
+  .gal figure{ position:relative; overflow:hidden; border-radius:var(--r-sm); border:1px solid var(--glass-line-2); cursor:pointer; margin:0; }
+  .gal figure.feat{ grid-column:span 2; grid-row:span 2; }
+  .gal figure.wide{ grid-column:span 2; }
+  .gal img{ width:100%; height:100%; object-fit:cover; transition:transform .4s; }
+  .gal figure:hover img{ transform:scale(1.06); }
+  .gal figcaption{ position:absolute; inset:auto 0 0 0; padding:16px 12px 9px; font-size:12px; font-weight:700; color:#fff;
+    background:linear-gradient(transparent, rgba(3,12,30,.9)); opacity:0; transition:opacity .3s; }
+  .gal figure:hover figcaption{ opacity:1; }
+  .gal-count{ font-size:12px; font-weight:800; color:var(--cyan-bright);
+    background:rgba(0,177,213,.1); border:1px solid var(--glass-line); border-radius:var(--pill); padding:4px 12px; }
+  .gal-empty{ text-align:center; padding:50px 20px; color:var(--text-mute);
+    background:rgba(255,255,255,.02); border:1px dashed var(--glass-line); border-radius:var(--r-md); }
+  .gal-empty-ico{ font-size:44px; margin-bottom:10px; opacity:.7; }
+  .gal-empty p{ font-size:14px; }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox{ position:fixed; inset:0; z-index:200; background:rgba(3,8,20,.94);
+    display:none; align-items:center; justify-content:center; backdrop-filter:blur(6px); }
+  .lightbox.open{ display:flex; }
+  .lightbox img{ max-width:90vw; max-height:82vh; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,.6); }
+  .lb-close{ position:absolute; top:20px; inset-inline-end:24px; width:44px;height:44px; border-radius:50%;
+    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:#fff; font-size:20px; cursor:pointer; }
+  .lb-close:hover{ background:rgba(255,255,255,.2); }
+  .lb-nav{ position:absolute; top:50%; transform:translateY(-50%); width:52px;height:52px; border-radius:50%;
+    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:#fff; font-size:30px; cursor:pointer; line-height:1; }
+  .lb-nav:hover{ background:var(--grad-cyan); color:var(--ink); }
+  .lb-prev{ inset-inline-start:20px; } .lb-next{ inset-inline-end:20px; }
+  .lb-cap{ position:absolute; bottom:26px; left:0; right:0; text-align:center; color:#fff; font-size:14px; font-weight:700; }
+
+  /* ─── VIDEO ─── */
+  .video{ overflow:hidden; }
+  .video .frame{ aspect-ratio:16/9; position:relative;
+    background:radial-gradient(ellipse at center, var(--surface-2), var(--ink));
+    display:grid; place-items:center; }
+  .play{ width:74px;height:74px;border-radius:50%; background:var(--grad-cyan);
+    display:grid;place-items:center; cursor:pointer; color:var(--ink); font-size:26px;
+    box-shadow:var(--glow-cyan); transition:transform .25s; border:none; }
+  .play:hover{ transform:scale(1.1); }
+  .play::before{ content:''; position:absolute; width:74px;height:74px;border-radius:50%;
+    border:2px solid var(--cyan); animation:ripple 2s ease-out infinite; }
+  @keyframes ripple{ 0%{transform:scale(1);opacity:.7} 100%{transform:scale(1.7);opacity:0} }
+  .video .cap{ padding:16px 20px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .video .cap h4{ font-size:16px; color:#fff; font-weight:800; }
+  .video .cap span{ font-size:12px; color:var(--text-mute); }
+  .video .dur{ font-family:var(--f-en); font-size:13px; font-weight:700; color:var(--cyan); border:1px solid var(--glass-line); padding:4px 12px; border-radius:var(--pill); }
+
+  /* ─── ANNOUNCEMENTS + LEADERBOARD split ─── */
+  .split{ display:grid; grid-template-columns:1.1fr .9fr; gap:22px; align-items:stretch; }
+  .split > div{ display:flex; flex-direction:column; }
+  .ann{ display:flex; flex-direction:column; gap:12px; }
+  .note{ display:flex; gap:14px; padding:15px 16px; align-items:flex-start;
+    background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border:1px solid var(--glass-line-2); border-radius:var(--r-md);
+    border-inline-start:3px solid var(--cyan); transition:border-color .25s; }
+  .note:hover{ border-color:var(--glass-line); }
+  .note.urgent{ border-inline-start-color:var(--alert); }
+  .note.success{ border-inline-start-color:var(--ok); }
+  .note.info{ border-inline-start-color:var(--cyan); }
+  .note .ico{ width:40px;height:40px;border-radius:10px; display:grid;place-items:center; font-size:19px; flex-shrink:0; background:rgba(0,177,213,.12); }
+  .note.urgent .ico{ background:rgba(255,107,138,.14); }
+  .note.success .ico{ background:rgba(53,208,165,.14); }
+  .note h4{ font-size:14.5px; color:#fff; font-weight:800; }
+  .note p{ font-size:12.5px; color:var(--text-soft); margin-top:2px; }
+  .note time{ font-size:11px; color:var(--text-mute); margin-top:5px; display:block; }
+
+  .lb{ overflow:hidden; display:flex; flex-direction:column; flex:1; min-height:0; }
+  .lb .lb-scroll{ overflow-y:auto; flex:1; min-height:0;
+    scrollbar-width:thin; scrollbar-color:var(--cyan) transparent; }
+  .lb .lb-scroll::-webkit-scrollbar{ width:6px; }
+  .lb .lb-scroll::-webkit-scrollbar-thumb{ background:var(--cyan); border-radius:99px; }
+  .lb .lb-scroll::-webkit-scrollbar-track{ background:transparent; }
+  .lb .row{ display:grid; grid-template-columns:44px 1fr auto auto; gap:12px; align-items:center; padding:13px 16px; border-bottom:1px solid rgba(255,255,255,.05); }
+  .lb .row:last-child{ border-bottom:none; }
+  .lb .head{ font-size:10px; font-weight:800; color:var(--text-mute); letter-spacing:1px; padding:11px 16px; border-bottom:1px solid var(--glass-line); flex-shrink:0; }
+  .lb .rk{ font-family:var(--f-en); font-size:18px; font-weight:700; text-align:center; color:var(--text-soft); }
+  /* ألوان المراكز — تظهر فقط عندما تكون النقاط > 0 (فئة scored) */
+  .lb .row.g1.scored{ background:linear-gradient(90deg, rgba(255,200,87,.12), transparent); }
+  .lb .row.g2.scored{ background:linear-gradient(90deg, rgba(195,212,232,.08), transparent); }
+  .lb .row.g3.scored{ background:linear-gradient(90deg, rgba(224,150,90,.08), transparent); }
+  .lb .row.g1.scored .rk{ color:var(--gold); }
+  .lb .row.g2.scored .rk{ color:#c3d4e8; }
+  .lb .row.g3.scored .rk{ color:#e0965a; }
+  /* عند النقاط = 0: كل المراكز بيضاء/محايدة */
+  .lb .team{ display:flex; align-items:center; gap:10px; }
+  .lb .av{ width:32px;height:32px;border-radius:8px; background:var(--grad-cyan); display:grid;place-items:center; font-size:15px; color:var(--ink); }
+  .lb .nm{ font-size:14px; font-weight:800; color:#fff; }
+  .lb .pts{ font-family:var(--f-en); font-size:17px; font-weight:700; color:var(--cyan-bright); }
+  .lb .ch{ font-size:12px; font-weight:800; }
+  .lb .ch.up{ color:var(--ok); } .lb .ch.down{ color:var(--alert); } .lb .ch.same{ color:var(--text-mute); }
+
+  /* ─── QUOTE (with character) ─── */
+  .quote{ position:relative; overflow:hidden;
+    background:var(--grad-brand);
+    border:1px solid var(--glass-line);
+    border-radius:var(--r-lg); padding:40px;
+    display:grid; grid-template-columns:auto 1fr; gap:30px; align-items:center; }
+  .quote::before{ content:'”'; position:absolute; top:-30px; left:30px; font-size:220px; color:rgba(255,255,255,.06); font-family:Georgia,serif; }
+  .quote img{ height:220px; filter:drop-shadow(0 14px 26px rgba(0,0,0,.5)); animation:bob 6s ease-in-out infinite; }
+  .quote .q{ font-size:clamp(19px,2.6vw,30px); font-weight:800; color:#fff; line-height:1.55; position:relative; }
+  .quote .who{ margin-top:16px; color:var(--cyan-bright); font-weight:800; font-size:14px; }
+
+  /* ─── DAILY QUIZ ─── */
+  .quiz-card{
+    background:linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border:1px solid var(--glass-line); border-radius:var(--r-lg, 20px);
+    padding:34px; width:100%; margin:0 auto; position:relative; overflow:hidden;
+    box-shadow:0 20px 60px -30px rgba(0,177,213,.5);
+  }
+  .quiz-card::before{ content:''; position:absolute; inset:0 0 auto 0; height:4px; background:var(--grad-cyan, linear-gradient(90deg,var(--cyan),var(--cyan-bright))); }
+  .quiz-screen{ animation:qfade .35s ease; }
+  @keyframes qfade{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)} }
+  .quiz-lead{ text-align:center; margin-bottom:22px; }
+  .quiz-ico{ font-size:44px; display:block; margin-bottom:10px; }
+  .quiz-lead h3{ font-size:22px; font-weight:900; color:#fff; }
+  .quiz-hint{ font-size:13.5px; color:var(--text-mute); margin-top:8px; }
+  .quiz-choices{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .quiz-choice{
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+    background:rgba(0,177,213,.06); border:1.5px solid var(--glass-line-2);
+    border-radius:16px; padding:28px 18px; cursor:pointer; transition:all .2s;
+    font-family:var(--f-ar); color:#fff;
+  }
+  .quiz-choice:hover{ border-color:var(--cyan); background:rgba(0,177,213,.12); transform:translateY(-3px); }
+  .qc-ico{ font-size:38px; }
+  .qc-t{ font-size:15px; font-weight:800; text-align:center; line-height:1.4; }
+  .quiz-back{ background:none; border:none; color:var(--cyan-bright); font-family:var(--f-ar);
+    font-weight:800; font-size:13px; cursor:pointer; margin-bottom:6px; }
+  .quiz-input{
+    width:100%; background:rgba(3,12,30,.5); border:1.5px solid var(--glass-line-2);
+    border-radius:12px; padding:15px 18px; color:#fff; font-size:17px; font-family:var(--f-en);
+    text-align:center; letter-spacing:1px; margin:6px 0 14px; transition:border-color .2s;
+  }
+  .quiz-input:focus{ outline:none; border-color:var(--cyan); }
+  .quiz-btn{
+    width:100%; background:var(--grad-cyan, linear-gradient(135deg,var(--cyan),var(--cyan-bright)));
+    color:var(--ink,#04122b); border:none; border-radius:12px; padding:15px;
+    font-family:var(--f-ar); font-weight:900; font-size:16px; cursor:pointer; transition:all .2s;
+  }
+  .quiz-btn:hover:not(:disabled){ transform:translateY(-2px); box-shadow:0 12px 28px -8px rgba(0,177,213,.6); }
+  .quiz-btn:disabled{ opacity:.4; cursor:not-allowed; }
+  .quiz-err{ background:rgba(255,107,138,.12); border:1px solid var(--alert); color:#ffb3c4;
+    border-radius:10px; padding:11px 14px; font-size:13px; font-weight:700; margin-bottom:14px; text-align:center; }
+  .quiz-topic{ display:inline-block; background:rgba(0,177,213,.12); color:var(--cyan-bright);
+    border-radius:var(--pill); padding:6px 16px; font-size:13px; font-weight:800; margin-bottom:16px; }
+  .quiz-q{ font-size:20px; font-weight:900; color:#fff; line-height:1.6; margin-bottom:22px; }
+  .quiz-options{ display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+  .quiz-opt{
+    text-align:start; background:rgba(3,12,30,.4); border:1.5px solid var(--glass-line-2);
+    border-radius:14px; padding:16px 20px; cursor:pointer; transition:all .18s;
+    font-family:var(--f-ar); font-size:15.5px; font-weight:700; color:var(--text-soft);
+    display:flex; align-items:center; gap:14px;
+  }
+  .quiz-opt::before{ content:''; width:22px; height:22px; border-radius:50%; flex-shrink:0;
+    border:2px solid var(--glass-line); transition:all .18s; }
+  .quiz-opt:hover{ border-color:var(--cyan); color:#fff; }
+  .quiz-opt.sel{ border-color:var(--cyan); background:rgba(0,177,213,.1); color:#fff; }
+  .quiz-opt.sel::before{ border-color:var(--cyan); background:var(--cyan) content-box; box-shadow:inset 0 0 0 3px var(--surface); }
+  .quiz-opt.correct{ border-color:var(--ok); background:rgba(53,208,165,.12); color:#fff; }
+  .quiz-opt.correct::before{ border-color:var(--ok); background:var(--ok); box-shadow:none; content:'✓'; color:var(--ink,#04122b); display:grid; place-items:center; font-size:13px; font-weight:900; }
+  .quiz-opt.wrong{ border-color:var(--alert); background:rgba(255,107,138,.1); color:#fff; }
+  .quiz-opt.wrong::before{ border-color:var(--alert); background:var(--alert); content:'✕'; color:#fff; display:grid; place-items:center; font-size:12px; font-weight:900; }
+  .quiz-opt.locked{ pointer-events:none; }
+  .quiz-change{ background:none; border:none; color:var(--text-mute); font-family:var(--f-ar);
+    font-size:12.5px; font-weight:700; cursor:pointer; margin-top:14px; width:100%; text-decoration:underline; }
+  .quiz-result-head{ text-align:center; font-size:24px; font-weight:900; margin-bottom:18px; }
+  .quiz-result-head.ok{ color:var(--ok); }
+  .quiz-result-head.no{ color:var(--alert); }
+  .quiz-answer-box{ background:rgba(53,208,165,.08); border:1px solid rgba(53,208,165,.3);
+    border-radius:12px; padding:14px 18px; margin-bottom:12px; font-size:14.5px; color:#fff; font-weight:700; }
+  .quiz-answer-box b{ color:var(--ok); }
+  .quiz-explain{ background:rgba(0,177,213,.06); border-radius:12px; padding:14px 18px;
+    font-size:14px; color:var(--text-soft); line-height:1.8; margin-bottom:14px; }
+  .quiz-points{ text-align:center; font-size:19px; font-weight:900; color:var(--gold); margin-bottom:8px; }
+  .quiz-encore{ text-align:center; font-size:14px; color:var(--cyan-bright); font-weight:700; margin-bottom:22px; }
+  .quiz-history{ background:rgba(3,12,30,.4); border:1px solid var(--glass-line-2);
+    border-radius:16px; padding:20px; margin-bottom:16px; }
+  .quiz-history h4{ font-size:15px; color:#fff; font-weight:900; margin-bottom:14px; text-align:center; }
+  .qh-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .qh-stat{ text-align:center; background:rgba(0,177,213,.06); border-radius:12px; padding:12px 6px; }
+  .qh-n{ display:block; font-family:var(--f-en); font-size:24px; font-weight:700; color:var(--cyan-bright); }
+  .qh-l{ font-size:11px; color:var(--text-mute); font-weight:700; }
+  .qh-badge{ margin-top:14px; text-align:center; background:linear-gradient(135deg, rgba(255,200,87,.16), transparent);
+    border:1px solid rgba(255,200,87,.35); border-radius:12px; padding:12px; color:var(--gold); font-weight:900; font-size:15px; }
+  .quiz-daystat{ text-align:center; font-size:13px; color:var(--text-mute); line-height:1.9;
+    border-top:1px solid var(--glass-line-2); padding-top:16px; }
+  .quiz-daystat b{ color:var(--text-soft); }
+  .quiz-empty{ text-align:center; padding:20px; }
+  .quiz-empty h3{ font-size:20px; color:#fff; font-weight:900; margin:6px 0; }
+  @media (max-width:600px){
+    .quiz-card{ padding:22px; }
+    .quiz-choices{ grid-template-columns:1fr; }
+    .qh-stats{ grid-template-columns:repeat(2,1fr); }
+    .quiz-q{ font-size:18px; }
+  }
+
+  /* ─── VISION & MISSION ─── */
+  .vm{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .vm-card{ position:relative; overflow:hidden; padding:32px;
+    border:1px solid var(--glass-line-2); border-radius:var(--r-lg); }
+  .vm-card.vision{ background:linear-gradient(135deg, rgba(0,177,213,.14), var(--surface-2)); }
+  .vm-card.mission{ background:linear-gradient(135deg, rgba(41,91,152,.22), var(--surface-2)); }
+  .vm-card::after{ content:''; position:absolute; inset:0 auto auto 0; width:100%; height:4px; background:var(--grad-cyan); }
+  .vm-ico{ font-size:38px; margin-bottom:12px; }
+  .vm-card h3{ font-size:20px; font-weight:900; color:#fff; margin-bottom:10px; }
+  .vm-card p{ font-size:15px; color:var(--text-soft); line-height:1.9; }
+
+  /* ─── TOMORROW ─── */
+  .tmr{ display:grid; grid-template-columns:1fr auto; gap:26px; align-items:center; padding:30px; overflow:hidden;
+    background:linear-gradient(120deg, var(--surface) 0%, var(--surface-2) 60%, rgba(0,177,213,.14) 100%);
+    border:1px solid var(--glass-line); border-radius:var(--r-lg); }
+  .tmr .lbl{ font-size:11px; font-weight:800; letter-spacing:2px; color:var(--cyan); margin-bottom:10px; }
+  .tmr h3{ font-size:25px; color:#fff; font-weight:900; margin-bottom:16px; }
+  .tmr ul{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .tmr li{ display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text-soft); }
+  .tmr li::before{ content:''; width:7px;height:7px;border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); flex-shrink:0; }
+  .tmr img{ height:230px; filter:drop-shadow(0 14px 26px rgba(0,0,0,.4)); animation:bob 5.5s ease-in-out infinite; }
+
+  /* ─── FOOTER ─── */
+  footer{ background:var(--navy-abyss); border-top:1px solid var(--glass-line); padding:38px 0 22px; margin-top:20px; position:relative; z-index:2; }
+  .fcols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:28px; padding-bottom:26px; border-bottom:1px solid var(--glass-line-2); }
+  .fcols h5{ font-size:12px; color:var(--cyan); font-weight:800; letter-spacing:1px; margin-bottom:12px; }
+  .fcols a{ display:block; color:var(--text-mute); font-size:13px; text-decoration:none; margin-bottom:7px; }
+  .fcols a:hover{ color:var(--cyan-bright); }
+  .badges{ display:flex; flex-wrap:wrap; gap:8px; }
+  .badges span{ font-size:11px; font-weight:700; color:var(--text-soft); background:rgba(255,255,255,.05); border:1px solid var(--glass-line-2); padding:6px 12px; border-radius:8px; }
+  .social{ display:flex; gap:9px; }
+  .social a{ width:36px;height:36px;border-radius:9px; background:rgba(0,177,213,.1); border:1px solid var(--glass-line-2); display:grid;place-items:center; font-size:15px; text-decoration:none; transition:background .2s; }
+  .social a:hover{ background:rgba(0,177,213,.25); }
+  .fbot{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top:20px; font-size:12px; color:var(--text-mute); }
+  .fbot .en{ color:var(--cyan); }
+
+  /* ═══════════════════════════════════════════════
+     LIVE DASHBOARD LAYER
+  ═══════════════════════════════════════════════ */
+  /* real-time clock in status bar */
+  .status-clock{
+    display:flex; align-items:center; gap:7px; flex-shrink:0;
+    background:var(--ink); color:var(--cyan-bright);
+    font-family:var(--f-en); font-weight:700; font-size:13px;
+    padding:8px 18px; letter-spacing:1px;
+    clip-path:polygon(14px 0, 100% 0, 100% 100%, 0 100%);
+    padding-inline-start:26px;
+  }
+  .status-clock .lbl{ font-family:var(--f-ar); color:var(--text-mute); font-size:11px; font-weight:700; }
+
+  /* "HAPPENING NOW" spotlight — the heartbeat of the dashboard */
+  .nowbar{
+    position:relative; z-index:2;
+    margin:38px auto 0; max-width:calc(var(--maxw) - 44px);
+    background:linear-gradient(120deg, rgba(255,107,138,.16), var(--surface-2) 60%);
+    border:1px solid var(--alert);
+    border-radius:16px; padding:16px 22px;
+    display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+    box-shadow:0 16px 44px -18px rgba(255,107,138,.6);
+  }
+  .nowbar .pulse{
+    width:52px;height:52px;border-radius:14px;flex-shrink:0;
+    background:rgba(255,107,138,.16); display:grid;place-items:center; font-size:24px;
+    position:relative;
+  }
+  .nowbar .pulse::after{
+    content:'';position:absolute;inset:0;border-radius:14px;border:2px solid var(--alert);
+    animation:ripple 2s ease-out infinite;
+  }
+  .nowbar .live-tag{ font-size:11px;font-weight:900;color:var(--alert);letter-spacing:1px;display:flex;align-items:center;gap:6px; }
+  .nowbar h3{ font-size:18px;color:#fff;font-weight:900;margin:2px 0; }
+  .nowbar .meta{ font-size:12.5px;color:var(--text-soft); }
+  .nowbar .next{ margin-inline-start:auto; text-align:center; padding-inline-start:18px; border-inline-start:1px solid var(--glass-line-2); }
+  .nowbar .next .k{ font-size:10px;color:var(--text-mute);font-weight:800;letter-spacing:1px; }
+  .nowbar .next .v{ font-size:14px;color:var(--cyan-bright);font-weight:800;margin-top:2px; }
+  .nowbar .next .cd{ font-family:var(--f-en);font-size:20px;color:#fff;font-weight:700; }
+
+  /* "what's new since yesterday" ribbon */
+  .fresh{ display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:rgba(0,177,213,.07);border:1px solid var(--glass-line);
+    border-radius:12px;padding:12px 18px;margin-bottom:26px; }
+  .fresh .badge{ font-size:11px;font-weight:900;color:var(--ink);background:var(--grad-cyan);
+    padding:4px 12px;border-radius:var(--pill);letter-spacing:.5px;flex-shrink:0; }
+  .fresh .items{ display:flex;gap:8px;flex-wrap:wrap; }
+  .fresh .chip{ font-size:12px;font-weight:700;color:var(--text-soft);
+    background:rgba(255,255,255,.05);border:1px solid var(--glass-line-2);
+    padding:5px 12px;border-radius:var(--pill); }
+  .fresh .chip b{ color:var(--cyan-bright); }
+
+  /* live counters animate up */
+  .stat .num[data-count]{ font-variant-numeric:tabular-nums; }
+
+  /* subtle "updated" flash on refresh */
+  @keyframes flashUp{ 0%{color:var(--ok);transform:scale(1.08)} 100%{color:var(--cyan-bright);transform:scale(1)} }
+  .stat .num.bumped{ animation:flashUp .8s ease; }
+
+  /* last-updated stamp */
+  .stamp{ text-align:center;font-size:12px;color:var(--text-mute);padding:10px 0 0; }
+  .stamp b{ color:var(--cyan); font-family:var(--f-en); }
+
+  /* ═══════════════════════════════════════════════
+     LANGUAGE TOGGLE + BILINGUAL
+  ═══════════════════════════════════════════════ */
+  .lang-toggle{
+    display:flex; align-items:center; gap:0; flex-shrink:0;
+    background:rgba(0,177,213,.1); border:1px solid var(--glass-line);
+    border-radius:var(--pill); padding:2px; cursor:pointer;
+  }
+  .lang-toggle button{
+    border:none; background:transparent; color:var(--text-soft);
+    font-family:var(--f-en); font-weight:700; font-size:10px;
+    padding:3px 8px; border-radius:var(--pill); cursor:pointer; transition:all .2s;
+  }
+  .lang-toggle button.active{ background:var(--grad-cyan); color:var(--ink); }
+  /* when English active, English text nudges LTR feel on select blocks */
+  html[data-lang="en"] .fresh, html[data-lang="en"] .nowbar,
+  html[data-lang="en"] .lb .head{ direction:ltr; }
+  html[data-lang="en"] body{ text-align:start; }
+
+  /* ─── TOP STUDENTS ─── */
+  .students{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; }
+  .stud{
+    position:relative; overflow:hidden; text-align:center;
+    background:linear-gradient(180deg, var(--surface), var(--surface-2));
+    border:1px solid var(--glass-line-2); border-radius:16px; padding:26px 18px 20px;
+    transition:transform .25s, border-color .25s;
+  }
+  .stud:hover{ transform:translateY(-5px); border-color:var(--glass-line); }
+  .stud::after{ content:''; position:absolute; inset:0 auto auto 0; width:100%; height:4px; background:var(--grad-cyan); }
+  .stud.gold::after{ background:linear-gradient(135deg,#ffc857,#ff9a3c); }
+  .stud .medal{ font-size:34px; margin-bottom:8px; }
+  .stud .avatar{
+    width:72px;height:72px;border-radius:50%;margin:0 auto 12px;
+    background:var(--grad-brand); display:grid;place-items:center;
+    font-size:30px; border:3px solid var(--cyan); box-shadow:var(--glow-cyan);
+  }
+  .stud .name{ font-size:16px; font-weight:900; color:#fff; }
+  .stud .team{ font-size:12px; color:var(--text-mute); margin-top:2px; }
+  .stud .why{ font-size:12.5px; color:var(--cyan-bright); font-weight:700; margin-top:10px;
+    background:rgba(0,177,213,.1); border-radius:var(--pill); padding:5px 12px; display:inline-block; }
+  .stud .pts{ font-family:var(--f-en); font-size:22px; font-weight:700; color:var(--cyan-bright); margin-top:10px; }
+
+  /* ─── ATTENDANCE (girls / boys) ─── */
+  .attend{ display:grid; grid-template-columns:1fr 1fr auto; gap:16px; align-items:stretch; }
+  .att-card{
+    position:relative; overflow:hidden;
+    border-radius:16px; padding:24px; display:flex; align-items:center; gap:18px;
+    border:1px solid var(--glass-line-2);
+  }
+  .att-card.girls{ background:linear-gradient(135deg, rgba(255,107,138,.16), var(--surface-2)); }
+  .att-card.boys{ background:linear-gradient(135deg, rgba(0,177,213,.16), var(--surface-2)); }
+  .att-card .ico{ width:64px;height:64px;border-radius:16px; display:grid;place-items:center; font-size:32px; flex-shrink:0; }
+  .att-card.girls .ico{ background:rgba(255,107,138,.18); }
+  .att-card.boys .ico{ background:rgba(0,177,213,.18); }
+  .att-card .big{ font-family:var(--f-en); font-size:46px; font-weight:700; line-height:1; color:#fff; }
+  .att-card.girls .big{ color:#ff9bb0; } .att-card.boys .big{ color:var(--cyan-bright); }
+  .att-card .cap{ font-size:14px; font-weight:700; color:var(--text-soft); margin-top:4px; }
+  .att-total{
+    background:linear-gradient(180deg,var(--surface),var(--surface-2));
+    border:1px solid var(--glass-line); border-radius:16px; padding:24px; text-align:center;
+    display:flex; flex-direction:column; justify-content:center; min-width:150px;
+  }
+  .att-total .t{ font-size:12px; font-weight:800; color:var(--text-mute); letter-spacing:1px; }
+  .att-total .n{ font-family:var(--f-en); font-size:52px; font-weight:700; color:var(--cyan-bright); line-height:1; margin:6px 0; }
+  .att-total .bar{ height:8px; border-radius:99px; overflow:hidden; background:rgba(255,255,255,.08); display:flex; margin-top:6px; }
+  .att-total .bar .b1{ background:#ff6b8a; } .att-total .bar .b2{ background:var(--cyan); }
+  .att-total .legend{ font-size:11px; color:var(--text-mute); margin-top:6px; display:flex; justify-content:center; gap:12px; }
+  .att-total .legend b{ color:var(--text-soft); }
+  .att-note{ margin-top:14px; font-size:13px; color:var(--text-mute); text-align:center;
+    background:rgba(255,200,87,.06); border:1px solid rgba(255,200,87,.25);
+    border-radius:12px; padding:12px 18px; }
+  .att-note.connected{ display:none; }
+  #attStatus.pending{ color:var(--gold); }
+
+  /* ─── STUDENT FEEDBACK (replaces quote) ─── */
+  .fb{ display:grid; grid-template-columns:auto 1fr; gap:30px; align-items:center;
+    background:var(--grad-brand); border:1px solid var(--glass-line);
+    border-radius:var(--r-lg); padding:38px; position:relative; overflow:hidden; }
+  .fb::before{ content:'❝'; position:absolute; top:-10px; right:26px; font-size:150px; color:rgba(255,255,255,.08); font-family:Georgia,serif; }
+  .fb img{ height:210px; filter:drop-shadow(0 14px 26px rgba(0,0,0,.5)); animation:bob 6s ease-in-out infinite; }
+  .fb-photo{ width:180px; height:180px; border-radius:50%; overflow:hidden; flex-shrink:0;
+    border:4px solid var(--cyan); box-shadow:var(--glow-cyan); background:var(--surface-2);
+    display:grid; place-items:center; position:relative; }
+  .fb-photo img{ width:100%; height:100%; object-fit:cover; animation:none; filter:none; }
+  .fb-photo-ph{ position:absolute; font-size:13px; color:var(--text-mute); font-weight:700; text-align:center; padding:0 12px; }
+  .fb-photo:not(.empty) .fb-photo-ph{ display:none; }
+  .fb .stars{ color:var(--gold); font-size:18px; letter-spacing:3px; margin-bottom:10px; }
+  .fb .q{ font-size:clamp(18px,2.4vw,26px); font-weight:800; color:#fff; line-height:1.55; position:relative; }
+  .fb .who{ margin-top:16px; color:var(--cyan-bright); font-weight:800; font-size:14px; }
+  .fb .who span{ color:var(--text-soft); font-weight:600; }
+
+  /* ═══════════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════════ */
+  @media (max-width:920px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .stage{ min-height:300px; margin-top:-10px; }
+    .hl.feat{ grid-column:span 1; flex-direction:column; }
+    .hl.feat .hl-media{ flex:none; aspect-ratio:16/9; }
+    .split{ grid-template-columns:1fr; }
+    .quote{ grid-template-columns:1fr; text-align:center; }
+    .quote img{ height:170px; margin:0 auto; }
+    .fb{ grid-template-columns:1fr; text-align:center; }
+    .fb img{ height:150px; margin:0 auto; }
+    .attend{ grid-template-columns:1fr 1fr; }
+    .vm{ grid-template-columns:1fr; }
+    .grp-switch{ grid-template-columns:repeat(2,1fr); }
+    .att-total{ grid-column:span 2; }
+    .tmr{ grid-template-columns:1fr; }
+    .tmr img{ height:180px; margin:0 auto; }
+  }
+  @media (max-width:600px){
+    .gal{ grid-template-columns:repeat(2,1fr); grid-auto-rows:120px; }
+    .gal figure.feat{ grid-column:span 2; grid-row:span 1; }
+    .gal figure.wide{ grid-column:span 2; }
+    .gal figure:nth-child(1){ grid-column:span 2; }
+    .nav-logos{ gap:8px; }
+    .camp-logo{ height:30px; }
+    .nav-logo.agency{ height:24px; } .nav-logo.academy{ height:23px; }
+    .nav-logos .nav-sep{ display:none; }
+    .cast img{ height:220px; } .cast img:nth-child(1),.cast img:nth-child(3){ height:190px; }
+    .lb .row,.lb .head{ grid-template-columns:34px 1fr auto auto; gap:8px; }
+  }
+
+  /* ─── إصلاحات الهاتف الشاملة ─── */
+  @media (max-width:768px){
+    /* منع أي تمرير أفقي */
+    html,body{ overflow-x:hidden; width:100%; max-width:100%; }
+    .wrap{ padding:0 16px; }
+    section{ padding:64px 0 32px; }
+    .sec-head{ margin-bottom:28px; flex-wrap:wrap; gap:10px; }
+    .sec-title{ font-size:22px; }
+
+    /* الشريط العلوي: لفّ العناصر بدل ما تتزحلق برّه */
+    .nav-in{ flex-wrap:wrap; gap:10px; row-gap:8px; justify-content:center; }
+    .nav-logos{ flex-wrap:wrap; justify-content:center; gap:10px; }
+    .nav-actions{ flex-wrap:wrap; justify-content:center; gap:10px; }
+
+    /* الشريط المتحرك لا يسبب تمدّد */
+    .statusbar{ max-width:100vw; overflow:hidden; }
+    .status-live,.status-clock{ font-size:11px; padding-inline:12px; }
+
+    /* الهيرو */
+    .hero{ padding:32px 0 0; }
+    .hero-grid{ gap:16px; }
+    .hero-copy{ padding-bottom:32px; }
+    .stage{ min-height:240px; }
+    .cast.cast-solo img.cast-lock-big{ height:250px; }
+    .orbit{ font-size:11px; padding:6px 9px; }
+    .day-chip .n{ font-size:32px; }
+
+    /* البطاقات على عمود واحد */
+    .stats{ grid-template-columns:1fr 1fr; }
+    .attend{ grid-template-columns:1fr; }
+    .att-total{ grid-column:span 1; }
+    .students{ grid-template-columns:repeat(2,1fr); }
+    .hl-grid{ grid-template-columns:1fr; }
+
+    /* المبدّل: زرّين في الصف */
+    .grp-switch{ grid-template-columns:repeat(2,1fr); }
+    .grp-switch button{ font-size:12.5px; padding:11px 8px; }
+
+    /* منع الصور والعناصر من تجاوز العرض */
+    img{ max-width:100%; height:auto; }
+    .fb-photo{ width:130px; height:130px; }
+
+    /* Lightbox أزرار أصغر */
+    .lb-nav{ width:44px; height:44px; font-size:24px; }
+  }
+
+  @media (max-width:400px){
+    .stats{ grid-template-columns:1fr; }
+    .students{ grid-template-columns:1fr; }
+    .gal{ grid-template-columns:1fr; }
+    .gal figure.feat,.gal figure.wide,.gal figure:nth-child(1){ grid-column:span 1; }
+    .sec-num{ display:none; }
+    .day-chip{ padding:10px 16px; }
+    .hero h1{ font-size:26px; }
+    .cast.cast-solo img.cast-lock-big{ height:210px; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+  :focus-visible{ outline:2px solid var(--cyan-bright); outline-offset:3px; border-radius:4px; }
+</style>
+</head>
+<body>
+<div style="background:linear-gradient(90deg,#ffc857,#ff9a3c);color:#04122b;text-align:center;padding:8px 16px;font-weight:900;font-size:13px;position:relative;z-index:100" data-en="🔍 PREVIEW / DEMO — sample data for client review">🔍 نسخة تجريبية (ديمو) — بيانات وهمية للعرض والمراجعة</div>
+
+<!-- ══ LIVE STATUS BAR ══ -->
+<div class="statusbar">
+  <div class="status-live"><span class="dot"></span> <span data-en="LIVE NOW">مباشر الآن</span></div>
+  <div class="status-clock"><span class="lbl" data-en="TIME">التوقيت</span><span id="liveClock">00:00:00</span></div>
+  <div class="ticker">
+    <div class="ticker-track">
+      <span data-en="🎉 Welcome to the opening day of Cyber Security Youth Camp 2026!">🎉 أهلاً بكم في يوم افتتاح المخيم الشبابي للأمن السيبراني 2026!</span>
+      <span data-en="👥 400 young talents · 10 teams · one secure digital future">👥 400 موهبة شابة · 10 فرق · مستقبل رقمي آمن</span>
+      <span data-en="📅 Camp runs 19 July – 6 August">📅 المخيم من 19 يوليو حتى 6 أغسطس</span>
+      <span data-en="🚀 Follow the live updates here every day">🚀 تابعوا التحديثات المباشرة هنا كل يوم</span>
+      <span data-en="🎉 Welcome to the opening day of Cyber Security Youth Camp 2026!">🎉 أهلاً بكم في يوم افتتاح المخيم الشبابي للأمن السيبراني 2026!</span>
+      <span data-en="👥 400 young talents · 10 teams · one secure digital future">👥 400 موهبة شابة · 10 فرق · مستقبل رقمي آمن</span>
+      <span data-en="📅 Camp runs 19 July – 6 August">📅 المخيم من 19 يوليو حتى 6 أغسطس</span>
+      <span data-en="🚀 Follow the live updates here every day">🚀 تابعوا التحديثات المباشرة هنا كل يوم</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div class="wrap nav-in">
+    <div class="nav-logos">
+      <img class="nav-logo agency" src="images/logo-agency.png" alt="الوكالة الوطنية للأمن السيبراني">
+      <div class="nav-sep"></div>
+      <img class="nav-logo academy" src="images/logo-academy.png" alt="الأكاديمية الوطنية للأمن السيبراني">
+    </div>
+    <div class="nav-actions">
+      <a href="#quiz" class="nav-link gold" data-en="🛡️ Daily Quiz">🛡️ تحدّي اليوم</a>
+      <a href="days/index.html" class="nav-link cyan" data-en="🗂 Archive">🗂 أرشيف الأيام</a>
+      <div class="lang-toggle" id="langToggle" role="group" aria-label="Language">
+        <button data-set="ar" class="active">ع</button>
+        <button data-set="en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="kicker"><span class="dot"></span> <span data-en="Daily Updates Hub · Live">لوحة التحديثات اليومية · بث مباشر</span></div>
+      <h1>
+        <span data-en="Cyber Security&lt;br&gt;Youth Camp">المخيم الشبابي<br>للأمن السيبراني</span>
+        <span class="en">CYBER SECURITY YOUTH CAMP 2026</span>
+      </h1>
+      <p class="hero-sub" data-en="Follow everything daily: sessions, challenges, achievements and photos — moment by moment from the heart of the camp.">تابعوا يومياً كل جديد: الجلسات، التحديات، الإنجازات، والصور — لحظة بلحظة من قلب المخيم.</p>
+      <!-- ✏️ حدّث يومياً: رقم اليوم · الاسم · التاريخ · الأسبوع -->
+      <div class="hero-meta">
+        <div class="day-chip">
+          <span class="n en">01</span>
+          <span class="l" data-en="DAY&lt;b&gt;One&lt;/b&gt;">اليوم<b>الأول</b></span>
+        </div>
+        <div class="hero-date">
+          <span data-en="Sunday">الأحد</span>
+          <strong data-en="19 July 2026">19 يوليو 2026</strong>
+          <span class="wk" data-en="Week 1 · Opening day">الأسبوع الأول · يوم الافتتاح</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="stage-glow"></div>
+      <div class="orbit o1"><span class="em">🔐</span> <span data-en="Secure">آمن</span></div>
+      <div class="orbit o2"><span class="em">⚡</span> <span data-en="400 students">400 طالب</span></div>
+      <div class="orbit o3"><span class="em">🏆</span> <span data-en="10 teams">10 فرق</span></div>
+      <div class="cast cast-solo">
+        <img class="cast-lock cast-lock-big" src="images/lock-shield.png" alt="رمز الأمن السيبراني">
+      </div>
+    </div>
+  </div>
+  <div class="hero-cut"></div>
+</header>
+
+<!-- ══ HAPPENING NOW — auto-driven by the timeline data ══ -->
+<div class="wrap">
+  <div class="nowbar" id="nowbar">
+    <div class="pulse">🔴</div>
+    <div>
+      <div class="live-tag"><span class="dot"></span> <span data-en="HAPPENING NOW">جارٍ الآن</span></div>
+      <h3 id="nowTitle">تحدي CTF</h3>
+      <div class="meta" id="nowMeta">القاعة A · 12 فريقاً يتنافسون على حل 20 لغزاً أمنياً</div>
+    </div>
+    <div class="next">
+      <div class="k" data-en="NEXT IN">التالي بعد</div>
+      <div class="cd" id="nowCountdown">—</div>
+      <div class="v" id="nowNext">استراحة الغداء</div>
+    </div>
+  </div>
+</div>
+
+<main>
+<!-- ✏️ حدّث يومياً: أرقام الإحصائيات أدناه -->
+<!-- ══ 1 · SNAPSHOT ══ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-num en">01</span>
+    <h2 class="sec-title" data-en="Today at a Glance">لمحة اليوم <span class="sub" data-en="Live-updated numbers">أرقام محدّثة لحظياً</span></h2>
+    <span class="sec-line"></span>
+    <span class="sec-live"><span class="dot"></span> <span data-en="live">مباشر</span></span>
+  </div>
+  <!-- ✏️ حدّث يومياً: "الجديد اليوم" — أضف أو احذف الرقائق بحرية -->
+  <div class="fresh">
+    <span class="badge" data-en="✨ Today">✨ اليوم</span>
+    <div class="items">
+      <span class="chip" data-en="🎉 Opening day of the camp">🎉 يوم افتتاح المخيم</span>
+      <span class="chip" data-en="👥 &lt;b&gt;400&lt;/b&gt; students join">👥 انضمام <b>400</b> طالب وطالبة</span>
+      <span class="chip" data-en="🧩 &lt;b&gt;10&lt;/b&gt; teams formed">🧩 تكوين <b>10</b> فرق</span>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="em">✅</div>
+      <div class="num en" id="attTotal">—</div>
+      <div class="lab" data-en="Daily attendance">الحضور اليومي</div>
+      <div class="delta"><span data-en="Girls">بنات</span>: <b class="en" id="attGirls">—</b> · <span data-en="Boys">أولاد</span>: <b class="en" id="attBoys">—</b></div>
+    </div>
+    <div class="stat"><div class="em">🧩</div><div class="num en" data-count="10">0</div><div class="lab" data-en="Teams">عدد الفرق</div><div class="delta" data-en="competing">المتنافسة</div></div>
+  </div>
+  <div class="stamp"><span data-en="Last update:">آخر تحديث:</span> <b id="lastUpdate">—</b> · <span data-en="auto-refreshing">يتحدّث تلقائياً</span></div>
+</section>
+
+<!-- ✏️ حدّث يومياً: أوقات الجلسات وحالتها (done / now / فارغ=قادم) -->
+<!-- ══ 2 · TIMELINE RAIL (بمبدّل المجموعات) ══ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-num en">02</span>
+    <h2 class="sec-title" data-en="Today's Schedule">جدول اليوم <span class="sub" data-en="Pick your group to see its schedule">اختاروا مجموعتكم لعرض جدولها</span></h2>
+    <span class="sec-line"></span>
+  </div>
+  <!-- مبدّل المجموعات: بنات/أولاد × فئتين عمريتين -->
+  <div class="grp-switch" id="grpSwitch" role="group" aria-label="اختيار المجموعة">
+    <button data-grp="girls_13" class="active"><span data-en="Girls 13–14">بنات ١٣–١٤</span></button>
+    <button data-grp="girls_15"><span data-en="Girls 15–17">بنات ١٥–١٧</span></button>
+    <button data-grp="boys_13"><span data-en="Boys 13–14">أولاد ١٣–١٤</span></button>
+    <button data-grp="boys_15"><span data-en="Boys 15–17">أولاد ١٥–١٧</span></button>
+  </div>
+  <div class="grp-meta" id="grpMeta"></div>
+  <div class="rail" id="rail"><!-- تُبنى تلقائياً من SCHEDULES --></div>
+</section>
+
+<!-- ══ 3 · HIGHLIGHTS ══ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-num en">03</span>
+    <h2 class="sec-title" data-en="Highlights">أبرز اللحظات <span class="sub" data-en="Today's stories worth watching">قصص اليوم التي تستحق المشاهدة</span></h2>
+    <span class="sec-line"></span>
+  </div>
+  <div class="hl-grid">
+    <article class="hl feat">
+      <div class="hl-media"><span class="tag win" data-en="🎉 Opening">🎉 الافتتاح</span><img src="images/902965b2d49a46e29efab274b03533f1.png" alt="المخيم الشبابي للأمن السيبراني"></div>
+      <div class="hl-body">
+        <h3 data-en="A strong start for Cyber Security Youth Camp 2026">انطلاقة قوية للمخيم الشبابي للأمن السيبراني 2026</h3>
+        <p data-en="On the opening day, 400 talented students joined across 10 teams, ready to begin an exciting journey into the world of cybersecurity. Enthusiasm and energy filled the halls from the very first moment.">في يوم الافتتاح، انضمّ 400 طالب وطالبة موزّعين على 10 فرق، مستعدّين لبدء رحلة مثيرة في عالم الأمن السيبراني. الحماس والطاقة ملآ القاعات منذ اللحظة الأولى.</p>
+        <a class="more" href="#" data-en="Read the full story →">اقرأ القصة كاملة ←</a>
+      </div>
+    </article>
+    <article class="hl">
+      <div class="hl-media"><span class="tag info" data-en="Teams">الفرق</span><img src="images/78005c2d626a418b841c31e4fa18d841.png" alt="فرق المخيم"></div>
+      <div class="hl-body"><h3 data-en="Meet the 10 teams">تعرّفوا على الفرق العشرة</h3><p data-en="From Hackers and Defenders to Python and Ghosts — the campers formed their teams and chose their names, ready to compete.">من Hackers وDefenders إلى Python وGhosts — كوّن المشاركون فرقهم واختاروا أسماءها، استعداداً للمنافسة.</p><a class="more" href="#" data-en="Read more →">اقرأ المزيد ←</a></div>
+    </article>
+    <article class="hl">
+      <div class="hl-media"><span class="tag warn" data-en="Activity">نشاط</span><img src="images/ab882049ae224f849c23f8903c3c9571.png" alt="نشاط الافتتاح"></div>
+      <div class="hl-body"><h3 data-en="The first interactive activity">أول نشاط تفاعلي</h3><p data-en="Campers kicked off with a hands-on activity that introduced them to core cybersecurity concepts in a fun, engaging way.">بدأ المشاركون بنشاط عملي عرّفهم على مفاهيم الأمن السيبراني الأساسية بطريقة ممتعة وتفاعلية.</p><a class="more" href="#" data-en="Read more →">اقرأ المزيد ←</a></div>
+    </article>
+  </div>
+</section>
+
+<!-- ══ التحدّي اليومي · Daily Cyber Quiz ══ -->
+<section class="wrap" id="quiz">
+  <div class="sec-head">
+    <span class="sec-num en">05</span>
+    <h2 class="sec-title" data-en="Daily Cyber Challenge">تحدّي الأمن السيبراني اليومي <span class="sub" data-en="One new question every day">سؤال جديد كل يوم</span></h2>
+    <span class="sec-line"></span>
+  </div>
+
+  <div class="quiz-card" id="quizCard">
+    <!-- 1. شاشة اختيار طريقة المشاركة -->
+    <div class="quiz-screen" id="qsIntro">
+      <div class="quiz-lead">
+        <span class="quiz-ico">🛡️</span>
+        <h3 data-en="How would you like to take part?">كيف ترغب في المشاركة؟</h3>
+        <p class="quiz-hint" data-en="No account or login needed — just choose and start.">لا حاجة لحساب أو تسجيل دخول — اختر وابدأ.</p>
+      </div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" id="chFamily">
+          <span class="qc-ico">👨‍👩‍👧</span>
+          <span class="qc-t" data-en="I'm family of a participant">أنا من أسرة أحد المشاركين</span>
+        </button>
+        <button class="quiz-choice" id="chGuest">
+          <span class="qc-ico">🌐</span>
+          <span class="qc-t" data-en="Join as a visitor">أشارك كزائر</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. إدخال رقم المشارك -->
+    <div class="quiz-screen" id="qsFamily" hidden>
+      <button class="quiz-back" id="famBack" data-en="← Back">→ رجوع</button>
+      <div class="quiz-lead">
+        <span class="quiz-ico">🔑</span>
+        <h3 data-en="Enter the participant ID">أدخل الرقم التعريفي للمشارك</h3>
+      </div>
+      <input type="text" class="quiz-input" id="famId" placeholder="مثال: CAMP-1234" autocomplete="off" inputmode="text">
+      <div class="quiz-err" id="famErr" hidden></div>
+      <button class="quiz-btn" id="famStart" data-en="Start the challenge">ابدأ التحدّي</button>
+    </div>
+
+    <!-- 3. السؤال -->
+    <div class="quiz-screen" id="qsQuestion" hidden>
+      <div class="quiz-topic" id="qTopic"></div>
+      <h3 class="quiz-q" id="qText"></h3>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-err" id="qErr" hidden></div>
+      <button class="quiz-btn" id="qSubmit" data-en="Confirm answer" disabled>تأكيد الإجابة</button>
+      <button class="quiz-change" id="qChange" data-en="Change participant ID" hidden>تغيير رقم المشارك</button>
+    </div>
+
+    <!-- 4. النتيجة -->
+    <div class="quiz-screen" id="qsResult" hidden>
+      <div class="quiz-result-head" id="rHead"></div>
+      <div class="quiz-answer-box" id="rCorrect"></div>
+      <div class="quiz-explain" id="rExplain"></div>
+      <div class="quiz-points" id="rPoints"></div>
+      <div class="quiz-encore" id="rEncore" data-en="See you tomorrow for a new challenge 🎉">ننتظركم غداً في تحدٍّ جديد 🎉</div>
+
+      <!-- سجل المشاركة -->
+      <div class="quiz-history" id="rHistory" hidden>
+        <h4 data-en="Your participation record">سجل مشاركتكم</h4>
+        <div class="qh-stats">
+          <div class="qh-stat"><span class="qh-n" id="hDays">0</span><span class="qh-l" data-en="Days">أيام</span></div>
+          <div class="qh-stat"><span class="qh-n" id="hCorrect">0</span><span class="qh-l" data-en="Correct">صحيحة</span></div>
+          <div class="qh-stat"><span class="qh-n" id="hPoints">0</span><span class="qh-l" data-en="Points">نقاط</span></div>
+          <div class="qh-stat"><span class="qh-n" id="hStreak">0</span><span class="qh-l" data-en="Streak">متتالية</span></div>
+        </div>
+        <div class="qh-badge" id="hBadge" hidden></div>
+      </div>
+
+      <!-- إحصائيات اليوم -->
+      <div class="quiz-daystat" id="rDayStat"></div>
+    </div>
+
+    <!-- لا يوجد سؤال -->
+    <div class="quiz-screen quiz-empty" id="qsNone" hidden>
+      <span class="quiz-ico">🌙</span>
+      <h3 data-en="No new challenge right now">لا يوجد تحدٍّ جديد حالياً</h3>
+      <p class="quiz-hint" data-en="Come back soon for a new cyber question.">عودوا قريباً لسؤال سيبراني جديد.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ✏️ حدّث يومياً: الإعلانات ونقاط المتصدّرين -->
+<!-- ══ 6+7 · ANNOUNCEMENTS + LEADERBOARD ══ -->
+<section class="wrap">
+  <div class="split">
+    <div>
+      <div class="sec-head">
+        <span class="sec-num en">06</span>
+        <h2 class="sec-title" data-en="Announcements">إعلانات وتنبيهات</h2>
+      </div>
+      <div class="ann">
+        <div class="note urgent"><div class="ico">📍</div><div><h4 data-en="Morning assembly point">مكان التجمّع الصباحي</h4><p data-en="Girls' groups gather at the main hall from 7:00 AM. Boys' groups begin at 12:30 PM. Please arrive on time.">مجموعات البنات تتجمّع في القاعة الرئيسية من الساعة 7:00 صباحاً. مجموعات الأولاد تبدأ 12:30 ظهراً. يُرجى الحضور في الموعد.</p><time data-en="Today">اليوم</time></div></div>
+        <div class="note info"><div class="ico">👕</div><div><h4 data-en="Camp dress code">الزي الرسمي للمخيم</h4><p data-en="Please wear the blue camp shirt and keep your ID badge with you at all times.">يُرجى ارتداء قميص المخيم الأزرق والاحتفاظ بالبطاقة التعريفية طوال الوقت.</p><time data-en="Today">اليوم</time></div></div>
+        <div class="note success"><div class="ico">🎉</div><div><h4 data-en="Welcome, campers!">أهلاً بالمشاركين!</h4><p data-en="A warm welcome to all 400 students joining us today. Get ready for an amazing three weeks ahead.">ترحيب حارّ بجميع الطلاب الـ 400 المنضمّين إلينا اليوم. استعدّوا لثلاثة أسابيع رائعة قادمة.</p><time data-en="Today">اليوم</time></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-head">
+        <span class="sec-num en">07</span>
+        <h2 class="sec-title" data-en="Leaderboard">المتصدّرون</h2>
+      </div>
+      <div class="card lb">
+        <div class="head" style="display:grid;grid-template-columns:44px 1fr auto auto;gap:12px;"><span>#</span><span data-en="Team">الفريق</span><span data-en="Points">النقاط</span><span data-en="Change">التغيير</span></div>
+        <!-- تُبنى الصفوف تلقائياً من قائمة الفرق + شيت Google (LEADERBOARD_URL) -->
+        <div class="lb-scroll" id="lbBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TOP STUDENTS (الطلاب المتفوقون) ══ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-num en">05</span>
+    <h2 class="sec-title" data-en="Top Students">الطلاب المتفوقون <span class="sub" data-en="Today's standout campers">نجوم اليوم المتميّزون</span></h2>
+    <span class="sec-line"></span>
+  </div>
+  <!-- بيانات ديمو -->
+  <div class="students">
+    <div class="stud gold">
+      <div class="medal">🥇</div>
+      <div class="avatar">🏅</div>
+      <div class="name" data-en="Sara Al-Ahmad">سارة الأحمد</div>
+      <div class="team" data-en="Team Hackers">فريق Hackers</div>
+      <div class="why" data-en="Solved the hardest challenge">حلّت أصعب تحدٍّ</div>
+      <div class="pts en">980</div>
+    </div>
+    <div class="stud">
+      <div class="medal">🥈</div>
+      <div class="avatar">🏅</div>
+      <div class="name" data-en="Mohammed Al-Ali">محمد العلي</div>
+      <div class="team" data-en="Team Defenders">فريق Defenders</div>
+      <div class="why" data-en="Fastest to finish">الأسرع في الإنجاز</div>
+      <div class="pts en">940</div>
+    </div>
+    <div class="stud">
+      <div class="medal">🥉</div>
+      <div class="avatar">🏅</div>
+      <div class="name" data-en="Noura Al-Sayed">نورة السيّد</div>
+      <div class="team" data-en="Team Kali">فريق Kali</div>
+      <div class="why" data-en="Most creative solution">أبدع حلّ</div>
+      <div class="pts en">910</div>
+    </div>
+    <div class="stud">
+      <div class="medal">⭐</div>
+      <div class="avatar">🏅</div>
+      <div class="name" data-en="Khalid Al-Mansour">خالد المنصور</div>
+      <div class="team" data-en="Team Python">فريق Python</div>
+      <div class="why" data-en="Great team spirit">روح فريق مميّزة</div>
+      <div class="pts en">880</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 8 · STUDENT FEEDBACK (التغذية الراجعة من الطلاب) ══ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-num en">07</span>
+    <h2 class="sec-title" data-en="Student Feedback">التغذية الراجعة من الطلاب <span class="sub" data-en="What our campers say today">ماذا قال طلابنا اليوم</span></h2>
+    <span class="sec-line"></span>
+  </div>
+  <!-- ✏️ حدّث يومياً: رأي طالب اليوم + صورته (ضع صورة الطالب في images/ وحدّث المسار) -->
+  <div class="fb">
+    <div class="fb-photo">
+      <img src="images/student-photo.jpg" alt="صورة الطالب"
+           onerror="this.style.display='none';this.parentElement.classList.add('empty');">
+      <span class="fb-photo-ph" data-en="Student photo">صورة الطالب</span>
+    </div>
+    <div>
+      <div class="stars">★★★★★</div>
+      <p class="q" data-en="&quot;The opening day was amazing — meeting my team and starting our first challenge got me so excited for the weeks ahead!&quot;">«يوم الافتتاح كان رائعاً — تعرّفت على فريقي وبدأنا أول تحدٍّ، وصرت متحمّساً جداً للأسابيع القادمة!»</p>
+      <div class="who" data-en="— A camper · Team Hackers · Day 1">— أحد المشاركين · فريق Hackers · اليوم الأول</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 9 · TOMORROW ══ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-num en">08</span>
+    <h2 class="sec-title" data-en="Tomorrow Preview">نظرة إلى الغد</h2>
+    <span class="sec-line"></span>
+  </div>
+  <div class="tmr">
+    <div>
+      <div class="lbl" data-en="Day 2 · Monday 20 July 2026">اليوم الثاني · الاثنين 20 يوليو 2026</div>
+      <h3 data-en="The camp begins in full 🚀">انطلاقة المخيم الكاملة 🚀</h3>
+      <ul>
+        <li data-en="First hands-on cybersecurity workshops">أولى ورش الأمن السيبراني العملية</li>
+        <li data-en="Teams start earning points">الفرق تبدأ بجمع النقاط</li>
+        <li data-en="First daily challenge launches">إطلاق أول تحدٍّ يومي</li>
+        <li data-en="Top students of the day announced">إعلان متفوّقي اليوم</li>
+      </ul>
+    </div>
+    <img src="images/6e9b4e21d47049f8911ba54f05897cbb.png" alt="" aria-hidden="true">
+  </div>
+</section>
+
+<!-- ══ 4 · GALLERY (تلقائي من مجلد GitHub عبر gallery.json) ══ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-num en">04</span>
+    <h2 class="sec-title" data-en="Today's Album">ألبوم اليوم</h2>
+    <span class="sec-line"></span>
+    <span class="gal-count" id="galCount"></span>
+  </div>
+  <div class="gal" id="gal"><!-- يُبنى تلقائياً من images/gallery/gallery.json --></div>
+  <div class="gal-empty" id="galEmpty" style="display:none">
+    <div class="gal-empty-ico">📸</div>
+    <p data-en="No photos yet today — they'll appear here automatically once uploaded.">لا توجد صور بعد اليوم — ستظهر هنا تلقائياً فور رفعها.</p>
+  </div>
+</section>
+
+<!-- صندوق عرض الصورة (Lightbox) -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="عرض الصورة">
+  <button class="lb-close" id="lbClose" aria-label="إغلاق">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="السابق">‹</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-nav lb-next" id="lbNext" aria-label="التالي">›</button>
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<!-- ══ VISION & MISSION (رؤية ورسالة المخيم) ══ -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="sec-num en">09</span>
+    <h2 class="sec-title" data-en="Vision & Mission">الرؤية والرسالة</h2>
+    <span class="sec-line"></span>
+  </div>
+  <div class="vm">
+    <div class="vm-card vision">
+      <div class="vm-ico">🎯</div>
+      <h3 data-en="Our Vision">رؤيتنا</h3>
+      <p data-en="To empower young cybersecurity talents and prepare them to contribute to a secure digital future.">تمكين المواهب الشابة في الأمن السيبراني وإعدادهم للإسهام في مستقبل رقمي آمن.</p>
+    </div>
+    <div class="vm-card mission">
+      <div class="vm-ico">🚀</div>
+      <h3 data-en="Our Mission">رسالتنا</h3>
+      <p data-en="To provide an innovative learning and training experience that enhances students' cybersecurity awareness and skills, guiding them toward promising academic and career pathways.">تقديم تجربة تعليمية وتدريبية مبتكرة تعزّز وعي الطلاب ومهاراتهم في الأمن السيبراني، وتوجّههم نحو مسارات أكاديمية ومهنية واعدة.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div>
+        <h5 data-en="Quick links">روابط سريعة</h5>
+        <a href="#" data-en="Today at a glance">لمحة اليوم</a><a href="#" data-en="Today's schedule">جدول اليوم</a><a href="#" data-en="Leaderboard">المتصدّرون</a><a href="#" data-en="Photo album">ألبوم الصور</a>
+      </div>
+      <div>
+        <h5 data-en="Organizers">الجهات المنظّمة</h5>
+        <div class="badges"><span data-en="National Cyber Security Agency">الوكالة الوطنية للأمن السيبراني</span><span data-en="National Cyber Security Academy">الأكاديمية الوطنية للأمن السيبراني</span></div>
+      </div>
+      <div>
+        <h5 data-en="Contact us">تواصلوا معنا</h5>
+        <div class="social"><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Telegram">✈</a></div>
+        <div style="margin-top:12px;font-size:12.5px;color:var(--text-mute);display:flex;flex-direction:column;gap:5px">
+          <span data-en="Camp contact: &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;0097412345678&lt;/span&gt;">تواصل مع المخيم: <span class="en" dir="ltr">0097412345678</span></span>
+          <span data-en="Call Center: &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;16555&lt;/span&gt;">مركز الاتصال (Call Center): <span class="en" dir="ltr">16555</span></span>
+          <span data-en="Phone: &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;0097440466798&lt;/span&gt; · &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;0097440466623&lt;/span&gt; · &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;0097451045944&lt;/span&gt;">هاتف: <span class="en" dir="ltr">0097440466798</span> · <span class="en" dir="ltr">0097440466623</span> · <span class="en" dir="ltr">0097451045944</span></span>
+          <span data-en="Email: &lt;a href=&quot;mailto:academy@ncsa.gov.qa&quot; style=&quot;color:var(--cyan-bright);text-decoration:none&quot;&gt;academy@ncsa.gov.qa&lt;/a&gt;">البريد الإلكتروني: <a href="mailto:academy@ncsa.gov.qa" style="color:var(--cyan-bright);text-decoration:none">academy@ncsa.gov.qa</a></span>
+          <span data-en="Official site: &lt;a href=&quot;https://academy.ncsa.gov.qa&quot; style=&quot;color:var(--cyan-bright);text-decoration:none&quot; dir=&quot;ltr&quot;&gt;academy.ncsa.gov.qa&lt;/a&gt;">الموقع الرسمي: <a href="https://academy.ncsa.gov.qa" style="color:var(--cyan-bright);text-decoration:none" dir="ltr">academy.ncsa.gov.qa</a></span>
+        </div>
+      </div>
+    </div>
+    <div class="fbot">
+      <div data-en="© 2026 &lt;span class=&quot;en&quot;&gt;CYBER SECURITY YOUTH CAMP&lt;/span&gt; — All rights reserved">© 2026 <span class="en">CYBER SECURITY YOUTH CAMP</span> — جميع الحقوق محفوظة</div>
+      <div data-en="Auto-updating · &lt;span class=&quot;en&quot;&gt;live&lt;/span&gt;">تحديث تلقائي · <span class="en">DAY 01 / 15</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   جداول اليوم — ٤ مجموعات (بنات/أولاد × فئتين عمريتين)
+   اليوم الأول: الأحد 19 يوليو 2026
+   ✏️ للتحديث اليومي: عدّل الجلسات داخل كل مجموعة.
+   type: session | activity | break | ceremony | challenge | expert | trip
+   الوقت 24 ساعة "HH:MM".
+═══════════════════════════════════════════════════════════ */
+const GROUPS = {
+  girls_13: {
+    labelAr:"بنات · ١٣–١٤ سنة", labelEn:"Girls · 13–14",
+    periodAr:"الفترة الصباحية · 7:00 ص – 1:00 م", periodEn:"Morning · 7:00 AM – 1:00 PM",
+    sessions:[
+      {time:"07:00",type:"ceremony",title:"تسجيل الحضور",en:"Registration",meta:"استقبال وتسجيل الطالبات",metaEn:"Welcome & check-in"},
+      {time:"08:00",type:"activity",title:"نشاط: التحقيق في مسرح الجريمة",en:"Activity: Crime Scene Investigation",meta:"نشاط تفاعلي افتتاحي",metaEn:"Opening interactive activity"},
+      {time:"08:50",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"أساسيات الأمن السيبراني",metaEn:"Cybersecurity fundamentals"},
+      {time:"09:45",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"تكملة الجلسة",metaEn:"Session continued"},
+      {time:"10:35",type:"break",title:"استراحة",en:"Break",meta:"استراحة قصيرة",metaEn:"Short break"},
+      {time:"11:25",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"الجلسة الختامية",metaEn:"Closing session"},
+      {time:"12:30",type:"ceremony",title:"ذهاب",en:"Departure",meta:"نهاية اليوم",metaEn:"End of day"},
+    ]
+  },
+  girls_15: {
+    labelAr:"بنات · ١٥–١٧ سنة", labelEn:"Girls · 15–17",
+    periodAr:"الفترة الصباحية · 8:00 ص – 12:30 م", periodEn:"Morning · 8:00 AM – 12:30 PM",
+    sessions:[
+      {time:"08:00",type:"activity",title:"نشاط: اهرب من الفيروس",en:"Activity: Escape the Virus",meta:"نشاط تفاعلي افتتاحي",metaEn:"Opening interactive activity"},
+      {time:"08:50",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"أساسيات الأمن السيبراني",metaEn:"Cybersecurity fundamentals"},
+      {time:"09:50",type:"break",title:"استراحة",en:"Break",meta:"استراحة قصيرة",metaEn:"Short break"},
+      {time:"10:40",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"تكملة الجلسة",metaEn:"Session continued"},
+      {time:"11:30",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"الجلسة الختامية",metaEn:"Closing session"},
+      {time:"12:30",type:"ceremony",title:"ذهاب",en:"Departure",meta:"نهاية اليوم",metaEn:"End of day"},
+    ]
+  },
+  boys_13: {
+    labelAr:"أولاد · ١٣–١٤ سنة", labelEn:"Boys · 13–14",
+    periodAr:"الفترة المسائية · 12:30 م – 6:00 م", periodEn:"Afternoon · 12:30 PM – 6:00 PM",
+    sessions:[
+      {time:"12:30",type:"ceremony",title:"تسجيل الحضور",en:"Registration",meta:"استقبال وتسجيل الطلاب",metaEn:"Welcome & check-in"},
+      {time:"13:00",type:"activity",title:"نشاط: التحقيق في مسرح الجريمة",en:"Activity: Crime Scene Investigation",meta:"نشاط تفاعلي افتتاحي",metaEn:"Opening interactive activity"},
+      {time:"13:45",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"أساسيات الأمن السيبراني",metaEn:"Cybersecurity fundamentals"},
+      {time:"14:45",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"تكملة الجلسة",metaEn:"Session continued"},
+      {time:"16:00",type:"break",title:"استراحة",en:"Break",meta:"استراحة",metaEn:"Break"},
+      {time:"17:00",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"الجلسة الختامية",metaEn:"Closing session"},
+      {time:"18:00",type:"ceremony",title:"ذهاب",en:"Departure",meta:"نهاية اليوم",metaEn:"End of day"},
+    ]
+  },
+  boys_15: {
+    labelAr:"أولاد · ١٥–١٧ سنة", labelEn:"Boys · 15–17",
+    periodAr:"الفترة المسائية · 1:00 م – 6:00 م", periodEn:"Afternoon · 1:00 PM – 6:00 PM",
+    sessions:[
+      {time:"13:00",type:"activity",title:"نشاط: اهرب من الفيروس",en:"Activity: Escape the Virus",meta:"نشاط تفاعلي افتتاحي",metaEn:"Opening interactive activity"},
+      {time:"13:50",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"أساسيات الأمن السيبراني",metaEn:"Cybersecurity fundamentals"},
+      {time:"14:50",type:"break",title:"استراحة",en:"Break",meta:"استراحة",metaEn:"Break"},
+      {time:"16:10",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"تكملة الجلسة",metaEn:"Session continued"},
+      {time:"17:00",type:"session",title:"حصة تعليمية",en:"Learning Session",meta:"الجلسة الختامية",metaEn:"Closing session"},
+      {time:"18:00",type:"ceremony",title:"ذهاب",en:"Departure",meta:"نهاية اليوم",metaEn:"End of day"},
+    ]
+  },
+};
+
+let CUR_GROUP = 'girls_13';
+try{ CUR_GROUP = localStorage.getItem('camp-group') || 'girls_13'; }catch(e){}
+
+/* الجلسات الحالية للمجموعة المختارة (يستخدمها محرّك "جارٍ الآن") */
+function curSessions(){ return GROUPS[CUR_GROUP].sessions.map(s=>({
+  time:s.time, title:s.title, en:s.en, meta:s.meta, metaEn:s.metaEn, type:s.type
+})); }
+
+const TAG = {
+  session:{ar:"حصة",en:"Session",cls:"workshop"},
+  activity:{ar:"نشاط",en:"Activity",cls:"challenge"},
+  break:{ar:"استراحة",en:"Break",cls:"break"},
+  ceremony:{ar:"",en:"",cls:"ceremony"},
+  challenge:{ar:"تحدٍّ",en:"Challenge",cls:"challenge"},
+  expert:{ar:"خبير",en:"Expert",cls:"ceremony"},
+  trip:{ar:"رحلة",en:"Trip",cls:"break"},
+};
+
+/* بناء شريط الجدول للمجموعة المختارة */
+function renderRail(){
+  const rail=document.getElementById('rail'); if(!rail) return;
+  const cur = now();
+  const list = GROUPS[CUR_GROUP].sessions;
+  let html='';
+  list.forEach((s,i)=>{
+    const start=toMin(s.time);
+    const end = i<list.length-1 ? toMin(list[i+1].time) : start+60;
+    let state='', pin = (LANG==='en'?'Upcoming':'القادم');
+    if(cur>=end){ state='done'; pin=(LANG==='en'?'✔ done':'✔ انتهت'); }
+    else if(cur>=start && cur<end){ state='now'; pin=(LANG==='en'?'● now':'● جارٍ الآن'); }
+    const tg=TAG[s.type]||TAG.session;
+    const title = LANG==='en'? s.en : s.title;
+    const meta = LANG==='en'? s.metaEn : s.meta;
+    const tgLabel = LANG==='en'?tg.en:tg.ar;
+    const tgHtml = tgLabel ? `<span class="st ${tg.cls}">${tgLabel}</span>` : '';
+    html += `<div class="slot ${state}"><div class="pin">${pin}</div>`+
+            `<span class="time en">${s.time}</span>`+
+            tgHtml+
+            `<h4>${title}</h4><p>${meta}</p></div>`;
+  });
+  rail.innerHTML=html;
+  // meta line
+  const gm=document.getElementById('grpMeta');
+  if(gm){ const g=GROUPS[CUR_GROUP];
+    gm.innerHTML = `📅 <b>${LANG==='en'?g.labelEn:g.labelAr}</b> · ${LANG==='en'?g.periodEn:g.periodAr}`; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   الحضور اليومي — عدّ تلقائي من جدول Excel / Google Sheets
+   ✏️ ضع رابط الملف هنا عند توفّره. اترك "" لإبقاء حالة الانتظار.
+   الطريقة الأسهل: انشر Google Sheet كـ CSV واستخدم رابط CSV هنا.
+   يجب أن يحتوي الصف الأول على أعمدة: girls, boys  (أو أول قيمتين رقميتين).
+═══════════════════════════════════════════════════════════ */
+const ATTENDANCE_URL = ""; // معطّل في الديمو
+const TOTAL_STUDENTS = 400;          // إجمالي طلاب المخيم (200 بنت + 200 ولد)
+
+function setAttendance(girls, boys){
+  const total = girls + boys;
+  const g = document.getElementById('attGirls'), b = document.getElementById('attBoys'),
+        t = document.getElementById('attTotal');
+  if(g) g.textContent = girls;
+  if(b) b.textContent = boys;
+  if(t) t.textContent = total;
+  const pg = total? Math.round(girls/total*100):50, pb = 100-pg;
+  const barG=document.getElementById('attBarG'), barB=document.getElementById('attBarB');
+  if(barG) barG.style.width=pg+'%'; if(barB) barB.style.width=pb+'%';
+  const pctG=document.getElementById('attPctG'), pctB=document.getElementById('attPctB');
+  if(pctG) pctG.textContent=pg+'%'; if(pctB) pctB.textContent=pb+'%';
+  const note=document.getElementById('attNote'); if(note) note.classList.add('connected');
+  const st=document.getElementById('attStatus'); if(st) st.classList.remove('pending');
+}
+
+function pendingAttendance(){
+  const st=document.getElementById('attStatus');
+  if(st){ st.classList.add('pending'); }
+}
+
+async function loadAttendance(){
+  if(!ATTENDANCE_URL){ setAttendance(178, 189); return; }   // ديمو: أرقام وهمية
+  try{
+    // إضافة وقت الطلب تمنع المتصفح وخوادم التخزين المؤقت من إرجاع نسخة قديمة
+    const url = ATTENDANCE_URL + '&t=' + Date.now();
+    const res = await fetch(url, {cache:'no-store'});
+    const text = await res.text();
+    // استخرج أول رقمين من ملف CSV (girls ثم boys)
+    const nums = (text.match(/\d+/g)||[]).map(Number);
+    if(nums.length>=2){ setAttendance(nums[0], nums[1]); }
+    else pendingAttendance();
+  }catch(e){ pendingAttendance(); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   لوحة المتصدّرين — تُحدَّث تلقائياً من Google Sheet
+   ✏️ لربط الشيت: انشره كـ CSV ثم ضع رابط CSV في LEADERBOARD_URL.
+   تنسيق الشيت المتوقّع: عمود اسم الفريق، عمود النقاط (وعمود تغيير اختياري).
+   أول صف يمكن أن يكون عناوين الأعمدة (سيتم تجاهله إن لم يكن رقمياً).
+   أسماء الفرق يجب أن تطابق القائمة أدناه (غير حساسة لحالة الأحرف).
+═══════════════════════════════════════════════════════════ */
+// رابط CSV المنشور من Google Sheets
+const LEADERBOARD_URL = ""; // معطّل في الديمو
+
+// القائمة الأساسية للفرق (الترتيب الافتراضي عند غياب البيانات)
+let TEAMS = [
+  {name:"Hackers", pts:4850, change:320},
+  {name:"Defenders", pts:4620, change:180},
+  {name:"Kali", pts:4410, change:210},
+  {name:"0101", pts:4100, change:-50},
+  {name:"Python", pts:3890, change:90},
+  {name:"Scanners", pts:3640, change:140},
+  {name:"Hydra", pts:3420, change:-30},
+  {name:"Ghosts", pts:3180, change:60},
+  {name:"Java", pts:2950, change:110},
+  {name:"Hunters", pts:2710, change:0},
+];
+
+function parseCSV(text){
+  return text.trim().split(/\r?\n/).map(line=>{
+    // تقسيم بسيط يدعم القيم بين علامتي اقتباس
+    const out=[]; let cur='', q=false;
+    for(const ch of line){
+      if(ch==='"'){ q=!q; }
+      else if(ch===',' && !q){ out.push(cur); cur=''; }
+      else cur+=ch;
+    }
+    out.push(cur);
+    return out.map(s=>s.trim());
+  });
+}
+
+async function loadLeaderboard(){
+  if(LEADERBOARD_URL){
+    try{
+      // إضافة وقت الطلب تمنع المتصفح وخوادم التخزين المؤقت من إرجاع نسخة قديمة
+      const url = LEADERBOARD_URL + '&t=' + Date.now();
+      const res=await fetch(url,{cache:'no-store'});
+      if(res.ok){
+        const rows=parseCSV(await res.text());
+        const parsed=[];
+        rows.forEach(cols=>{
+          if(cols.length<2) return;
+          const name=cols[0];
+          const pts=parseInt((cols[1]||'').replace(/[^\d-]/g,''),10);
+          if(!name || isNaN(pts)) return;              // تجاهل صف العناوين
+          const change=cols.length>2 ? parseInt((cols[2]||'').replace(/[^\d-]/g,''),10) : 0;
+          parsed.push({name, pts, change: isNaN(change)?0:change});
+        });
+        if(parsed.length){ TEAMS=parsed; }
+      }
+    }catch(e){ /* يبقى على القائمة الافتراضية */ }
+  }
+  renderLeaderboard();
+}
+
+function renderLeaderboard(){
+  const body=document.getElementById('lbBody'); if(!body) return;
+  // رتّب تنازلياً حسب النقاط
+  const sorted=[...TEAMS].sort((a,b)=> b.pts-a.pts);
+  let html='';
+  sorted.forEach((t,i)=>{
+    const rank=i+1;
+    const gCls = rank<=3 ? `g${rank}` : '';
+    const scored = t.pts>0 ? 'scored' : '';   // الألوان تظهر فقط مع نقاط > 0
+    let ch='<div class="ch same">—</div>';
+    if(t.change>0) ch=`<div class="ch up">▲ ${t.change}</div>`;
+    else if(t.change<0) ch=`<div class="ch down">▼ ${Math.abs(t.change)}</div>`;
+    html += `<div class="row ${gCls} ${scored}">`+
+            `<div class="rk">${rank}</div>`+
+            `<div class="team"><div class="nm">${t.name}</div></div>`+
+            `<div class="pts en">${t.pts.toLocaleString('en-US')}</div>`+
+            ch+`</div>`;
+  });
+  body.innerHTML=html;
+}
+
+
+/* ═══ اللغة / LANGUAGE ═══ */
+const UI = {
+  ar:{ waitingTitle:"بانتظار الجلسة القادمة", waitingMeta:"تابعوا الجدول أدناه",
+       ended:"انتهى اليوم", none:"—", mins:m=>m>60?`${Math.floor(m/60)}س ${m%60}د`:`${m} د` },
+  en:{ waitingTitle:"Waiting for next session", waitingMeta:"See the schedule below",
+       ended:"Day ended", none:"—", mins:m=>m>60?`${Math.floor(m/60)}h ${m%60}m`:`${m} min` }
+};
+let LANG = 'ar';
+
+function applyLang(lang){
+  LANG = lang;
+  const html=document.documentElement;
+  html.setAttribute('data-lang',lang);
+  html.setAttribute('lang', lang);
+  html.setAttribute('dir', lang==='ar'?'rtl':'ltr');
+  // swap every element that has data-en
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    if(!el.dataset.ar){ el.dataset.ar = el.innerHTML; } // stash original arabic once
+    el.innerHTML = lang==='en' ? el.dataset.en : el.dataset.ar;
+  });
+  // toggle button states
+  document.querySelectorAll('#langToggle button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.set===lang);
+  });
+  updateNow(); // refresh live strings in new language
+  if(typeof renderRail==='function') renderRail(); // rebuild schedule in new language
+  if(typeof loadGallery==='function' && GAL_PHOTOS.length) loadGallery(); // refresh captions language
+  if(typeof QUIZ_TODAY!=='undefined' && QUIZ_TODAY){ // refresh quiz language if showing question/result
+    const qs=document.getElementById('qsQuestion'), rs=document.getElementById('qsResult');
+    if(qs && !qs.hidden) renderQuestion();
+    else if(rs && !rs.hidden){ const st=quizStore(); showQuizResult(st.lastChoice, true); }
+  }
+  try{ localStorage.setItem('camp-lang',lang);}catch(e){}
+}
+
+const pad = n => String(n).padStart(2,'0');
+const toMin = t => { const [h,m]=t.split(':').map(Number); return h*60+m; };
+const now = () => { const d=new Date(); return d.getHours()*60+d.getMinutes(); };
+
+function tickClock(){
+  const d = new Date();
+  const el = document.getElementById('liveClock');
+  if(el && !el.dataset.frozen) el.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+
+function updateNow(){
+  const cur = now(); const t=UI[LANG];
+  const SCH = curSessions();
+  let active = null, next = null;
+  for(let i=0;i<SCH.length;i++){
+    const start = toMin(SCH[i].time);
+    const end = i<SCH.length-1 ? toMin(SCH[i+1].time) : start+60;
+    if(cur>=start && cur<end){ active=SCH[i]; next=SCH[i+1]||null; break; }
+    if(cur<start){ next=SCH[i]; break; }
+  }
+  const bar=document.getElementById('nowbar'); if(!bar) return;
+  const pick=(o,k)=> LANG==='en'?(k==='title'?o.en:o.metaEn):(k==='title'?o.title:o.meta);
+  if(active){
+    document.getElementById('nowTitle').textContent=pick(active,'title');
+    document.getElementById('nowMeta').textContent=pick(active,'meta');
+    bar.style.display='flex';
+  } else if(next){
+    document.getElementById('nowTitle').textContent=t.waitingTitle;
+    document.getElementById('nowMeta').textContent=t.waitingMeta;
+    bar.style.display='flex';
+  } else { bar.style.display='none'; }
+  const nx=document.getElementById('nowNext'), cd=document.getElementById('nowCountdown');
+  if(next){
+    nx.textContent = LANG==='en'?next.en:next.title;
+    const mins=toMin(next.time)-cur;
+    cd.textContent = t.mins(mins);
+  } else { nx.textContent=t.none; cd.textContent=t.ended; }
+}
+
+function countUp(){
+  document.querySelectorAll('.num[data-count], .big, .att-total .n, .stud .pts').forEach(el=>{
+    const raw = el.dataset.count || (el.textContent.match(/[\d,]+/)||[''])[0].replace(/,/g,'');
+    const target = +raw; if(!target) return;
+    const suffix = el.innerHTML.includes('<span') ? el.innerHTML.slice(el.innerHTML.indexOf('<span')) : '';
+    const dur=1100; const t0=performance.now();
+    (function step(t){
+      const p=Math.min((t-t0)/dur,1);
+      const val=Math.round(target*(1-Math.pow(1-p,3)));
+      el.innerHTML = val + (suffix?' '+suffix:'');
+      if(p<1) requestAnimationFrame(step);
+    })(t0);
+  });
+}
+
+function stamp(){
+  const d=new Date(); const el=document.getElementById('lastUpdate');
+  if(el) el.textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   تحدّي الأمن السيبراني اليومي (نسخة مبسّطة — تعليمية)
+   ─────────────────────────────────────────────────────────
+   • سؤال كل يوم حسب تاريخ اليوم — من Google Sheet (إكسل) أو ملف JSON
+   • مساران: أسرة مشارك (برقم) / زائر
+   • منع تكرار الإجابة على نفس الجهاز (localStorage)
+   • سجل مشاركة وشارات ونقاط
+   ملاحظة: هذه نسخة تعليمية؛ التحقّق والمنع على مستوى الجهاز فقط.
+   ✏️ الأسئلة من الإكسل: انشري الشيت كـ CSV وضعي الرابط في QUIZ_SHEET_URL أدناه.
+      أعمدة الشيت (الصف الأول عناوين): date, topic, topic_en, question,
+      question_en, option1, option2, option3, option4, correct, explain, explain_en
+      • correct = رقم الإجابة الصحيحة من 1 إلى 4
+      • الأعمدة الإنجليزية اختيارية (لو فاضية يظهر العربي في الوضعين)
+═══════════════════════════════════════════════════════════ */
+const QUIZ_KEY='camp-quiz-v1';
+// ديمو: الأسئلة مدمجة هنا حتى يعمل التحدّي بدون سيرفر (فتح مباشر بالملف)
+const DEMO_QUESTIONS = [{"date": "2026-07-19","topic": "كلمات المرور","topicEn": "Passwords","q": "أي مما يلي يُعدّ كلمة مرور قوية؟","qEn": "Which of the following is a strong password?","options": ["123456","اسمك وتاريخ ميلادك","P@ssw0rd!2026#Kx","password"],"correct": 2,"explain": "كلمة المرور القوية تمزج حروفاً كبيرة وصغيرة وأرقاماً ورموزاً، وتكون طويلة ولا علاقة لها بمعلوماتك الشخصية.","explainEn": "A strong password mixes upper/lowercase letters, numbers and symbols, is long, and unrelated to your personal info.","points": 10},{"date": "2026-07-20","topic": "التصيّد الإلكتروني","topicEn": "Phishing","q": "وصلتك رسالة تطلب بياناتك البنكية بشكل عاجل مع رابط غريب. ما التصرّف الصحيح؟","qEn": "You get a message urgently asking for your bank details with a strange link. What should you do?","options": ["تضغط الرابط فوراً","تتجاهلها ولا تضغط الرابط","ترسل بياناتك بسرعة","تعيد إرسالها لأصدقائك"],"correct": 1,"explain": "الرسائل التي تطلب بياناتك بشكل عاجل مع روابط مشبوهة هي تصيّد إلكتروني. لا تضغط الرابط ولا تشارك أي بيانات.","explainEn": "Urgent messages asking for data with suspicious links are phishing. Don't click and don't share any data.","points": 10},{"date": "2026-07-21","topic": "التحديثات الأمنية","topicEn": "Security Updates","q": "لماذا من المهم تحديث تطبيقاتك وأجهزتك باستمرار؟","qEn": "Why is it important to keep your apps and devices updated?","options": ["لتغيير الألوان فقط","لأنها تغلق الثغرات الأمنية","لاستهلاك البطارية","لا فائدة منها"],"correct": 1,"explain": "التحديثات تصلح الثغرات الأمنية التي قد يستغلها المخترقون، لذلك تحديث أجهزتك باستمرار يحميك.","explainEn": "Updates fix security gaps attackers could exploit, so keeping devices updated protects you.","points": 10},{"date": "2026-07-22","topic": "المصادقة الثنائية","topicEn": "Two-Factor Auth","q": "ما فائدة المصادقة الثنائية (2FA)؟","qEn": "What is the benefit of two-factor authentication (2FA)?","options": ["تجعل الدخول أبطأ بلا سبب","تضيف طبقة حماية ثانية غير كلمة المرور","تلغي الحاجة لكلمة المرور","تشارك حسابك مع غيرك"],"correct": 1,"explain": "المصادقة الثنائية تطلب رمزاً إضافياً (غالباً على هاتفك) بجانب كلمة المرور، فحتى لو سُرقت كلمتك يصعب اختراق حسابك.","explainEn": "2FA requires an extra code (usually on your phone) beyond the password, so even a stolen password isn't enough to break in.","points": 10},{"date": "2026-07-23","topic": "الخصوصية على الإنترنت","topicEn": "Online Privacy","q": "أي المعلومات يُفضّل عدم نشرها علناً على وسائل التواصل؟","qEn": "Which information is best NOT to share publicly on social media?","options": ["لونك المفضّل","عنوان منزلك ورقم هاتفك","فيلمك المفضّل","هوايتك"],"correct": 1,"explain": "العنوان ورقم الهاتف بيانات حسّاسة قد يستغلها الغرباء، فاحرص على عدم نشرها علناً.","explainEn": "Address and phone number are sensitive data strangers could misuse — avoid posting them publicly.","points": 10},{"date": "2026-07-26","topic": "الشبكات العامة","topicEn": "Public Wi-Fi","q": "ما أفضل تصرّف عند استخدام شبكة واي-فاي عامة؟","qEn": "What is the safest thing to do on public Wi-Fi?","options": ["إدخال كلمات المرور البنكية","تجنّب المواقع الحسّاسة","مشاركة ملفاتك مع الجميع","إيقاف تحديثات الجهاز"],"correct": 1,"explain": "الشبكات العامة غير آمنة وقد يتنصّت عليها الآخرون؛ تجنّب إدخال بياناتك الحسّاسة عليها.","explainEn": "Public networks aren't secure and can be snooped on; avoid entering sensitive data on them.","points": 10},{"date": "2026-07-27","topic": "البرمجيات الخبيثة","topicEn": "Malware","q": "كيف يمكن أن تصيب البرمجيات الخبيثة جهازك؟","qEn": "How can malware infect your device?","options": ["بتحديث النظام","بتحميل ملفات من مصادر غير موثوقة","بإطفاء الجهاز","بقراءة كتاب"],"correct": 1,"explain": "البرمجيات الخبيثة تنتشر عبر الملفات والروابط من مصادر غير موثوقة، فحمّل فقط من مصادر رسمية.","explainEn": "Malware spreads through files and links from untrusted sources — only download from official sources.","points": 10},{"date": "2026-07-28","topic": "الهندسة الاجتماعية","topicEn": "Social Engineering","q": "اتصل بك شخص يدّعي أنه من الدعم الفني وطلب كلمة مرورك. ماذا تفعل؟","qEn": "Someone calls claiming to be tech support and asks for your password. What do you do?","options": ["تعطيه كلمة المرور","ترفض ولا تشارك كلمة المرور أبداً","تعطيه نصفها فقط","تتصل بأصدقائك"],"correct": 1,"explain": "الدعم الفني الحقيقي لا يطلب كلمة مرورك أبداً. رفض المشاركة هو التصرّف الصحيح ضد الهندسة الاجتماعية.","explainEn": "Real tech support never asks for your password. Refusing is the correct response to social engineering.","points": 10},{"date": "2026-07-29","topic": "النسخ الاحتياطي","topicEn": "Backups","q": "لماذا يُنصح بعمل نسخة احتياطية لملفاتك؟","qEn": "Why is it recommended to back up your files?","options": ["لملء مساحة التخزين","لاستعادتها إذا فُقدت أو أُصيب الجهاز","لإبطاء الجهاز","لا داعي لها"],"correct": 1,"explain": "النسخ الاحتياطي يحميك من فقدان بياناتك بسبب الأعطال أو هجمات الفدية، فيمكنك استعادتها بسهولة.","explainEn": "Backups protect you from losing data to failures or ransomware, so you can restore easily.","points": 10},{"date": "2026-07-30","topic": "بصمتك الرقمية","topicEn": "Digital Footprint","q": "ما المقصود بـ«البصمة الرقمية»؟","qEn": "What is a 'digital footprint'?","options": ["أثر قدمك على الشاشة","كل ما تتركه من بيانات وأنشطة على الإنترنت","نوع لوحة المفاتيح","سرعة الإنترنت"],"correct": 1,"explain": "بصمتك الرقمية هي كل ما تتركه على الإنترنت من منشورات وبيانات، وتبقى مدة طويلة، لذا فكّر قبل أن تنشر.","explainEn": "Your digital footprint is everything you leave online — posts and data — and it lasts, so think before you post.","points": 10},{"date": "2026-08-02","topic": "هجمات الفدية","topicEn": "Ransomware","q": "ماذا تفعل برمجية الفدية (Ransomware)؟","qEn": "What does ransomware do?","options": ["تسرّع جهازك","تشفّر ملفاتك وتطلب فدية لفكّها","تنظّف الفيروسات","تزيد البطارية"],"correct": 1,"explain": "برمجية الفدية تقفل ملفاتك بالتشفير وتطلب مالاً لفكّها. النسخ الاحتياطي وتجنّب الروابط المشبوهة أفضل وقاية.","explainEn": "Ransomware locks your files with encryption and demands money. Backups and avoiding suspicious links are the best defense.","points": 10},{"date": "2026-08-03","topic": "أمان المتصفح","topicEn": "Browser Safety","q": "ماذا يعني رمز القفل 🔒 بجانب عنوان الموقع؟","qEn": "What does the padlock 🔒 next to a website address mean?","options": ["الموقع ممنوع","الاتصال مشفّر (HTTPS)","الموقع بطيء","الموقع مجاني"],"correct": 1,"explain": "القفل يعني أن الاتصال مشفّر (HTTPS)، مما يحمي بياناتك أثناء تنقلها، لكنه لا يضمن نوايا الموقع بالكامل.","explainEn": "The padlock means the connection is encrypted (HTTPS), protecting data in transit — though it doesn't fully guarantee the site's intent.","points": 10},{"date": "2026-08-04","topic": "التطبيقات والأذونات","topicEn": "App Permissions","q": "طلب تطبيق ألعاب الوصول إلى جهات اتصالك وموقعك. ما التصرّف الأنسب؟","qEn": "A game app asks to access your contacts and location. What's the best move?","options": ["الموافقة فوراً","التساؤل: هل يحتاجها فعلاً؟ ورفض غير الضروري","مشاركة كل شيء","حذف كل جهات الاتصال"],"correct": 1,"explain": "امنح التطبيقات فقط الأذونات التي تحتاجها لعملها. لعبة لا تحتاج جهات اتصالك عادةً، فارفض الأذونات غير المبرّرة.","explainEn": "Grant apps only the permissions they truly need. A game usually doesn't need your contacts — deny unjustified permissions.","points": 10},{"date": "2026-08-05","topic": "التحقّق من المعلومات","topicEn": "Verifying Info","q": "رأيت خبراً مثيراً على الإنترنت. ما التصرّف السليم قبل تصديقه أو نشره؟","qEn": "You see a shocking news item online. What's the right step before believing or sharing?","options": ["تنشره فوراً","تتحقّق من مصدر موثوق أولاً","تصدّقه لأنه مثير","تتجاهل التفكير"],"correct": 1,"explain": "المعلومات المضلّلة تنتشر بسرعة. تحقّق دائماً من مصدر موثوق قبل تصديق أو نشر أي خبر.","explainEn": "Misinformation spreads fast. Always verify from a trusted source before believing or sharing.","points": 10},{"date": "2026-08-06","topic": "مراجعة ختامية","topicEn": "Final Review","q": "ما القاعدة الذهبية للبقاء آمناً على الإنترنت؟","qEn": "What is the golden rule for staying safe online?","options": ["مشاركة كل بياناتك","التوقّف والتفكير قبل الضغط أو المشاركة","الضغط على كل رابط","تجاهل التحديثات"],"correct": 1,"explain": "الوعي هو خط الدفاع الأول: توقّف وفكّر قبل الضغط أو المشاركة، وطبّق ما تعلّمته طوال المخيم لحماية نفسك.","explainEn": "Awareness is your first defense: stop and think before clicking or sharing, and apply what you learned all camp to protect yourself.","points": 10}];
+
+// ✏️ ضعي رابط CSV للشيت هنا. اتركيه "" لاستخدام ملف quiz-questions.json بدلاً منه.
+const QUIZ_SHEET_URL = "";
+let QUIZ_TODAY=null;         // سؤال اليوم
+let QUIZ_MODE=null;          // 'family' | 'guest'
+let QUIZ_FAMID=null;
+let QUIZ_SELECTED=-1;
+
+// قائمة أرقام المشاركين (نسخة مبسّطة — استبدليها بالأرقام الحقيقية)
+// ملاحظة: في النسخة الآمنة تُخزَّن في قاعدة بيانات محمية.
+const VALID_PARTICIPANTS=null; // null = تقبل أي رقم (نسخة تعليمية). أو ضعي مصفوفة: ["CAMP-1234", ...]
+
+function quizStore(){ try{ return JSON.parse(localStorage.getItem(QUIZ_KEY))||{}; }catch(e){ return {}; } }
+function quizSave(o){ try{ localStorage.setItem(QUIZ_KEY, JSON.stringify(o)); }catch(e){} }
+
+function todayISO(){
+  const d=new Date();
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+}
+
+function qShow(id){
+  document.querySelectorAll('#quizCard .quiz-screen').forEach(s=>s.hidden=true);
+  const el=document.getElementById(id); if(el) el.hidden=false;
+}
+
+/* يحوّل صفوف CSV إلى قائمة أسئلة (يتوقّع عناوين الأعمدة في الصف الأول) */
+function quizRowsToQuestions(rows){
+  if(!rows.length) return [];
+  const head=rows[0].map(h=>h.trim().toLowerCase());
+  const col=name=>head.indexOf(name);
+  const ci={
+    date:col('date'), topic:col('topic'), topicEn:col('topic_en'),
+    q:col('question'), qEn:col('question_en'),
+    o1:col('option1'), o2:col('option2'), o3:col('option3'), o4:col('option4'),
+    correct:col('correct'), explain:col('explain'), explainEn:col('explain_en')
+  };
+  const out=[];
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i]; if(!r || !r[ci.date]) continue;
+    const opts=[r[ci.o1],r[ci.o2],r[ci.o3],r[ci.o4]].filter(x=>x!==undefined&&x!=='');
+    const correctNum=parseInt((r[ci.correct]||'').replace(/[^\d]/g,''),10);
+    if(!opts.length || isNaN(correctNum)) continue;
+    const optsEn = ci.qEn>-1 ? null : null; // الخيارات الإنجليزية غير منفصلة هنا (نستخدم العربية)
+    out.push({
+      date:(r[ci.date]||'').trim(),
+      topic:r[ci.topic]||'', topicEn: ci.topicEn>-1 ? (r[ci.topicEn]||'') : '',
+      q:r[ci.q]||'', qEn: ci.qEn>-1 ? (r[ci.qEn]||'') : '',
+      options:opts,
+      correct: Math.min(Math.max(correctNum-1,0), opts.length-1), // من 1-based إلى 0-based
+      explain:r[ci.explain]||'', explainEn: ci.explainEn>-1 ? (r[ci.explainEn]||'') : '',
+      points:10
+    });
+  }
+  return out;
+}
+
+async function loadQuiz(){
+  let questions=[];
+  // ديمو: استخدم الأسئلة المدمجة أولاً (تعمل حتى بفتح الملف مباشرة بدون سيرفر)
+  if(typeof DEMO_QUESTIONS!=='undefined' && DEMO_QUESTIONS.length){ questions=DEMO_QUESTIONS; }
+  // احتياطي: حاول تحميل ملف JSON إن لم تتوفر المدمجة
+  if(!questions.length){
+    try{
+      const res=await fetch('quiz-questions.json?t='+Date.now(),{cache:'no-store'});
+      const data=await res.json();
+      questions=(data && data.questions) ? data.questions : [];
+    }catch(e){ questions=[]; }
+  }
+
+  const today=todayISO();
+  // ديمو: اعرض سؤال اليوم إن وُجد، وإلا اعرض أول سؤال متاح (حتى يظهر التحدّي دائماً)
+  QUIZ_TODAY = questions.find(q=>q.date===today) || questions[0] || null;
+
+  // لا يوجد سؤال إطلاقاً
+  if(!QUIZ_TODAY){ qShow('qsNone'); return; }
+
+  // في الديمو نسمح بإعادة التجربة دائماً (لا نمنع التكرار) لأغراض العرض
+  qShow('qsIntro');
+}
+
+function qText(o,key){ return (LANG==='en' && o[key+'En']) ? o[key+'En'] : o[key]; }
+function qOpts(o){ return (LANG==='en' && o.optionsEn) ? o.optionsEn : o.options; }
+
+function renderQuestion(){
+  const q=QUIZ_TODAY;
+  document.getElementById('qTopic').textContent = qText(q,'topic');
+  document.getElementById('qText').textContent = qText(q,'q');
+  const wrap=document.getElementById('qOptions'); wrap.innerHTML='';
+  QUIZ_SELECTED=-1;
+  qOpts(q).forEach((opt,i)=>{
+    const b=document.createElement('button');
+    b.className='quiz-opt'; b.textContent=opt; b.dataset.i=i;
+    b.addEventListener('click',()=>{
+      if(b.classList.contains('locked')) return;
+      wrap.querySelectorAll('.quiz-opt').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel'); QUIZ_SELECTED=i;
+      document.getElementById('qSubmit').disabled=false;
+    });
+    wrap.appendChild(b);
+  });
+  document.getElementById('qSubmit').disabled=true;
+  document.getElementById('qErr').hidden=true;
+  const chg=document.getElementById('qChange');
+  chg.hidden = (QUIZ_MODE!=='family');
+  qShow('qsQuestion');
+}
+
+function submitQuizAnswer(){
+  if(QUIZ_SELECTED<0) return;
+  const q=QUIZ_TODAY;
+  const correct=q.correct;
+  const opts=document.querySelectorAll('#qOptions .quiz-opt');
+  opts.forEach((b,i)=>{
+    b.classList.add('locked');
+    if(i===correct) b.classList.add('correct');
+    else if(i===QUIZ_SELECTED) b.classList.add('wrong');
+  });
+  // خزّن الإجابة (منع التكرار على هذا الجهاز)
+  const today=todayISO();
+  const store=quizStore();
+  const isCorrect=(QUIZ_SELECTED===correct);
+  const pts=isCorrect ? (q.points||10) : 0;
+  // سجل تراكمي
+  store.days=(store.days||0);
+  if(store.lastDate!==today){
+    store.days+=1;
+    store.totalCorrect=(store.totalCorrect||0)+(isCorrect?1:0);
+    store.totalPoints=(store.totalPoints||0)+pts;
+    // متتالية
+    const y=new Date(); y.setDate(y.getDate()-1);
+    const yISO=y.getFullYear()+'-'+pad(y.getMonth()+1)+'-'+pad(y.getDate());
+    store.streak = (store.lastDate===yISO && isCorrect) ? (store.streak||0)+1 : (isCorrect?1:0);
+  }
+  store.lastDate=today; store.answered=true; store.lastChoice=QUIZ_SELECTED;
+  store.lastMode=QUIZ_MODE; store.lastFam=QUIZ_FAMID;
+  // إحصائية اليوم (محلية/تقديرية)
+  store.dayStats=store.dayStats||{};
+  if(!store.dayStats[today]){ store.dayStats[today]={total:0,correct:0}; }
+  store.dayStats[today].total+=1;
+  if(isCorrect) store.dayStats[today].correct+=1;
+  quizSave(store);
+  setTimeout(()=>showQuizResult(QUIZ_SELECTED,false), 900);
+}
+
+function badgeFor(store){
+  const d=store.days||0, c=store.totalCorrect||0, s=store.streak||0;
+  if(s>=5) return LANG==='en'?'🔥 Cyber Streak Master':'🔥 بطل السلسلة السيبرانية';
+  if(c>=5) return LANG==='en'?'🛡️ Aware Guardian':'🛡️ حارس واعٍ';
+  if(d>=3) return LANG==='en'?'🧭 Digital Explorer':'🧭 مستكشف رقمي';
+  if(d>=1) return LANG==='en'?'🌱 New Learner':'🌱 متعلّم جديد';
+  return null;
+}
+
+function showQuizResult(choice, replay){
+  const q=QUIZ_TODAY; const correct=q.correct; const isCorrect=(choice===correct);
+  const head=document.getElementById('rHead');
+  head.className='quiz-result-head '+(isCorrect?'ok':'no');
+  head.textContent = isCorrect ? (LANG==='en'?'Correct! 🎉':'إجابة صحيحة! 🎉')
+                               : (LANG==='en'?'Not quite 💡':'ليست صحيحة 💡');
+  const correctText=qOpts(q)[correct];
+  document.getElementById('rCorrect').innerHTML =
+    (LANG==='en'?'Correct answer: ':'الإجابة الصحيحة: ')+'<b>'+correctText+'</b>';
+  document.getElementById('rExplain').textContent = qText(q,'explain');
+  const pts=isCorrect?(q.points||10):0;
+  document.getElementById('rPoints').textContent =
+    (LANG==='en'? (isCorrect?`+${pts} points`:'0 points') : (isCorrect?`+${pts} نقطة`:'0 نقطة'));
+
+  // السجل
+  const store=quizStore();
+  document.getElementById('hDays').textContent=store.days||0;
+  document.getElementById('hCorrect').textContent=store.totalCorrect||0;
+  document.getElementById('hPoints').textContent=store.totalPoints||0;
+  document.getElementById('hStreak').textContent=store.streak||0;
+  const badge=badgeFor(store);
+  const bEl=document.getElementById('hBadge');
+  if(badge){ bEl.hidden=false; bEl.textContent=badge; } else bEl.hidden=true;
+  document.getElementById('rHistory').hidden=false;
+
+  // إحصائية اليوم (تقديرية محلية)
+  const today=todayISO();
+  const ds=(store.dayStats&&store.dayStats[today])||{total:1,correct:isCorrect?1:0};
+  const pct=ds.total?Math.round(ds.correct/ds.total*100):0;
+  document.getElementById('rDayStat').innerHTML =
+    (LANG==='en'
+      ? `Today <b>${ds.total}</b> answered on this device · <b>${pct}%</b> correct`
+      : `اليوم <b>${ds.total}</b> إجابة على هذا الجهاز · <b>${pct}%</b> صحيحة`);
+
+  qShow('qsResult');
+}
+
+function initQuiz(){
+  const card=document.getElementById('quizCard'); if(!card) return;
+  document.getElementById('chFamily').addEventListener('click',()=>{ QUIZ_MODE='family'; qShow('qsFamily'); document.getElementById('famId').focus(); });
+  document.getElementById('chGuest').addEventListener('click',()=>{ QUIZ_MODE='guest'; QUIZ_FAMID=null; renderQuestion(); });
+  document.getElementById('famBack').addEventListener('click',()=>qShow('qsIntro'));
+  document.getElementById('famStart').addEventListener('click',()=>{
+    const id=document.getElementById('famId').value.trim();
+    const err=document.getElementById('famErr');
+    if(!id){ err.hidden=false; err.textContent=LANG==='en'?'Please enter the participant ID.':'يرجى إدخال الرقم التعريفي.'; return; }
+    if(VALID_PARTICIPANTS && !VALID_PARTICIPANTS.map(x=>x.toLowerCase()).includes(id.toLowerCase())){
+      err.hidden=false; err.textContent=LANG==='en'?'ID not found. Please check and try again.':'الرقم غير موجود. يرجى التحقق والمحاولة مرة أخرى.'; return;
+    }
+    err.hidden=true; QUIZ_FAMID=id; renderQuestion();
+  });
+  document.getElementById('qSubmit').addEventListener('click',submitQuizAnswer);
+  document.getElementById('qChange').addEventListener('click',()=>{ document.getElementById('famId').value=''; qShow('qsFamily'); });
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════
+   ألبوم اليوم — يُبنى تلقائياً من images/gallery/gallery.json
+   ✏️ لإضافة صور: ارفعها إلى مجلد images/gallery/ ثم أضف اسمها
+      في gallery.json. لا حاجة لتعديل هذا الكود.
+═══════════════════════════════════════════════════════════ */
+// ديمو: الصور مدمجة حتى يعمل الألبوم بدون سيرفر
+const DEMO_PHOTOS = [{"file": "sample-1.jpg", "caption": "لحظة من اليوم الأول", "captionEn": "A moment from Day 1"}, {"file": "sample-2.jpg", "caption": "تسجيل الحضور", "captionEn": "Registration"}, {"file": "sample-3.jpg", "caption": "نشاط الافتتاح", "captionEn": "Opening activity"}];
+let GAL_PHOTOS = [];
+
+async function loadGallery(){
+  const gal=document.getElementById('gal'), empty=document.getElementById('galEmpty'),
+        count=document.getElementById('galCount');
+  // ديمو: استخدم الصور المدمجة أولاً
+  if(typeof DEMO_PHOTOS!=='undefined' && DEMO_PHOTOS.length){
+    GAL_PHOTOS=DEMO_PHOTOS.filter(p=>p && p.file);
+  } else {
+    try{
+      const res=await fetch('images/gallery/gallery.json?t='+Date.now(), {cache:'no-store'});
+      const data=await res.json();
+      GAL_PHOTOS=(data.photos||[]).filter(p=>p && p.file);
+    }catch(e){ GAL_PHOTOS=[]; }
+  }
+
+  if(!GAL_PHOTOS.length){
+    gal.innerHTML=''; gal.style.display='none';
+    if(empty) empty.style.display='block';
+    if(count) count.textContent='';
+    return;
+  }
+  gal.style.display='grid';
+  if(empty) empty.style.display='none';
+  if(count) count.textContent = (LANG==='en'? GAL_PHOTOS.length+' photos' : GAL_PHOTOS.length+' صورة');
+
+  let html='';
+  GAL_PHOTOS.forEach((p,i)=>{
+    // أول صورة كبيرة، والصورة السادسة عريضة (شكل جمالي يتكيّف مع أي عدد)
+    const cls = i===0 ? 'feat' : (i===5 ? 'wide' : '');
+    const cap = LANG==='en' ? (p.captionEn||p.caption||'') : (p.caption||'');
+    html += `<figure class="${cls}" data-i="${i}">`+
+            `<img src="images/gallery/${p.file}" alt="${cap}" loading="lazy" `+
+            `onerror="this.closest('figure').style.display='none'">`+
+            (cap?`<figcaption>${cap}</figcaption>`:'')+`</figure>`;
+  });
+  gal.innerHTML=html;
+
+  // فتح Lightbox عند الضغط
+  gal.querySelectorAll('figure').forEach(f=>{
+    f.addEventListener('click',()=> openLightbox(+f.dataset.i));
+  });
+}
+
+/* Lightbox */
+let lbIndex=0;
+function openLightbox(i){
+  lbIndex=i; const lb=document.getElementById('lightbox');
+  showLbImage(); lb.classList.add('open');
+}
+function showLbImage(){
+  const p=GAL_PHOTOS[lbIndex]; if(!p) return;
+  document.getElementById('lbImg').src='images/gallery/'+p.file;
+  const cap = LANG==='en' ? (p.captionEn||p.caption||'') : (p.caption||'');
+  document.getElementById('lbCap').textContent=cap;
+}
+function lbMove(d){
+  lbIndex=(lbIndex+d+GAL_PHOTOS.length)%GAL_PHOTOS.length; showLbImage();
+}
+(function initLightbox(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lbClose').addEventListener('click',()=>lb.classList.remove('open'));
+  document.getElementById('lbNext').addEventListener('click',()=>lbMove(1));
+  document.getElementById('lbPrev').addEventListener('click',()=>lbMove(-1));
+  lb.addEventListener('click',e=>{ if(e.target===lb) lb.classList.remove('open'); });
+  document.addEventListener('keydown',e=>{
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') lb.classList.remove('open');
+    if(e.key==='ArrowRight') lbMove(LANG==='en'?1:-1);
+    if(e.key==='ArrowLeft') lbMove(LANG==='en'?-1:1);
+  });
+})();
+
+/* التشغيل */
+let saved='ar'; try{ saved=localStorage.getItem('camp-lang')||'ar'; }catch(e){}
+applyLang(saved);
+document.getElementById('langToggle').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(b) applyLang(b.dataset.set);
+});
+
+/* مبدّل المجموعات */
+(function(){
+  const sw=document.getElementById('grpSwitch');
+  // اضبط الزر النشط حسب المحفوظ
+  sw.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b.dataset.grp===CUR_GROUP));
+  sw.addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    CUR_GROUP=b.dataset.grp;
+    try{ localStorage.setItem('camp-group',CUR_GROUP); }catch(e){}
+    sw.querySelectorAll('button').forEach(x=>x.classList.toggle('active', x===b));
+    renderRail(); updateNow();
+  });
+})();
+
+renderRail();
+tickClock(); updateNow(); stamp(); loadAttendance(); loadGallery(); loadLeaderboard();
+initQuiz(); loadQuiz();
+setInterval(tickClock,1000);
+setInterval(()=>{ updateNow(); renderRail(); },30000); // يحدّث الجدول و"جارٍ الآن"
+setInterval(loadAttendance,30000); // يحدّث الحضور كل 30 ثانية من الشيت
+setInterval(loadLeaderboard,30000); // يحدّث المتصدّرين كل 30 ثانية من الشيت
+if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+  window.addEventListener('load',countUp);
+}
+</script>
+
+</body>
+</html>

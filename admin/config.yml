@@ -1,0 +1,102 @@
+# ══════════════════════════════════════════════════════════
+# إعداد لوحة التحكم (Decap CMS)
+# ✏️ غيّري "YOUR-USERNAME/YOUR-REPO" باسم مستودعك على GitHub
+# ══════════════════════════════════════════════════════════
+backend:
+  name: git-gateway
+  branch: main
+
+# مكان رفع الصور
+media_folder: "images/uploads"
+public_folder: "images/uploads"
+
+# لغة الواجهة
+locale: "ar"
+
+collections:
+  # ─── اليوم الحالي ───
+  # ملاحظة: الحضور والمتصدرون يُداران من Google Sheet (الإكسل) وليس من هنا.
+  - name: "today"
+    label: "🗓️ اليوم الحالي"
+    files:
+      - name: "day"
+        label: "بيانات اليوم"
+        file: "content/today.json"
+        fields:
+          - { name: "dayNumber", label: "رقم اليوم", widget: "number", default: 1 }
+          - { name: "dateAr", label: "التاريخ (عربي)", widget: "string", default: "19 يوليو 2026" }
+          - { name: "dateEn", label: "التاريخ (إنجليزي)", widget: "string", default: "19 July 2026", required: false }
+          - { name: "weekAr", label: "الأسبوع (عربي)", widget: "string", default: "الأسبوع الأول" }
+
+  # ─── الإعلانات ───
+  - name: "announcements"
+    label: "📢 الإعلانات"
+    folder: "content/announcements"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { name: "type", label: "النوع", widget: "select", options: [{label: "عاجل", value: "urgent"}, {label: "معلومة", value: "info"}, {label: "نجاح", value: "success"}], default: "info" }
+      - { name: "icon", label: "الأيقونة (إيموجي)", widget: "string", default: "📢" }
+      - { name: "titleAr", label: "العنوان (عربي)", widget: "string" }
+      - { name: "titleEn", label: "العنوان (إنجليزي)", widget: "string", required: false }
+      - { name: "textAr", label: "النص (عربي)", widget: "text" }
+      - { name: "textEn", label: "النص (إنجليزي)", widget: "text", required: false }
+      - { name: "time", label: "الوقت", widget: "string", default: "اليوم", required: false }
+
+  # ─── الطلاب المتفوقون ───
+  - name: "top_students"
+    label: "🏅 الطلاب المتفوقون"
+    folder: "content/students"
+    create: true
+    fields:
+      - { name: "rank", label: "المركز (1-4)", widget: "number", default: 1 }
+      - { name: "nameAr", label: "الاسم (عربي)", widget: "string" }
+      - { name: "nameEn", label: "الاسم (إنجليزي)", widget: "string", required: false }
+      - { name: "team", label: "الفريق", widget: "select", options: ["Hackers","Defenders","0101","Kali","Scanners","Java","Python","Hydra","Ghosts","Hunters"] }
+      - { name: "whyAr", label: "سبب التميّز (عربي)", widget: "string" }
+      - { name: "whyEn", label: "سبب التميّز (إنجليزي)", widget: "string", required: false }
+      - { name: "points", label: "النقاط", widget: "number", default: 0 }
+
+  # ─── رأي طالب (التغذية الراجعة) ───
+  - name: "feedback"
+    label: "💬 التغذية الراجعة"
+    files:
+      - name: "quote"
+        label: "رأي اليوم"
+        file: "content/feedback.json"
+        fields:
+          - { name: "photo", label: "صورة الطالب", widget: "image", required: false }
+          - { name: "quoteAr", label: "الرأي (عربي)", widget: "text" }
+          - { name: "quoteEn", label: "الرأي (إنجليزي)", widget: "text", required: false }
+          - { name: "studentAr", label: "الاسم والفريق (عربي)", widget: "string" }
+          - { name: "studentEn", label: "الاسم والفريق (إنجليزي)", widget: "string", required: false }
+          - { name: "stars", label: "عدد النجوم (1-5)", widget: "number", default: 5 }
+
+  # ─── ألبوم الصور ───
+  - name: "gallery"
+    label: "📸 ألبوم الصور"
+    folder: "content/gallery"
+    create: true
+    fields:
+      - { name: "photo", label: "الصورة", widget: "image" }
+      - { name: "captionAr", label: "تعليق (عربي)", widget: "string", required: false }
+      - { name: "captionEn", label: "تعليق (إنجليزي)", widget: "string", required: false }
+
+  # ─── أسئلة التحدّي اليومي ───
+  - name: "quiz"
+    label: "🛡️ تحدّي اليوم"
+    folder: "content/quiz"
+    create: true
+    fields:
+      - { name: "date", label: "تاريخ الظهور (YYYY-MM-DD)", widget: "string" }
+      - { name: "topicAr", label: "الموضوع (عربي)", widget: "string" }
+      - { name: "topicEn", label: "الموضوع (إنجليزي)", widget: "string", required: false }
+      - { name: "questionAr", label: "السؤال (عربي)", widget: "string" }
+      - { name: "questionEn", label: "السؤال (إنجليزي)", widget: "string", required: false }
+      - { name: "option1", label: "الخيار 1", widget: "string" }
+      - { name: "option2", label: "الخيار 2", widget: "string" }
+      - { name: "option3", label: "الخيار 3", widget: "string" }
+      - { name: "option4", label: "الخيار 4", widget: "string" }
+      - { name: "correct", label: "رقم الإجابة الصحيحة (1-4)", widget: "number", default: 1 }
+      - { name: "explainAr", label: "الشرح (عربي)", widget: "text" }
+      - { name: "explainEn", label: "الشرح (إنجليزي)", widget: "text", required: false }

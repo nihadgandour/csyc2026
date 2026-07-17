@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل إعداد لوحة التحكم</title>
+<style>
+  :root{ --cyan:#00b1d5; --cyan-b:#22d3f0; --navy:#295b98; --ink:#030c1e;
+    --surface:#0c1d38; --surface2:#0a1730; --line:rgba(120,170,220,.18); --line2:rgba(120,170,220,.1);
+    --text:#e8f1fb; --soft:#a9c6e0; --mute:#6d87a6; --ok:#35d0a5; --gold:#ffc857; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Tajawal',system-ui,sans-serif;background:var(--ink);color:var(--text);line-height:1.8;padding:0 0 60px}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px}
+  header{background:linear-gradient(135deg,var(--navy),var(--ink));padding:40px 0;border-bottom:3px solid var(--cyan);margin-bottom:30px}
+  h1{font-size:30px;font-weight:900}
+  h1 .en{display:block;font-size:14px;color:var(--cyan-b);margin-top:6px;letter-spacing:1px}
+  .lead{color:var(--soft);font-size:15px;margin-top:10px}
+  section{padding:26px 0;border-bottom:1px solid var(--line2)}
+  h2{font-size:20px;font-weight:900;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .badge{width:30px;height:30px;border-radius:50%;background:var(--cyan);color:var(--ink);display:grid;place-items:center;font-size:15px;font-weight:900;flex-shrink:0}
+  .step{display:flex;gap:14px;padding:13px 16px;background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--line2);border-radius:12px;margin:9px 0}
+  .step .n{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--cyan);color:var(--ink);display:grid;place-items:center;font-weight:900;font-size:13px}
+  code{font-family:monospace;background:rgba(0,177,213,.14);color:var(--cyan-b);padding:2px 7px;border-radius:5px;font-size:13px;direction:ltr;display:inline-block}
+  a{color:var(--cyan-b)}
+  .tip{background:rgba(53,208,165,.08);border:1px solid rgba(53,208,165,.3);border-radius:12px;padding:13px 16px;margin:12px 0;font-size:14px}
+  .tip b{color:var(--ok)}
+  .warn{background:rgba(255,200,87,.08);border:1px solid rgba(255,200,87,.3);border-radius:12px;padding:13px 16px;margin:12px 0;font-size:14px}
+  .warn b{color:var(--gold)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>دليل إعداد لوحة التحكم<span class="en">NO-CODE ADMIN PANEL SETUP</span></h1>
+    <p class="lead">لوحة تحكم تتيح لكِ إضافة الصور والنصوص بدون أي كود — بعد إعداد لمرة واحدة.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2><span class="badge">؟</span> ما هذه اللوحة؟</h2>
+    <p>لوحة التحكم (Decap CMS) صفحة تسجّلين فيها الدخول، ثم تعدّلين كل محتوى الموقع — الإعلانات، الطلاب المتفوقين، الصور، الأسئلة — من خلال <b>حقول جاهزة تكتبين فيها</b>، وترفعين الصور بالسحب. لا حاجة لأي كود.</p>
+    <div class="warn"><b>مهم:</b> هذه اللوحة تحتاج <b>إعداداً لمرة واحدة</b> (الخطوات أدناه). بعدها تصبح جاهزة للاستخدام اليومي البسيط.</div>
+  </section>
+
+  <section>
+    <h2><span class="badge">1</span> ارفعي الموقع على GitHub</h2>
+    <div class="step"><span class="n">1</span><span>أنشئي حساباً مجانياً على <a href="https://github.com">github.com</a> إن لم يكن لديكِ.</span></div>
+    <div class="step"><span class="n">2</span><span>أنشئي مستودعاً (Repository) جديداً وارفعي فيه كل ملفات الموقع.</span></div>
+    <div class="step"><span class="n">3</span><span>فعّلي <b>GitHub Pages</b> من إعدادات المستودع (Settings ▸ Pages) ليصبح الموقع أونلاين.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="badge">2</span> اربطي الموقع بـ Netlify (مجاني)</h2>
+    <div class="step"><span class="n">1</span><span>أنشئي حساباً مجانياً على <a href="https://netlify.com">netlify.com</a> (سجّلي الدخول بحساب GitHub).</span></div>
+    <div class="step"><span class="n">2</span><span>اختاري <b>Add new site ▸ Import an existing project</b>، واختاري مستودع الموقع.</span></div>
+    <div class="step"><span class="n">3</span><span>اضغطي <b>Deploy</b> — سيعطيكِ Netlify رابطاً للموقع.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="badge">3</span> فعّلي تسجيل الدخول للوحة</h2>
+    <div class="step"><span class="n">1</span><span>في Netlify: <b>Site settings ▸ Identity ▸ Enable Identity</b>.</span></div>
+    <div class="step"><span class="n">2</span><span>فعّلي <b>Git Gateway</b> (تحت Identity ▸ Services).</span></div>
+    <div class="step"><span class="n">3</span><span>تحت <b>Identity ▸ Registration</b>، اختاري <b>Invite only</b> (لمنع تسجيل الغرباء).</span></div>
+    <div class="step"><span class="n">4</span><span>اضغطي <b>Invite users</b> وأدخلي بريدكِ الإلكتروني — ستصلكِ دعوة لتعيين كلمة مرور.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="badge">4</span> عدّلي اسم المستودع في الإعداد</h2>
+    <div class="step"><span class="n">1</span><span>افتحي ملف <code>admin/config.yml</code>.</span></div>
+    <div class="step"><span class="n">2</span><span>ابحثي عن السطر الذي فيه اسم المستودع وغيّريه لاسم مستودعكِ (لو استخدمتِ Git Gateway مع Netlify فالإعداد الحالي يعمل مباشرة).</span></div>
+  </section>
+
+  <section>
+    <h2><span class="badge">✓</span> الاستخدام اليومي</h2>
+    <div class="step"><span class="n">1</span><span>ادخلي على: <code>رابط-موقعك/admin</code></span></div>
+    <div class="step"><span class="n">2</span><span>سجّلي الدخول بكلمة المرور التي عيّنتِها.</span></div>
+    <div class="step"><span class="n">3</span><span>اختاري القسم (إعلانات، طلاب، صور...)، اكتبي أو ارفعي الصورة، واضغطي <b>Publish</b>.</span></div>
+    <div class="step"><span class="n">4</span><span>خلال دقيقة، يتحدّث الموقع تلقائياً. ✅</span></div>
+    <div class="tip"><b>هذا كل شيء!</b> بعد الإعداد لمرة واحدة، تديرين الموقع بالكامل من لوحة أنيقة — بدون كود ولا رفع يدوي.</div>
+  </section>
+
+  <section>
+    <h2><span class="badge">i</span> ملاحظة أمينة</h2>
+    <p>ربط لوحة التحكم بالموقع الحالي (بحيث تظهر التعديلات فوراً) يحتاج خطوة تقنية إضافية: تعديل الموقع ليقرأ المحتوى من ملفات اللوحة. أخبريني عندما تكونين جاهزة وقد أنجزتِ الإعداد أعلاه، وسأكمل هذا الربط لكِ.</p>
+  </section>
+
+</div>
+</body>
+</html>

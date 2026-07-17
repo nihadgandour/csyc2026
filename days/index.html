@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>أرشيف الأيام · المخيم الشبابي للأمن السيبراني 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cyan:#00b1d5; --cyan-bright:#22d3f0; --navy:#295b98; --navy-deep:#0a2a52;
+    --navy-abyss:#04122b; --ink:#030c1e; --surface:#0c2447; --surface-2:#103159;
+    --glass-line:rgba(0,177,213,0.28); --glass-line-2:rgba(255,255,255,0.08);
+    --text:#eaf6fb; --text-soft:#a9c6e0; --text-mute:#6d8fb5;
+    --grad-brand:linear-gradient(120deg,var(--navy-deep) 0%,var(--navy) 42%,var(--cyan) 100%);
+    --grad-cyan:linear-gradient(135deg,var(--cyan) 0%,var(--cyan-bright) 100%);
+    --f-ar:'Tajawal',system-ui,sans-serif; --f-en:'Oswald',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--f-ar);background:var(--ink);color:var(--text);line-height:1.6;min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(0,177,213,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,177,213,.035) 1px,transparent 1px);
+    background-size:46px 46px;mask-image:radial-gradient(ellipse 100% 80% at 50% 0%,#000 30%,transparent 90%)}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+  .en{font-family:var(--f-en);letter-spacing:.5px}
+
+  .top{background:var(--grad-brand);padding:44px 0 40px;position:relative;overflow:hidden}
+  .top::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 85% 15%,rgba(0,177,213,.35),transparent 60%)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .top h1{font-size:clamp(24px,4vw,38px);font-weight:900;color:#fff}
+  .top h1 .en{display:block;font-size:.42em;color:var(--cyan-bright);margin-top:4px}
+  .top p{color:var(--text-soft);font-size:15px;margin-top:8px}
+  .home-btn{background:#fff;color:var(--navy-deep);text-decoration:none;font-weight:800;font-size:14px;
+    padding:12px 22px;border-radius:12px;box-shadow:0 12px 30px -8px rgba(0,177,213,.5);white-space:nowrap}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding:44px 0}
+  .day-card{display:block;text-decoration:none;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,var(--surface),var(--surface-2));
+    border:1px solid var(--glass-line-2);border-radius:16px;padding:24px 20px;
+    transition:transform .25s,border-color .25s}
+  .day-card:hover{transform:translateY(-5px);border-color:var(--glass-line)}
+  .day-card::after{content:'';position:absolute;inset:0 auto auto 0;width:100%;height:3px;background:var(--grad-cyan)}
+  .day-card .num{font-family:var(--f-en);font-size:46px;font-weight:700;color:var(--cyan-bright);line-height:1}
+  .day-card .lbl{font-size:13px;font-weight:800;color:#fff;margin-top:8px}
+  .day-card .date{font-size:12px;color:var(--text-mute);margin-top:2px}
+  .day-card .go{font-size:12px;font-weight:800;color:var(--cyan);margin-top:14px;display:inline-flex;gap:5px}
+
+  .empty{text-align:center;color:var(--text-mute);padding:60px 0;font-size:15px}
+
+  footer{border-top:1px solid var(--glass-line-2);padding:22px 0;text-align:center;color:var(--text-mute);font-size:12px}
+  .soon{ text-align:center; padding:70px 24px; max-width:560px; margin:40px auto;
+    background:linear-gradient(180deg,var(--surface),var(--surface-2));
+    border:1px solid var(--glass-line); border-radius:24px; }
+  .soon-ico{ font-size:64px; margin-bottom:16px; }
+  .soon h2{ font-size:30px; font-weight:900; color:#fff; margin-bottom:14px; }
+  .soon p{ color:var(--text-soft); font-size:16px; line-height:1.8; margin-bottom:26px; }
+  .soon p b{ color:var(--cyan-bright); }
+  .home-btn2{ display:inline-block; background:var(--grad-cyan); color:var(--ink);
+    text-decoration:none; font-weight:800; padding:13px 28px; border-radius:12px;
+    box-shadow:0 12px 30px -8px rgba(0,177,213,.5); }
+  .home-btn2:hover{ transform:translateY(-2px); }
+  :focus-visible{outline:2px solid var(--cyan-bright);outline-offset:3px;border-radius:8px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div>
+      <h1>أرشيف الأيام<span class="en">DAILY ARCHIVE · CAMP 2026</span></h1>
+      <p>هنا ستُحفظ كل أيام المخيم المنتهية — الجلسات، الإنجازات، والصور.</p>
+    </div>
+    <a class="home-btn" href="../index.html">← العودة إلى اليوم المباشر</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- الأرشيف يُبنى تلقائياً: كل يوم انتهى يظهر هنا -->
+  <div class="grid" id="archiveGrid"></div>
+  <div class="soon" id="archiveSoon" style="display:none">
+    <div class="soon-ico">🗂️</div>
+    <h2>الأرشيف قريباً</h2>
+    <p>سينطلق المخيم في <b>19 يوليو 2026</b>. بمجرد انتهاء اليوم الأول، ستظهر هنا صفحة كل يوم — يمكن للأهالي تصفّحها في أي وقت.</p>
+    <a class="home-btn2" href="../index.html">تابعوا اليوم المباشر الآن ←</a>
+  </div>
+</main>
+
+<footer>© 2026 المخيم الشبابي للأمن السيبراني — أرشيف الأيام</footer>
+
+<script>
+/* أرشيف تلقائي: يقرأ أيام المخيم ويعرض كل يوم انتهى */
+const AR_DAYNAMES=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const AR_MONTHS=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const AR_ORD=["","الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر","الثالث عشر","الرابع عشر","الخامس عشر"];
+
+async function buildArchive(){
+  const grid=document.getElementById('archiveGrid');
+  const soon=document.getElementById('archiveSoon');
+  let camp=null;
+  try{
+    const res=await fetch('../content/camp-days.json?t='+Date.now(),{cache:'no-store'});
+    camp=await res.json();
+  }catch(e){ camp=null; }
+
+  if(!camp || !camp.days){ grid.innerHTML=''; soon.style.display='block'; return; }
+
+  const now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  let html='';
+  // الأحدث أولاً
+  for(let i=camp.days.length-1;i>=0;i--){
+    const d=camp.days[i];
+    const dt=new Date(d.date+'T00:00:00');
+    if(dt.getTime() < today.getTime()){   // يوم انتهى → للأرشيف
+      const nn=String(d.n).padStart(2,'0');
+      const dateStr=AR_DAYNAMES[dt.getDay()]+' · '+dt.getDate()+' '+AR_MONTHS[dt.getMonth()]+' '+dt.getFullYear();
+      html+=`<a class="day-card" href="day-${nn}.html">`+
+            `<div class="num en">${nn}</div>`+
+            `<div class="lbl">اليوم ${AR_ORD[d.n]||d.n}</div>`+
+            `<div class="date">${dateStr}</div>`+
+            `<div class="go">عرض اليوم ←</div></a>`;
+    }
+  }
+  if(html){ grid.innerHTML=html; soon.style.display='none'; }
+  else { grid.innerHTML=''; soon.style.display='block'; }
+}
+buildArchive();
+</script>
+
+</body>
+</html>
