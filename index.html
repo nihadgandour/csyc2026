@@ -1257,7 +1257,6 @@
         <h5 data-en="Contact us">تواصلوا معنا</h5>
         <div class="social"><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Telegram">✈</a></div>
         <div style="margin-top:12px;font-size:12.5px;color:var(--text-mute);display:flex;flex-direction:column;gap:5px">
-          <span data-en="Camp contact: &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;0097412345678&lt;/span&gt;">تواصل مع المخيم: <span class="en" dir="ltr">0097412345678</span></span>
           <span data-en="Call Center: &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;16555&lt;/span&gt;">مركز الاتصال (Call Center): <span class="en" dir="ltr">16555</span></span>
           <span data-en="Phone: &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;0097440466798&lt;/span&gt; · &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;0097440466623&lt;/span&gt; · &lt;span class=&quot;en&quot; dir=&quot;ltr&quot;&gt;0097451045944&lt;/span&gt;">هاتف: <span class="en" dir="ltr">0097440466798</span> · <span class="en" dir="ltr">0097440466623</span> · <span class="en" dir="ltr">0097451045944</span></span>
           <span data-en="Email: &lt;a href=&quot;mailto:academy@ncsa.gov.qa&quot; style=&quot;color:var(--cyan-bright);text-decoration:none&quot;&gt;academy@ncsa.gov.qa&lt;/a&gt;">البريد الإلكتروني: <a href="mailto:academy@ncsa.gov.qa" style="color:var(--cyan-bright);text-decoration:none">academy@ncsa.gov.qa</a></span>
@@ -1433,7 +1432,6 @@ function renderHighlights(){
   box.innerHTML=list.map(h=>{
     const tag=_t(h,'tag'), title=_t(h,'title'), text=_t(h,'text');
     const style=h.tagStyle||'info';
-    const more=LANG==='en'?'Read more →':'اقرأ المزيد ←';
 
     // الوسائط: فيديو مرفوع > يوتيوب > صورة
     let media='', isVid=false;
@@ -1449,8 +1447,7 @@ function renderHighlights(){
 
     return `<article class="hl${h.featured?' feat':''}">`+
       `<div class="hl-media${isVid?' is-video':''}">${tag?`<span class="tag ${style}">${_esc(tag)}</span>`:''}${media}</div>`+
-      `<div class="hl-body"><h3>${_esc(title)}</h3><p>${_esc(text)}</p>`+
-      `<a class="more" href="#">${more}</a></div></article>`;
+      `<div class="hl-body"><h3>${_esc(title)}</h3><p>${_esc(text)}</p></div></article>`;
   }).join('');
 }
 
