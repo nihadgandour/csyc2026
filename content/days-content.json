@@ -3,7 +3,9 @@
   "2026-07-19": {
     "highlights": [
       {
-        "tag": "🎉 الافتتاح", "tagEn": "🎉 Opening", "tagStyle": "win",
+        "tag": "🎉 الافتتاح",
+        "tagEn": "🎉 Opening",
+        "tagStyle": "win",
         "image": "images/902965b2d49a46e29efab274b03533f1.png",
         "titleAr": "انطلاقة قوية للمخيم الشبابي للأمن السيبراني 2026",
         "titleEn": "A strong start for Cyber Security Youth Camp 2026",
@@ -12,63 +14,251 @@
         "featured": true
       },
       {
-        "tag": "الفرق", "tagEn": "Teams", "tagStyle": "info",
+        "tag": "الفرق",
+        "tagEn": "Teams",
+        "tagStyle": "info",
         "image": "images/78005c2d626a418b841c31e4fa18d841.png",
         "titleAr": "تعرّفوا على الفرق العشرة",
         "titleEn": "Meet the 10 teams",
         "textAr": "من Hackers وDefenders إلى Python وGhosts — كوّن المشاركون فرقهم واختاروا أسماءها، استعداداً للمنافسة.",
         "textEn": "From Hackers and Defenders to Python and Ghosts — the campers formed their teams and chose their names, ready to compete.",
         "featured": false
-      },
-      {
-        "tag": "نشاط", "tagEn": "Activity", "tagStyle": "warn",
-        "image": "images/ab882049ae224f849c23f8903c3c9571.png",
-        "titleAr": "أول نشاط تفاعلي",
-        "titleEn": "The first interactive activity",
-        "textAr": "بدأ المشاركون بنشاط عملي عرّفهم على مفاهيم الأمن السيبراني الأساسية بطريقة ممتعة وتفاعلية.",
-        "textEn": "Campers kicked off with a hands-on activity that introduced them to core cybersecurity concepts in a fun, engaging way.",
-        "featured": false
       }
     ],
     "announcements": [
       {
-        "type": "urgent", "icon": "📍",
-        "titleAr": "مكان التجمّع الصباحي", "titleEn": "Morning assembly point",
-        "textAr": "مجموعات البنات تتجمّع في القاعة الرئيسية من الساعة 7:00 صباحاً. مجموعات الأولاد تبدأ 12:30 ظهراً. يُرجى الحضور في الموعد.",
-        "textEn": "Girls' groups gather at the main hall from 7:00 AM. Boys' groups begin at 12:30 PM. Please arrive on time.",
-        "time": "اليوم", "timeEn": "Today"
+        "type": "info",
+        "icon": "👕",
+        "titleAr": "الزي الرسمي للمخيم",
+        "titleEn": "Camp dress code",
+        "textAr": "يُرجى ارتداء الزي الرسمي المناسب للبيئة التعليمية ( ثوب/عبائة) والاحتفاظ بالبطاقة التعريفية طوال الوقت.",
+        "textEn": "Please wear appropriate formal attire suitable for an educational environment (thobe/abaya) and keep your identification badge with you at all times.",
+        "time": "اليوم",
+        "timeEn": "Today"
       },
       {
-        "type": "info", "icon": "👕",
-        "titleAr": "الزي الرسمي للمخيم", "titleEn": "Camp dress code",
-        "textAr": "يُرجى ارتداء قميص المخيم الأزرق والاحتفاظ بالبطاقة التعريفية طوال الوقت.",
-        "textEn": "Please wear the blue camp shirt and keep your ID badge with you at all times.",
-        "time": "اليوم", "timeEn": "Today"
-      },
-      {
-        "type": "success", "icon": "🎉",
-        "titleAr": "أهلاً بالمشاركين!", "titleEn": "Welcome, campers!",
+        "type": "success",
+        "icon": "🎉",
+        "titleAr": "أهلاً بالمشاركين!",
+        "titleEn": "Welcome, campers!",
         "textAr": "ترحيب حارّ بجميع الطلاب الـ 400 المنضمّين إلينا اليوم. استعدّوا لثلاثة أسابيع رائعة قادمة.",
         "textEn": "A warm welcome to all 400 students joining us today. Get ready for an amazing three weeks ahead.",
-        "time": "اليوم", "timeEn": "Today"
+        "time": "اليوم",
+        "timeEn": "Today"
       }
     ],
     "topStudents": [],
     "feedback": {
       "photo": "images/student-photo.jpg",
-      "quoteAr": "«يوم الافتتاح كان رائعاً — تعرّفت على فريقي وبدأنا أول تحدٍّ، وصرت متحمّساً جداً للأسابيع القادمة!»",
-      "quoteEn": "\"The opening day was amazing — meeting my team and starting our first challenge got me so excited for the weeks ahead!\"",
-      "studentAr": "— أحد المشاركين · فريق Hackers · اليوم الأول",
-      "studentEn": "— A camper · Team Hackers · Day 1",
-      "stars": 5
+      "quoteAr": "",
+      "quoteEn": "",
+      "studentAr": "",
+      "studentEn": "",
+      "stars": 0
     },
     "tomorrow": {
       "labelAr": "اليوم الثاني · الاثنين 20 يوليو 2026",
       "labelEn": "Day 2 · Monday 20 July 2026",
       "titleAr": "انطلاقة المخيم الكاملة 🚀",
       "titleEn": "The camp begins in full 🚀",
-      "itemsAr": ["أولى ورش الأمن السيبراني العملية","الفرق تبدأ بجمع النقاط","إطلاق أول تحدٍّ يومي","إعلان متفوّقي اليوم"],
-      "itemsEn": ["First hands-on cybersecurity workshops","Teams start earning points","First daily challenge launches","Top students of the day announced"]
+      "itemsAr": [
+        "ورش الأمن السيبراني العملية\\nالفرق تبدأ بجمع النقاط\\nجلسة مع خبير",
+        "حمد حديد  المري"
+      ],
+      "itemsEn": [
+        "First hands-on cybersecurity workshops\\nTeams start earning points\\nExpert session with Hamad Hadeed Al Marri"
+      ]
+    },
+    "gallery": [],
+    "schedule": {
+      "girls_13": [
+        {
+          "time": "07:00",
+          "title": "تسجيل الحضور",
+          "type": "ceremony",
+          "meta": ""
+        },
+        {
+          "time": "08:00",
+          "title": "مقدمة عن الأمن السيبراني والإختراق",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "08:50",
+          "title": "استراحة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "09:45",
+          "title": "محاضرة تعريفية",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "10:35",
+          "title": "مقدمة عن الأمن السيبراني والإختراق",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "11:25",
+          "title": "- صناعة الحلي الخرزية - صناعة الشموع ",
+          "type": "activity",
+          "meta": ""
+        },
+        {
+          "time": "12:30",
+          "title": "الإنصراف",
+          "type": "ceremony",
+          "meta": ""
+        }
+      ],
+      "girls_15": [
+        {
+          "time": "07:00",
+          "title": "تسجيل الحضور",
+          "type": "ceremony",
+          "meta": ""
+        },
+        {
+          "time": "08:00",
+          "title": "محاضرة تعريفية",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "08:50",
+          "title": "مقدمة عن الأمن السيبراني والإختراق",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "09:50",
+          "title": "استراحة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "10:40",
+          "title": "مقدمة عن الأمن السيبراني والإختراق",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "11:30",
+          "title": "- الرسم على المرأة - تزيين فرشاة الشعر",
+          "type": "activity",
+          "meta": ""
+        },
+        {
+          "time": "12:30",
+          "title": "الإنصراف",
+          "type": "ceremony",
+          "meta": ""
+        }
+      ],
+      "boys_13": [
+        {
+          "time": "12:30",
+          "title": "تسجيل الحضور",
+          "type": "ceremony",
+          "meta": ""
+        },
+        {
+          "time": "13:00",
+          "title": "مقدمة عن الأمن السيبراني والإختراق",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "13:45",
+          "title": "استراحة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "14:45",
+          "title": "محاضرة تعريفية",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "15:40",
+          "title": "صلاة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "16:10",
+          "title": "مقدمة عن الأمن السيبراني والإختراق",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "17:00",
+          "title": "التحقيق في مسرح الجريمة",
+          "type": "activity",
+          "meta": ""
+        },
+        {
+          "time": "18:00",
+          "title": "الإنصراف",
+          "type": "ceremony",
+          "meta": ""
+        }
+      ],
+      "boys_15": [
+        {
+          "time": "12:30",
+          "title": "تسجيل الحضور",
+          "type": "ceremony",
+          "meta": ""
+        },
+        {
+          "time": "13:00",
+          "title": "محاضرة تعريفية",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "13:50",
+          "title": "مقدمة عن الأمن السيبراني والإختراق",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "14:50",
+          "title": "استراحة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "15:40",
+          "title": "صلاة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "16:10",
+          "title": "مقدمة عن الأمن السيبراني والإختراق",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "17:00",
+          "title": "أهرب من الفايروس",
+          "type": "activity",
+          "meta": ""
+        },
+        {
+          "time": "18:00",
+          "title": "الإنصراف",
+          "type": "ceremony",
+          "meta": ""
+        }
+      ]
     }
   }
 }
