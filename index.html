@@ -734,31 +734,6 @@
   html[data-lang="en"] .lb .head{ direction:ltr; }
   html[data-lang="en"] body{ text-align:start; }
 
-  /* ─── TOP STUDENTS ─── */
-  .students{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; }
-  .stud{
-    position:relative; overflow:hidden; text-align:center;
-    background:linear-gradient(180deg, var(--surface), var(--surface-2));
-    border:1px solid var(--glass-line-2); border-radius:16px; padding:26px 18px 20px;
-    transition:transform .25s, border-color .25s;
-  }
-  .stud:hover{ transform:translateY(-5px); border-color:var(--glass-line); }
-  .stud::after{ content:''; position:absolute; inset:0 auto auto 0; width:100%; height:4px; background:var(--grad-cyan); }
-  .stud.gold::after{ background:linear-gradient(135deg,#ffc857,#ff9a3c); }
-  .stud .medal{ font-size:34px; margin-bottom:8px; }
-  .stud .avatar{
-    width:72px;height:72px;border-radius:50%;margin:0 auto 12px;
-    background:var(--grad-brand); display:grid;place-items:center;
-    font-size:30px; border:3px solid var(--cyan); box-shadow:var(--glow-cyan);
-  }
-  .stud .avatar.has-photo{ overflow:hidden; background:var(--surface-2); }
-  .stud .avatar.has-photo img{ width:100%; height:100%; object-fit:cover; }
-  .stud .name{ font-size:16px; font-weight:900; color:#fff; }
-  .stud .team{ font-size:12px; color:var(--text-mute); margin-top:2px; }
-  .stud .why{ font-size:12.5px; color:var(--cyan-bright); font-weight:700; margin-top:10px;
-    background:rgba(0,177,213,.1); border-radius:var(--pill); padding:5px 12px; display:inline-block; }
-  .stud .pts{ font-family:var(--f-en); font-size:22px; font-weight:700; color:var(--cyan-bright); margin-top:10px; }
-
   /* ─── ATTENDANCE (girls / boys) ─── */
   .attend{ display:grid; grid-template-columns:1fr 1fr auto; gap:16px; align-items:stretch; }
   .att-card{
@@ -872,7 +847,6 @@
     .stats{ grid-template-columns:1fr 1fr; }
     .attend{ grid-template-columns:1fr; }
     .att-total{ grid-column:span 1; }
-    .students{ grid-template-columns:repeat(2,1fr); }
     .hl-grid{ grid-template-columns:1fr; }
 
     /* المبدّل: زرّين في الصف */
@@ -889,7 +863,6 @@
 
   @media (max-width:400px){
     .stats{ grid-template-columns:1fr; }
-    .students{ grid-template-columns:1fr; }
     .gal{ grid-template-columns:1fr; }
     .gal figure.feat,.gal figure.wide,.gal figure:nth-child(1){ grid-column:span 1; }
     .sec-num{ display:none; }
@@ -1165,16 +1138,6 @@
   </div>
 </section>
 
-<!-- ══ TOP STUDENTS (الطلاب المتفوقون) ══ -->
-<section class="wrap">
-  <div class="sec-head">
-    <span class="sec-num en">05</span>
-    <h2 class="sec-title" data-en="Top Students">الطلاب المتفوقون <span class="sub" data-en="Today's standout campers">نجوم اليوم المتميّزون</span></h2>
-    <span class="sec-line"></span>
-  </div>
-  <div class="students" id="stuGrid"><!-- يُبنى من content/days-content.json --></div>
-</section>
-
 <!-- ══ 8 · STUDENT FEEDBACK (التغذية الراجعة من الطلاب) ══ -->
 <section class="wrap">
   <div class="sec-head">
@@ -1412,7 +1375,7 @@ async function loadDayContent(){
 }
 
 function renderDayContent(){
-  renderHighlights(); renderAnnouncements(); renderTopStudents();
+  renderHighlights(); renderAnnouncements();
   renderFeedback(); renderTomorrow();
   if(typeof loadGallery==='function') loadGallery();   // ألبوم اليوم من اللوحة
 }
@@ -1465,45 +1428,6 @@ function renderAnnouncements(){
     return `<div class="note ${a.type||'info'}"><div class="ico">${_esc(a.icon||'📢')}</div>`+
       `<div><h4>${_esc(title)}</h4><p>${_esc(text)}</p>`+
       `${time?`<time>${_esc(time)}</time>`:''}</div></div>`;
-  }).join('');
-}
-
-/* ─── الطلاب المتفوقون ─── */
-/* يعرض بالضبط ما أضفتِه في لوحة التحكم وبالترتيب الذي رتّبتِه.
-   لا يختفون تلقائياً — يبقون حتى تحذفيهم من اللوحة.
-   إن لم يُضَف أي طالب بعد → تظهر حالة "يُعلن قريباً" التمهيدية. */
-function renderTopStudents(){
-  const box=document.getElementById('stuGrid'); if(!box) return;
-  const list=(TODAY_C&&TODAY_C.topStudents)||[];
-  const sec=box.closest('section');
-  const medals=['🥇','🥈','🥉','⭐','🎖️','🏆'];
-
-  // لم يُضَف طلاب بعد (اليوم غير مُعدّ) → حالة تمهيدية
-  if(!list.length){
-    if(sec) sec.style.display='';
-    box.innerHTML=['🥇','🥈','🥉','⭐'].map((m,i)=>
-      `<div class="stud${i===0?' gold':''}"><div class="medal">${m}</div><div class="avatar">🏅</div>`+
-      `<div class="name">${LANG==='en'?'To be announced':'يُعلَن قريباً'}</div>`+
-      `<div class="team">${LANG==='en'?'Coming soon':'قريباً'}</div>`+
-      `<div class="pts en">—</div></div>`).join('');
-    return;
-  }
-
-  if(sec) sec.style.display='';
-  // يعرض كل الطلاب بالترتيب المحفوظ (بدون حد أقصى)
-  box.innerHTML=list.map((s,i)=>{
-    const name=_t(s,'name'), why=_t(s,'why');
-    const medal=s.medal || medals[i] || '🏅';
-    // صورة الطالب إن وُجدت، وإلا الأيقونة الافتراضية
-    const avatar = s.photo
-      ? `<div class="avatar has-photo"><img src="${_esc(s.photo)}" alt="${_esc(name)}" onerror="this.parentElement.classList.remove('has-photo');this.remove();"></div>`
-      : `<div class="avatar">🏅</div>`;
-    return `<div class="stud${i===0?' gold':''}">`+
-      `<div class="medal">${_esc(medal)}</div>${avatar}`+
-      `<div class="name">${_esc(name)}</div>`+
-      `${s.team?`<div class="team">${LANG==='en'?'Team ':'فريق '}${_esc(s.team)}</div>`:''}`+
-      `${why?`<div class="why">${_esc(why)}</div>`:''}`+
-      `<div class="pts en">${s.points||0}</div></div>`;
   }).join('');
 }
 
