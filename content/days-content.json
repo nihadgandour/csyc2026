@@ -377,5 +377,203 @@
         }
       ]
     }
+  },
+  "2026-07-20": {
+    "highlights": [],
+    "announcements": [],
+    "topStudents": [],
+    "feedback": {},
+    "tomorrow": {},
+    "gallery": [],
+    "schedule": {
+      "girls_13": [
+        {
+          "time": "07:00",
+          "title": "تسجيل الحضور",
+          "type": "ceremony",
+          "meta": ""
+        },
+        {
+          "time": "08:00",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "08:50",
+          "title": "استراحة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "09:45",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "10:35",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "11:25",
+          "title": "جلسة مع خبير حمد حديد  المري",
+          "type": "expert",
+          "meta": ""
+        },
+        {
+          "time": "12:30",
+          "title": "الإنصراف",
+          "type": "ceremony",
+          "meta": ""
+        }
+      ],
+      "girls_15": [
+        {
+          "time": "07:00",
+          "title": "تسجيل الحضور",
+          "type": "ceremony",
+          "meta": ""
+        },
+        {
+          "time": "08:00",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "08:50",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "09:50",
+          "title": "استراحة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "10:40",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "11:25",
+          "title": "جلسة مع خبير حمد حديد  المري",
+          "type": "expert",
+          "meta": ""
+        },
+        {
+          "time": "12:30",
+          "title": "الإنصراف",
+          "type": "ceremony",
+          "meta": ""
+        }
+      ],
+      "boys_13": [
+        {
+          "time": "12:30",
+          "title": "تسجيل الحضور",
+          "type": "ceremony",
+          "meta": ""
+        },
+        {
+          "time": "13:00",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "13:45",
+          "title": "استراحة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "14:45",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "15:45",
+          "title": "صلاة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "16:10",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "17:00",
+          "title": "جلسة مع خبير حمد حديد  المري",
+          "type": "expert",
+          "meta": ""
+        },
+        {
+          "time": "18:00",
+          "title": "الإنصراف",
+          "type": "ceremony",
+          "meta": ""
+        }
+      ],
+      "boys_15": [
+        {
+          "time": "12:30",
+          "title": "تسجيل الحضور",
+          "type": "ceremony",
+          "meta": ""
+        },
+        {
+          "time": "13:00",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "13:50",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "14:50",
+          "title": "استراحة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "15:45",
+          "title": "صلاة",
+          "type": "break",
+          "meta": ""
+        },
+        {
+          "time": "16:10",
+          "title": "التشفير و Linux ",
+          "type": "session",
+          "meta": ""
+        },
+        {
+          "time": "17:00",
+          "title": "جلسة مع خبير حمد حديد  المري",
+          "type": "expert",
+          "meta": ""
+        },
+        {
+          "time": "18:00",
+          "title": "الإنصراف",
+          "type": "ceremony",
+          "meta": ""
+        }
+      ]
+    }
   }
 }
