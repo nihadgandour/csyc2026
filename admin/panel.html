@@ -240,13 +240,6 @@
       <button class="add-btn" onclick="addAnn()">+ إضافة إعلان</button>
     </div>
 
-    <!-- الطلاب المتفوقون -->
-    <div class="card">
-      <h3>🏅 الطلاب المتفوقون</h3>
-      <div id="stuList"></div>
-      <button class="add-btn" onclick="addStudent()">+ إضافة طالب</button>
-    </div>
-
     <!-- التغذية الراجعة -->
     <div class="card">
       <h3>💬 التغذية الراجعة</h3>
@@ -366,9 +359,8 @@
     <div class="card">
       <h3>↕️ الترتيب والحذف</h3>
       <p style="font-size:14px;color:var(--soft);line-height:2">
-        استخدمي زرَّي <b style="color:var(--cyan-b)">↑ ↓</b> لتغيير ترتيب أي عنصر (اللحظات، الإعلانات، الطلاب).<br>
-        <b style="color:var(--cyan-b)">الطلاب المتفوقون:</b> يظهرون بالضبط كما أضفتِهم وبالترتيب الذي رتّبتِهم — الأول يحصل على 🥇.<br>
-        لا يختفون إلا إذا حذفتِهم من هنا. إن لم تضيفي أحداً، يظهر «يُعلن قريباً» في الموقع.
+        استخدمي زرَّي <b style="color:var(--cyan-b)">↑ ↓</b> لتغيير ترتيب أي عنصر (اللحظات، الإعلانات).<br>
+        لا يختفي أي عنصر إلا إذا حذفتِه من هنا.
       </p>
     </div>
     <div class="card">
@@ -833,7 +825,7 @@ function moveItem(list,i,dir){
   [arr[i],arr[j]]=[arr[j],arr[i]];
   rerenderAll();
 }
-function rerenderAll(){ renderHighlights(); renderAnns(); renderStudents(); renderFeedback(); renderTomorrow(); renderAlbum(); renderSchedule(); }
+function rerenderAll(){ renderHighlights(); renderAnns(); renderFeedback(); renderTomorrow(); renderAlbum(); renderSchedule(); }
 
 /* ═══════ أبرز اللحظات ═══════ */
 function renderHighlights(){
@@ -909,43 +901,6 @@ function renderAnns(){
   if(!d.announcements.length) box.innerHTML='<div class="empty">لا توجد إعلانات — أضيفي واحداً</div>';
 }
 function addAnn(){ dayData().announcements.push({type:'info',icon:'📢',titleAr:'',titleEn:'',textAr:'',textEn:'',time:'اليوم',timeEn:'Today'}); renderAnns(); }
-
-/* ═══════ الطلاب ═══════ */
-const TEAM_LIST=["Hackers","Defenders","0101","Kali","Scanners","Java","Python","Hydra","Ghosts","Hunters"];
-const MEDALS=['🥇','🥈','🥉','⭐','🎖️','🏆'];
-function renderStudents(){
-  const d=dayData(), box=$('stuList'); box.innerHTML='';
-  d.topStudents.forEach((s,i)=>{
-    const pid='stu'+i;
-    regImg(pid, v=>{ d.topStudents[i].photo=v; });
-    box.insertAdjacentHTML('beforeend',`
-      <div class="card" style="background:rgba(0,177,213,.04)">
-        <div class="item-tools">
-          <span class="rank-badge">${MEDALS[i]||'🏅'} ${i+1}</span>
-          <button class="ord" onclick="moveItem('topStudents',${i},-1)" ${i===0?'disabled':''} title="أعلى">↑</button>
-          <button class="ord" onclick="moveItem('topStudents',${i},1)" ${i===d.topStudents.length-1?'disabled':''} title="أسفل">↓</button>
-          <button class="btn btn-sm btn-del" onclick="delItem('topStudents',${i})">حذف</button>
-        </div>
-        <div style="height:10px"></div>
-        <div class="row">
-          <div><label>الاسم (عربي)</label><input type="text" value="${esc(s.nameAr)}" oninput="upd('topStudents',${i},'nameAr',this.value)"></div>
-          <div><label>الاسم (إنجليزي)</label><input type="text" value="${esc(s.nameEn)}" oninput="upd('topStudents',${i},'nameEn',this.value)"></div>
-        </div>
-        <div class="row">
-          <div><label>الفريق</label><select onchange="upd('topStudents',${i},'team',this.value)">
-            ${TEAM_LIST.map(t=>`<option ${s.team===t?'selected':''}>${t}</option>`).join('')}
-          </select></div>
-          <div><label>النقاط</label><input type="number" value="${s.points||0}" oninput="upd('topStudents',${i},'points',+this.value)"></div>
-        </div>
-        <label>سبب التميّز (عربي)</label><input type="text" value="${esc(s.whyAr)}" oninput="upd('topStudents',${i},'whyAr',this.value)">
-        <label>سبب التميّز (إنجليزي)</label><input type="text" value="${esc(s.whyEn)}" oninput="upd('topStudents',${i},'whyEn',this.value)">
-        <label>صورة الطالب (اختياري)</label>
-        ${dropZone(pid, s.photo, null)}
-      </div>`);
-  });
-  if(!d.topStudents.length) box.innerHTML='<div class="empty">لا يوجد طلاب — أضيفي واحداً<br><span style="font-size:12px">(سيظهر «يُعلن قريباً» في الموقع)</span></div>';
-}
-function addStudent(){ dayData().topStudents.push({nameAr:'',nameEn:'',team:'Hackers',whyAr:'',whyEn:'',points:0,photo:''}); renderStudents(); }
 
 /* ═══════ التغذية الراجعة ═══════ */
 function renderFeedback(){
@@ -1046,13 +1001,12 @@ function genReport(){
   // المحتوى المنشور
   s=pptx.addSlide(); s.background={color:'F4F8FD'};
   s.addText('المحتوى المنشور',{x:0.5,y:0.4,fontSize:30,bold:true,color:NAVY});
-  let hl=0,an=0,st=0;
-  Object.values(CONTENT).forEach(d=>{ hl+=(d.highlights||[]).length; an+=(d.announcements||[]).length; st+=(d.topStudents||[]).length; });
+  let hl=0,an=0;
+  Object.values(CONTENT).forEach(d=>{ hl+=(d.highlights||[]).length; an+=(d.announcements||[]).length; });
   s.addTable([
     [{text:'القسم',options:{bold:true,color:WHITE,fill:NAVY}},{text:'العدد',options:{bold:true,color:WHITE,fill:NAVY}}],
     ['أبرز اللحظات',String(hl)],
     ['الإعلانات',String(an)],
-    ['الطلاب المتفوقون',String(st)],
     ['أسئلة التحدّي','15'],
   ],{x:0.6,y:1.3,w:12,fontSize:15,border:{pt:1,color:'DDDDDD'},rowH:0.5});
 
