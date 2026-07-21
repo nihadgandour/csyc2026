@@ -108,6 +108,14 @@ section{padding:52px 0 6px;position:relative;z-index:2}
 
 .empty-note{text-align:center;color:var(--text-mute);font-size:13.5px;padding:30px 0}
 
+/* attendance */
+.att-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.att-stat{text-align:center;background:linear-gradient(180deg,var(--surface),var(--surface-2));
+  border:1px solid var(--glass-line-2);border-radius:16px;padding:20px 12px}
+.att-stat .n{font-family:var(--f-en);font-size:34px;font-weight:700;color:var(--cyan-bright);line-height:1}
+.att-stat .l{font-size:12.5px;color:var(--text-soft);font-weight:700;margin-top:6px}
+@media (max-width:600px){ .att-stats{grid-template-columns:1fr 1fr 1fr;gap:8px} .att-stat{padding:14px 8px} .att-stat .n{font-size:26px} }
+
 /* missing-day state */
 .miss{text-align:center;padding:80px 24px;max-width:520px;margin:40px auto;
   background:linear-gradient(180deg,var(--surface),var(--surface-2));
