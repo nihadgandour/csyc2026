@@ -1130,7 +1130,7 @@
         <h2 class="sec-title" data-en="Leaderboard">المتصدّرون</h2>
       </div>
       <div class="card lb">
-        <div class="head" style="display:grid;grid-template-columns:44px 1fr auto auto;gap:12px;"><span>#</span><span data-en="Team">الفريق</span><span data-en="Points">النقاط</span><span data-en="Change">التغيير</span></div>
+        <div class="head" style="display:grid;grid-template-columns:44px 1fr auto auto;gap:12px;"><span>#</span><span data-en="Team">الفريق</span><span data-en="Points">النقاط</span><span data-en="Solved">المحلولة</span></div>
         <!-- تُبنى الصفوف تلقائياً من قائمة الفرق + شيت Google (LEADERBOARD_URL) -->
         <div class="lb-scroll" id="lbBody"></div>
       </div>
@@ -1377,6 +1377,7 @@ async function loadDayContent(){
 function renderDayContent(){
   renderHighlights(); renderAnnouncements();
   renderFeedback(); renderTomorrow();
+  loadAttendance();
   if(typeof loadGallery==='function') loadGallery();   // ألبوم اليوم من اللوحة
 }
 
@@ -1770,14 +1771,10 @@ function renderRail(){
 
 
 /* ═══════════════════════════════════════════════════════════
-   الحضور اليومي — عدّ تلقائي من جدول Excel / Google Sheets
-   ✏️ ضع رابط الملف هنا عند توفّره. اترك "" لإبقاء حالة الانتظار.
-   الطريقة الأسهل: انشر Google Sheet كـ CSV واستخدم رابط CSV هنا.
-   يجب أن يحتوي الصف الأول على أعمدة: girls, boys  (أو أول قيمتين رقميتين).
+   الحضور اليومي — يُقرأ من لوحة التحكم (content/days-content.json)
+   لم يعد متصلاً بشيت Excel/Google — التحديث يتم من admin/panel.html
+   عبر بطاقة "🎟️ الحضور" (attendance: {girls, boys}) لكل يوم.
 ═══════════════════════════════════════════════════════════ */
-const ATTENDANCE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT9QW8obcDacEtgBtZnagoOwXjBQBK_-VpXnPIKrJkDCV8Hc96GOGcZ6b2RtLLOu64N-JA3883dx9Sh/pub?gid=0&single=true&output=csv";
-const TOTAL_STUDENTS = 400;          // إجمالي طلاب المخيم (200 بنت + 200 ولد)
-
 function setAttendance(girls, boys){
   const total = girls + boys;
   const g = document.getElementById('attGirls'), b = document.getElementById('attBoys'),
@@ -1799,18 +1796,12 @@ function pendingAttendance(){
   if(st){ st.classList.add('pending'); }
 }
 
-async function loadAttendance(){
-  if(!ATTENDANCE_URL){ pendingAttendance(); return; }   // لا رابط بعد → حالة انتظار
-  try{
-    // إضافة وقت الطلب تمنع المتصفح وخوادم التخزين المؤقت من إرجاع نسخة قديمة
-    const url = ATTENDANCE_URL + '&t=' + Date.now();
-    const res = await fetch(url, {cache:'no-store'});
-    const text = await res.text();
-    // استخرج أول رقمين من ملف CSV (girls ثم boys)
-    const nums = (text.match(/\d+/g)||[]).map(Number);
-    if(nums.length>=2){ setAttendance(nums[0], nums[1]); }
-    else pendingAttendance();
-  }catch(e){ pendingAttendance(); }
+function loadAttendance(){
+  const att = TODAY_C && TODAY_C.attendance;
+  const girls = att ? (+att.girls||0) : null;
+  const boys  = att ? (+att.boys||0)  : null;
+  if(att && (girls>0 || boys>0)){ setAttendance(girls, boys); }
+  else { pendingAttendance(); }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1825,16 +1816,16 @@ const LEADERBOARD_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT1-cGV
 
 // القائمة الأساسية للفرق (الترتيب الافتراضي عند غياب البيانات)
 let TEAMS = [
-  {name:"Hackers", pts:0, change:0},
-  {name:"Defenders", pts:0, change:0},
-  {name:"0101", pts:0, change:0},
-  {name:"Kali", pts:0, change:0},
-  {name:"Scanners", pts:0, change:0},
-  {name:"Java", pts:0, change:0},
-  {name:"Python", pts:0, change:0},
-  {name:"Hydra", pts:0, change:0},
-  {name:"Ghosts", pts:0, change:0},
-  {name:"Hunters", pts:0, change:0},
+  {name:"Hackers", pts:0, solved:0},
+  {name:"Defenders", pts:0, solved:0},
+  {name:"0101", pts:0, solved:0},
+  {name:"Kali", pts:0, solved:0},
+  {name:"Scanners", pts:0, solved:0},
+  {name:"Java", pts:0, solved:0},
+  {name:"Python", pts:0, solved:0},
+  {name:"Hydra", pts:0, solved:0},
+  {name:"Ghosts", pts:0, solved:0},
+  {name:"Hunters", pts:0, solved:0},
 ];
 
 function parseCSV(text){
@@ -1865,8 +1856,8 @@ async function loadLeaderboard(){
           const name=cols[0];
           const pts=parseInt((cols[1]||'').replace(/[^\d-]/g,''),10);
           if(!name || isNaN(pts)) return;              // تجاهل صف العناوين
-          const change=cols.length>2 ? parseInt((cols[2]||'').replace(/[^\d-]/g,''),10) : 0;
-          parsed.push({name, pts, change: isNaN(change)?0:change});
+          const solved=cols.length>2 ? parseInt((cols[2]||'').replace(/[^\d]/g,''),10) : 0;
+          parsed.push({name, pts, solved: isNaN(solved)?0:solved});
         });
         if(parsed.length){ TEAMS=parsed; }
       }
@@ -1884,14 +1875,11 @@ function renderLeaderboard(){
     const rank=i+1;
     const gCls = rank<=3 ? `g${rank}` : '';
     const scored = t.pts>0 ? 'scored' : '';   // الألوان تظهر فقط مع نقاط > 0
-    let ch='<div class="ch same">—</div>';
-    if(t.change>0) ch=`<div class="ch up">▲ ${t.change}</div>`;
-    else if(t.change<0) ch=`<div class="ch down">▼ ${Math.abs(t.change)}</div>`;
     html += `<div class="row ${gCls} ${scored}">`+
             `<div class="rk">${rank}</div>`+
             `<div class="team"><div class="nm">${t.name}</div></div>`+
             `<div class="pts en">${t.pts.toLocaleString('en-US')}</div>`+
-            ch+`</div>`;
+            `<div class="ch same en">${t.solved||0}</div></div>`;
   });
   body.innerHTML=html;
 }
@@ -2330,11 +2318,10 @@ document.getElementById('langToggle').addEventListener('click',e=>{
 
 loadCamp();   // يحدّد اليوم الحالي + العطلات تلقائياً
 renderRail();
-tickClock(); updateNow(); stamp(); loadAttendance(); loadGallery(); loadLeaderboard();
+tickClock(); updateNow(); stamp(); loadGallery(); loadLeaderboard();
 initQuiz(); loadQuiz();
 setInterval(tickClock,1000);
 setInterval(()=>{ updateNow(); renderRail(); },30000); // يحدّث الجدول و"جارٍ الآن"
-setInterval(loadAttendance,30000); // يحدّث الحضور كل 30 ثانية من الشيت
 setInterval(loadLeaderboard,30000); // يحدّث المتصدّرين كل 30 ثانية من الشيت
 if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
   window.addEventListener('load',countUp);
