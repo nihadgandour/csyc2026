@@ -64,9 +64,9 @@ async function renderDayPage(dayNum){
   </header>`;
 
   html += renderHighlights(c);
+  html += renderAttendance(c);
   html += renderSchedule(c);
   html += renderGallery(c);
-  html += renderStudents(c);
   html += renderFeedback(c);
   html += renderAnnouncements(c);
 
@@ -101,6 +101,18 @@ function renderHighlights(c){
   return sectionShell(1,'أبرز لحظات اليوم','', `<div class="hl-grid">${cards}</div>`);
 }
 
+function renderAttendance(c){
+  const a = c.attendance;
+  if(!a || ((+a.girls||0)===0 && (+a.boys||0)===0)) return '';
+  const girls = +a.girls||0, boys = +a.boys||0, total = girls+boys;
+  const inner = `<div class="att-stats">
+    <div class="att-stat"><div class="n en">${girls}</div><div class="l">بنات</div></div>
+    <div class="att-stat"><div class="n en">${boys}</div><div class="l">أولاد</div></div>
+    <div class="att-stat"><div class="n en">${total}</div><div class="l">الإجمالي</div></div>
+  </div>`;
+  return sectionShell(0,'الحضور','', inner);
+}
+
 function renderSchedule(c){
   const sch = c.schedule; if(!sch) return '';
   const groups = ['girls_13','girls_15','boys_13','boys_15'].filter(k=>Array.isArray(sch[k]) && sch[k].length);
@@ -129,26 +141,6 @@ function renderGallery(c){
        <div class="lightbox" id="lightbox"><button class="lb-close" id="lbClose">✕</button><img id="lbImg" src="" alt=""></div>`
     : `<div class="gal-empty">📸 لم تُرفع صور لهذا اليوم</div>`;
   return sectionShell(3,'ألبوم اليوم','', inner);
-}
-
-function renderStudents(c){
-  const list = c.topStudents || [];
-  if(!list.length) return '';
-  const medals=['🥇','🥈','🥉','⭐','🎖️','🏆'];
-  const cards = list.map((s,i)=>{
-    const name = s.nameAr || s.name || '';
-    const why = s.whyAr || s.why || '';
-    const avatar = s.photo
-      ? `<div class="avatar"><img src="${esc(s.photo)}" alt="${esc(name)}" onerror="this.parentElement.textContent='🏅'"></div>`
-      : `<div class="avatar">🏅</div>`;
-    return `<div class="stud">
-      <div class="medal">${esc(s.medal||medals[i]||'🏅')}</div>
-      ${avatar}
-      <div class="name">${esc(name)}</div>
-      ${why?`<div class="why">${esc(why)}</div>`:''}
-    </div>`;
-  }).join('');
-  return sectionShell(4,'الطلاب المتفوقون','نجوم هذا اليوم', `<div class="students">${cards}</div>`);
 }
 
 function renderFeedback(c){
