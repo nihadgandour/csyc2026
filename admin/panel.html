@@ -226,6 +226,16 @@
       <div class="hint">المحتوى يُحفظ لكل يوم على حدة. الجمعة والسبت عطلة (غير مدرجين).</div>
     </div>
 
+    <!-- الحضور -->
+    <div class="card">
+      <h3>🎟️ الحضور</h3>
+      <div class="row">
+        <div><label>عدد البنات</label><input type="number" min="0" id="attGirlsInp" oninput="updAttendance('girls',this.value)"></div>
+        <div><label>عدد الأولاد</label><input type="number" min="0" id="attBoysInp" oninput="updAttendance('boys',this.value)"></div>
+      </div>
+      <div class="hint" id="attTotalHint"></div>
+    </div>
+
     <!-- أبرز اللحظات -->
     <div class="card">
       <h3>⭐ أبرز اللحظات</h3>
@@ -542,11 +552,12 @@ async function loadAll(){
 }
 
 function dayData(){
-  if(!CONTENT[CUR]) CONTENT[CUR]={highlights:[],announcements:[],topStudents:[],feedback:{},tomorrow:{},gallery:[]};
+  if(!CONTENT[CUR]) CONTENT[CUR]={highlights:[],announcements:[],topStudents:[],feedback:{},tomorrow:{},gallery:[],attendance:{girls:0,boys:0}};
   const d=CONTENT[CUR];
   d.highlights=d.highlights||[]; d.announcements=d.announcements||[];
   d.topStudents=d.topStudents||[]; d.feedback=d.feedback||{}; d.tomorrow=d.tomorrow||{};
   d.gallery=d.gallery||[];
+  d.attendance=d.attendance||{girls:0,boys:0};
   d.schedule=d.schedule||{girls_13:[],girls_15:[],boys_13:[],boys_15:[]};
   return d;
 }
@@ -825,7 +836,21 @@ function moveItem(list,i,dir){
   [arr[i],arr[j]]=[arr[j],arr[i]];
   rerenderAll();
 }
-function rerenderAll(){ renderHighlights(); renderAnns(); renderFeedback(); renderTomorrow(); renderAlbum(); renderSchedule(); }
+function rerenderAll(){ renderHighlights(); renderAnns(); renderFeedback(); renderTomorrow(); renderAttendance(); renderAlbum(); renderSchedule(); }
+
+/* ═══════ الحضور ═══════ */
+function renderAttendance(){
+  const a=dayData().attendance;
+  const gi=$('attGirlsInp'), bi=$('attBoysInp'), hint=$('attTotalHint');
+  if(gi) gi.value = a.girls||0;
+  if(bi) bi.value = a.boys||0;
+  if(hint) hint.textContent = `الإجمالي: ${(a.girls||0)+(a.boys||0)} طالب/ة`;
+}
+function updAttendance(key,val){
+  const n=Math.max(0, parseInt(val,10)||0);
+  dayData().attendance[key]=n;
+  renderAttendance();
+}
 
 /* ═══════ أبرز اللحظات ═══════ */
 function renderHighlights(){
