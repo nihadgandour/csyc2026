@@ -274,6 +274,7 @@
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
         <button class="btn btn-ghost btn-sm" onclick="copyFromGroup()">📋 نسخ من مجموعة أخرى</button>
         <button class="btn btn-ghost btn-sm" onclick="copyFromPrevDay()">⏪ نسخ جدول يوم سابق</button>
+        <button class="btn btn-ghost btn-sm" onclick="translateAllSessions()">🌐 ترجمة تلقائية لكل الجلسات</button>
         <button class="btn btn-sm btn-del" onclick="clearSchedule()">🗑 مسح جدول هذه المجموعة</button>
       </div>
     </div>
@@ -731,6 +732,49 @@ function delAlb(i){
 }
 function albCap(i,key,val){ dayData().gallery[i][key]=val; }
 
+/* ═══════ ترجمة تلقائية (مجانية عبر MyMemory API) ═══════
+   ملاحظة: الترجمة الآلية ليست مثالية دائماً — راجعيها قبل الحفظ،
+   خصوصاً المصطلحات التقنية. تعمل فقط عند وجود اتصال إنترنت. */
+async function translateText(text){
+  if(!text || !text.trim()) return '';
+  try{
+    const res = await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair=ar|en');
+    const data = await res.json();
+    return (data && data.responseData && data.responseData.translatedText) || '';
+  }catch(e){ return ''; }
+}
+
+/* عنصر داخل قائمة (مثل highlights[i].titleAr → highlights[i].titleEn) */
+async function translateField(list, i, arKey, enKey, renderFnName){
+  const src=dayData()[list][i][arKey];
+  if(!src || !src.trim()){ toast('⚠️ اكتبي النص بالعربي أولاً'); return; }
+  toast('جارٍ الترجمة...');
+  const en=await translateText(src);
+  if(en){ dayData()[list][i][enKey]=en; window[renderFnName](); toast('تمت الترجمة ✓ راجعيها'); }
+  else toast('⚠️ تعذّرت الترجمة — أدخليها يدوياً');
+}
+/* حقل داخل كائن مفرد (مثل feedback.quoteAr → feedback.quoteEn) */
+async function translateObjField(objName, arKey, enKey, renderFnName){
+  const src=dayData()[objName][arKey];
+  if(!src || !src.trim()){ toast('⚠️ اكتبي النص بالعربي أولاً'); return; }
+  toast('جارٍ الترجمة...');
+  const en=await translateText(src);
+  if(en){ dayData()[objName][enKey]=en; window[renderFnName](); toast('تمت الترجمة ✓ راجعيها'); }
+  else toast('⚠️ تعذّرت الترجمة — أدخليها يدوياً');
+}
+/* قائمة بنود سطر بسطر (نظرة الغد) */
+async function translateTomorrowItems(){
+  const t=dayData().tomorrow;
+  const lines=(t.itemsAr||[]).filter(x=>x.trim());
+  if(!lines.length){ toast('⚠️ اكتبي البنود بالعربي أولاً'); return; }
+  toast('جارٍ ترجمة البنود...');
+  const out=[];
+  for(const line of lines){ out.push(await translateText(line)); }
+  t.itemsEn=out;
+  renderTomorrow();
+  toast('تمت الترجمة ✓ راجعيها');
+}
+
 /* ═══════ جدول اليوم ═══════ */
 const GROUP_LABELS={girls_13:'بنات ١٣–١٤',girls_15:'بنات ١٥–١٧',boys_13:'أولاد ١٣–١٤',boys_15:'أولاد ١٥–١٧'};
 const SESS_TYPES=[
@@ -775,8 +819,18 @@ function renderSchedule(){
         <button onclick="moveSess(${i},1)" ${i===list.length-1?'disabled':''} title="أسفل">↓</button>
         <button class="x" onclick="delSess(${i})" title="حذف">✕</button>
       </div>
+      <div style="grid-column:1/-1;display:flex;gap:8px">
+        <input type="text" value="${esc(s.titleEn)}" oninput="updSess(${i},'titleEn',this.value)"
+               placeholder="Session name (English, optional)" dir="ltr" style="flex:1">
+        <button type="button" class="btn btn-ghost btn-sm" onclick="translateSess(${i},'title')" title="ترجمة تلقائية">🌐</button>
+      </div>
       <input type="text" value="${esc(s.meta)}" oninput="updSess(${i},'meta',this.value)"
              placeholder="تفاصيل / مكان (اختياري)" style="grid-column:1/-1">
+      <div style="grid-column:1/-1;display:flex;gap:8px">
+        <input type="text" value="${esc(s.metaEn)}" oninput="updSess(${i},'metaEn',this.value)"
+               placeholder="Details (English, optional)" dir="ltr" style="flex:1">
+        <button type="button" class="btn btn-ghost btn-sm" onclick="translateSess(${i},'meta')" title="ترجمة تلقائية">🌐</button>
+      </div>
     </div>`).join('');
 }
 function addSession(){
@@ -786,10 +840,32 @@ function addSession(){
   let t='08:00';
   if(last&&last.time){ const [h,m]=last.time.split(':').map(Number);
     t=String(Math.min(h+1,23)).padStart(2,'0')+':'+String(m).padStart(2,'0'); }
-  list.push({time:t,title:'',type:'session',meta:''});
+  list.push({time:t,title:'',titleEn:'',type:'session',meta:'',metaEn:''});
   renderSchedule();
 }
 function updSess(i,k,v){ schedData()[CUR_SGROUP][i][k]=v; if(k==='time') renderSchedule(); }
+
+async function translateSess(i, field){
+  const list=schedData()[CUR_SGROUP];
+  const src=list[i][field];
+  if(!src || !src.trim()){ toast('⚠️ اكتبي النص بالعربي أولاً'); return; }
+  toast('جارٍ الترجمة...');
+  const en=await translateText(src);
+  if(en){ list[i][field+'En']=en; renderSchedule(); toast('تمت الترجمة ✓ راجعيها'); }
+  else toast('⚠️ تعذّرت الترجمة — أدخليها يدوياً');
+}
+
+async function translateAllSessions(){
+  const list=schedData()[CUR_SGROUP];
+  if(!list.length){ toast('⚠️ لا توجد جلسات لترجمتها'); return; }
+  toast('جارٍ ترجمة كل الجلسات...');
+  for(const s of list){
+    if(s.title && !s.titleEn) s.titleEn=await translateText(s.title);
+    if(s.meta && !s.metaEn) s.metaEn=await translateText(s.meta);
+  }
+  renderSchedule();
+  toast('تمت الترجمة ✓ راجعيها قبل الحفظ');
+}
 function moveSess(i,d){
   const a=schedData()[CUR_SGROUP], j=i+d;
   if(j<0||j>=a.length) return;
@@ -868,7 +944,12 @@ function renderHighlights(){
         <div style="height:10px"></div>
         <div class="row">
           <div><label>الوسم (عربي)</label><input type="text" value="${esc(h.tag)}" oninput="upd('highlights',${i},'tag',this.value)"></div>
-          <div><label>الوسم (إنجليزي)</label><input type="text" value="${esc(h.tagEn)}" oninput="upd('highlights',${i},'tagEn',this.value)"></div>
+          <div><label>الوسم (إنجليزي)</label>
+            <div style="display:flex;gap:8px">
+              <input type="text" value="${esc(h.tagEn)}" oninput="upd('highlights',${i},'tagEn',this.value)" style="flex:1">
+              <button type="button" class="btn btn-ghost btn-sm" onclick="translateField('highlights',${i},'tag','tagEn','renderHighlights')" title="ترجمة تلقائية">🌐</button>
+            </div>
+          </div>
         </div>
         <label>لون الوسم</label>
         <select onchange="upd('highlights',${i},'tagStyle',this.value)">
@@ -877,9 +958,17 @@ function renderHighlights(){
           <option value="warn" ${h.tagStyle==='warn'?'selected':''}>وردي (تنبيه)</option>
         </select>
         <label>العنوان (عربي)</label><input type="text" value="${esc(h.titleAr)}" oninput="upd('highlights',${i},'titleAr',this.value)">
-        <label>العنوان (إنجليزي)</label><input type="text" value="${esc(h.titleEn)}" oninput="upd('highlights',${i},'titleEn',this.value)">
+        <label>العنوان (إنجليزي)</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" value="${esc(h.titleEn)}" oninput="upd('highlights',${i},'titleEn',this.value)" style="flex:1">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="translateField('highlights',${i},'titleAr','titleEn','renderHighlights')" title="ترجمة تلقائية">🌐</button>
+        </div>
         <label>النص (عربي)</label><textarea oninput="upd('highlights',${i},'textAr',this.value)">${h.textAr||''}</textarea>
-        <label>النص (إنجليزي)</label><textarea oninput="upd('highlights',${i},'textEn',this.value)">${h.textEn||''}</textarea>
+        <label>النص (إنجليزي)</label>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <textarea oninput="upd('highlights',${i},'textEn',this.value)" style="flex:1">${h.textEn||''}</textarea>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="translateField('highlights',${i},'textAr','textEn','renderHighlights')" title="ترجمة تلقائية">🌐</button>
+        </div>
         <label>بطاقة مميّزة (أكبر حجماً)</label>
         <select onchange="upd('highlights',${i},'featured',this.value==='yes')">
           <option value="no" ${!h.featured?'selected':''}>لا</option>
@@ -918,9 +1007,17 @@ function renderAnns(){
           <div><label>الأيقونة</label><input type="text" value="${esc(a.icon)}" oninput="upd('announcements',${i},'icon',this.value)" placeholder="📢"></div>
         </div>
         <label>العنوان (عربي)</label><input type="text" value="${esc(a.titleAr)}" oninput="upd('announcements',${i},'titleAr',this.value)">
-        <label>العنوان (إنجليزي)</label><input type="text" value="${esc(a.titleEn)}" oninput="upd('announcements',${i},'titleEn',this.value)">
+        <label>العنوان (إنجليزي)</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" value="${esc(a.titleEn)}" oninput="upd('announcements',${i},'titleEn',this.value)" style="flex:1">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="translateField('announcements',${i},'titleAr','titleEn','renderAnns')" title="ترجمة تلقائية">🌐</button>
+        </div>
         <label>النص (عربي)</label><textarea oninput="upd('announcements',${i},'textAr',this.value)">${a.textAr||''}</textarea>
-        <label>النص (إنجليزي)</label><textarea oninput="upd('announcements',${i},'textEn',this.value)">${a.textEn||''}</textarea>
+        <label>النص (إنجليزي)</label>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <textarea oninput="upd('announcements',${i},'textEn',this.value)" style="flex:1">${a.textEn||''}</textarea>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="translateField('announcements',${i},'textAr','textEn','renderAnns')" title="ترجمة تلقائية">🌐</button>
+        </div>
       </div>`);
   });
   if(!d.announcements.length) box.innerHTML='<div class="empty">لا توجد إعلانات — أضيفي واحداً</div>';
@@ -933,10 +1030,19 @@ function renderFeedback(){
   regImg('fbPhoto', v=>{ dayData().feedback.photo=v; });
   $('fbBox').innerHTML=`
     <label>الرأي (عربي)</label><textarea oninput="updObj('feedback','quoteAr',this.value)">${f.quoteAr||''}</textarea>
-    <label>الرأي (إنجليزي)</label><textarea oninput="updObj('feedback','quoteEn',this.value)">${f.quoteEn||''}</textarea>
+    <label>الرأي (إنجليزي)</label>
+    <div style="display:flex;gap:8px;align-items:flex-start">
+      <textarea oninput="updObj('feedback','quoteEn',this.value)" style="flex:1">${f.quoteEn||''}</textarea>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="translateObjField('feedback','quoteAr','quoteEn','renderFeedback')" title="ترجمة تلقائية">🌐</button>
+    </div>
     <div class="row">
       <div><label>الاسم والفريق (عربي)</label><input type="text" value="${esc(f.studentAr)}" oninput="updObj('feedback','studentAr',this.value)"></div>
-      <div><label>الاسم والفريق (إنجليزي)</label><input type="text" value="${esc(f.studentEn)}" oninput="updObj('feedback','studentEn',this.value)"></div>
+      <div><label>الاسم والفريق (إنجليزي)</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" value="${esc(f.studentEn)}" oninput="updObj('feedback','studentEn',this.value)" style="flex:1">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="translateObjField('feedback','studentAr','studentEn','renderFeedback')" title="ترجمة تلقائية">🌐</button>
+        </div>
+      </div>
     </div>
     <label>عدد النجوم (1-5)</label><input type="number" min="1" max="5" value="${f.stars||5}" oninput="updObj('feedback','stars',+this.value)">
     <label>صورة الطالب</label>
@@ -949,12 +1055,20 @@ function renderTomorrow(){
   $('tmrBox').innerHTML=`
     <div class="row">
       <div><label>العنوان (عربي)</label><input type="text" value="${esc(t.titleAr)}" oninput="updObj('tomorrow','titleAr',this.value)"></div>
-      <div><label>العنوان (إنجليزي)</label><input type="text" value="${esc(t.titleEn)}" oninput="updObj('tomorrow','titleEn',this.value)"></div>
+      <div><label>العنوان (إنجليزي)</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" value="${esc(t.titleEn)}" oninput="updObj('tomorrow','titleEn',this.value)" style="flex:1">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="translateObjField('tomorrow','titleAr','titleEn','renderTomorrow')" title="ترجمة تلقائية">🌐</button>
+        </div>
+      </div>
     </div>
     <label>البنود (عربي) — سطر لكل بند</label>
     <textarea oninput="updList('tomorrow','itemsAr',this.value)">${(t.itemsAr||[]).join('\\n')}</textarea>
     <label>البنود (إنجليزي) — سطر لكل بند</label>
-    <textarea oninput="updList('tomorrow','itemsEn',this.value)">${(t.itemsEn||[]).join('\\n')}</textarea>`;
+    <div style="display:flex;gap:8px;align-items:flex-start">
+      <textarea oninput="updList('tomorrow','itemsEn',this.value)" style="flex:1">${(t.itemsEn||[]).join('\\n')}</textarea>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="translateTomorrowItems()" title="ترجمة تلقائية">🌐</button>
+    </div>`;
 }
 
 /* ═══════ تحديث ═══════ */
