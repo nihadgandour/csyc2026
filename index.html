@@ -618,6 +618,26 @@
     .quiz-q{ font-size:18px; }
   }
 
+  /* ─── ركن الاستشارات (تكريم أسبوعي) ─── */
+  .stars-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:16px; }
+  .star-card{ position:relative; overflow:hidden; text-align:center;
+    background:linear-gradient(180deg, var(--surface), var(--surface-2));
+    border:1px solid var(--glass-line-2); border-radius:16px; padding:26px 18px 20px;
+    transition:transform .25s, border-color .25s; }
+  .star-card:hover{ transform:translateY(-5px); border-color:var(--glass-line); }
+  .star-card::after{ content:''; position:absolute; inset:0 auto auto 0; width:100%; height:4px; background:var(--grad-cyan); }
+  .star-card.gold::after{ background:linear-gradient(135deg,#ffc857,#ff9a3c); }
+  .star-card .medal{ font-size:34px; margin-bottom:8px; }
+  .star-card .avatar{ width:72px;height:72px;border-radius:50%;margin:0 auto 12px; overflow:hidden;
+    background:var(--grad-brand); display:grid;place-items:center;
+    font-size:30px; border:3px solid var(--cyan); box-shadow:var(--glow-cyan); }
+  .star-card .avatar img{ width:100%; height:100%; object-fit:cover; }
+  .star-card .name{ font-size:16px; font-weight:900; color:#fff; }
+  .star-card .rank{ font-size:12.5px; color:var(--cyan-bright); font-weight:700; margin-top:10px;
+    background:rgba(0,177,213,.1); border-radius:var(--pill); padding:5px 12px; display:inline-block; }
+  .stars-empty{ grid-column:1/-1; text-align:center; padding:50px 20px; color:var(--text-mute);
+    background:rgba(255,255,255,.02); border:1px dashed var(--glass-line); border-radius:var(--r-md); }
+
   /* ─── VISION & MISSION ─── */
   .vm{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   .vm-card{ position:relative; overflow:hidden; padding:32px;
@@ -1116,6 +1136,21 @@
   </div>
 </section>
 
+<!-- ══ ركن الاستشارات (تكريم أسبوعي) ══ -->
+<section class="wrap" id="starsSection" style="display:none">
+  <div class="sec-head">
+    <span class="sec-num en">11</span>
+    <h2 class="sec-title" data-en="Advisory Corner">ركن الاستشارات <span class="sub" data-en="Weekly recognition for top-performing students">تكريم أسبوعي للطلبة المتفوقين</span></h2>
+    <span class="sec-line"></span>
+  </div>
+  <div class="grp-switch" id="starsWeekSwitch" role="group" aria-label="اختيار الأسبوع" style="grid-template-columns:repeat(3,1fr)">
+    <button data-week="1" class="active"><span data-en="Week 1">الأسبوع الأول</span></button>
+    <button data-week="2"><span data-en="Week 2">الأسبوع الثاني</span></button>
+    <button data-week="3"><span data-en="Week 3">الأسبوع الثالث</span></button>
+  </div>
+  <div class="stars-grid" id="starsGrid"></div>
+</section>
+
 <!-- ✏️ حدّث يومياً: الإعلانات ونقاط المتصدّرين -->
 <!-- ══ 6+7 · ANNOUNCEMENTS + LEADERBOARD ══ -->
 <section class="wrap">
@@ -1391,8 +1426,49 @@ function renderDayContent(){
   renderHighlights(); renderAnnouncements();
   renderFeedback(); renderTomorrow(); renderTip();
   loadAttendance();
+  renderStars();
   if(typeof loadGallery==='function') loadGallery();   // ألبوم اليوم من اللوحة
 }
+
+/* ─── ركن الاستشارات (تكريم أسبوعي — بيانات ثابتة لكل أسبوع، لا تُدخَل يومياً) ─── */
+let STARS_WEEK='1';
+function renderStars(){
+  const sec=document.getElementById('starsSection'), grid=document.getElementById('starsGrid');
+  if(!sec||!grid) return;
+  const all=(DAY_CONTENT&&DAY_CONTENT.weeklyStars)||null;
+  const hasAny = all && Object.keys(all).some(k=>(all[k]||[]).length);
+  if(!hasAny){ sec.style.display='none'; return; }
+  sec.style.display='';
+  const list=(all[STARS_WEEK]||[]);
+  const medals=['🥇','🥈','🥉','⭐','🎖️','🏆'];
+  if(!list.length){
+    grid.innerHTML=`<div class="stars-empty">${LANG==='en'?'No students added for this week yet':'لم تتم إضافة طلاب لهذا الأسبوع بعد'}</div>`;
+    return;
+  }
+  grid.innerHTML=list.map((s,i)=>{
+    const name=_t(s,'name');
+    const rankTxt = LANG==='en' ? `Rank ${EN_ORD[i+1]||(i+1)}` : `المركز ${AR_ORD[i+1]||(i+1)}`;
+    const avatar = s.photo
+      ? `<div class="avatar"><img src="${_esc(s.photo)}" alt="${_esc(name)}" onerror="this.parentElement.textContent='🏅'"></div>`
+      : `<div class="avatar">🏅</div>`;
+    return `<div class="star-card${i===0?' gold':''}">
+      <div class="medal">${medals[i]||'🏅'}</div>
+      ${avatar}
+      <div class="name">${_esc(name)}</div>
+      <div class="rank">${rankTxt}</div>
+    </div>`;
+  }).join('');
+}
+(function(){
+  const sw=document.getElementById('starsWeekSwitch');
+  if(!sw) return;
+  sw.addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    STARS_WEEK=b.dataset.week;
+    sw.querySelectorAll('button').forEach(x=>x.classList.toggle('active', x===b));
+    renderStars();
+  });
+})();
 
 /* ─── أبرز اللحظات ─── */
 /* يدعم: صورة، أو فيديو مرفوع، أو رابط يوتيوب */
