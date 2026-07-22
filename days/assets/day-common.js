@@ -66,6 +66,7 @@ async function renderDayPage(dayNum){
   html += renderHighlights(c);
   html += renderAttendance(c);
   html += renderSchedule(c);
+  html += renderTip(c);
   html += renderGallery(c);
   html += renderFeedback(c);
   html += renderAnnouncements(c);
@@ -129,6 +130,14 @@ function renderSchedule(c){
     return `<div class="grp-block"><h4>${GRP_LABELS[k]}</h4><div class="sess-list">${rows}</div></div>`;
   }).join('');
   return sectionShell(2,'جدول اليوم كاملاً','بجميع المجموعات', blocks);
+}
+
+function renderTip(c){
+  const t = c.tip;
+  const text = (t && (t.textAr||t.text)) || '';
+  if(!text) return '';
+  const inner = `<div class="tip-box"><img src="../images/robot01.png" alt="روبوت المعلومة"><div><p>${esc(text)}</p></div></div>`;
+  return sectionShell(3.5,'معلومة اليوم','', inner);
 }
 
 function renderGallery(c){
