@@ -1158,6 +1158,16 @@
   <div class="tmr" id="tmrBox"><!-- يُبنى من content/days-content.json --></div>
 </section>
 
+<!-- ══ معلومة اليوم ══ -->
+<section class="wrap" id="tipSection" style="display:none">
+  <div class="sec-head">
+    <span class="sec-num en">10</span>
+    <h2 class="sec-title" data-en="Tip of the Day">معلومة اليوم <span class="sub" data-en="A new useful fact every day">معلومة مفيدة جديدة كل يوم</span></h2>
+    <span class="sec-line"></span>
+  </div>
+  <div class="quote" id="tipBox"><!-- يُبنى من content/days-content.json --></div>
+</section>
+
 <!-- ══ 4 · GALLERY (تلقائي من مجلد GitHub عبر gallery.json) ══ -->
 <section class="wrap">
   <div class="sec-head">
@@ -1376,7 +1386,7 @@ async function loadDayContent(){
 
 function renderDayContent(){
   renderHighlights(); renderAnnouncements();
-  renderFeedback(); renderTomorrow();
+  renderFeedback(); renderTomorrow(); renderTip();
   loadAttendance();
   if(typeof loadGallery==='function') loadGallery();   // ألبوم اليوم من اللوحة
 }
@@ -1465,6 +1475,18 @@ function renderTomorrow(){
     `<h3>${_esc(title)}</h3>`+
     `<ul>${items.map(i=>`<li>${_esc(i)}</li>`).join('')}</ul></div>`+
     `<img src="images/6e9b4e21d47049f8911ba54f05897cbb.png" alt="" aria-hidden="true">`;
+}
+
+
+/* ─── معلومة اليوم ─── */
+function renderTip(){
+  const box=document.getElementById('tipBox'); if(!box) return;
+  const sec=document.getElementById('tipSection');
+  const tp=(TODAY_C&&TODAY_C.tip)||null;
+  const text=_t(tp||{},'text');
+  if(!tp || !text){ if(sec) sec.style.display='none'; return; }
+  if(sec) sec.style.display='';
+  box.innerHTML=`<img src="images/robot01.png" alt="روبوت المعلومة"><div><p class="q">${_esc(text)}</p></div>`;
 }
 
 
