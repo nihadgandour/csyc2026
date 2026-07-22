@@ -136,7 +136,11 @@ function renderTip(c){
   const t = c.tip;
   const text = (t && (t.textAr||t.text)) || '';
   if(!text) return '';
-  const inner = `<div class="tip-box"><img src="../images/robot01.png" alt="روبوت المعلومة"><div><p>${esc(text)}</p></div></div>`;
+  const lines = String(text).split(/\r?\n/).map(l=>l.trim().replace(/^-+\s*/,'')).filter(Boolean);
+  const body = lines.length>1
+    ? `<ul class="tip-list">${lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul>`
+    : `<p>${esc(lines[0]||text)}</p>`;
+  const inner = `<div class="tip-box"><img src="../images/robot01.png" alt="روبوت المعلومة"><div>${body}</div></div>`;
   return sectionShell(3.5,'معلومة اليوم','', inner);
 }
 
