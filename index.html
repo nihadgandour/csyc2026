@@ -511,6 +511,9 @@
   .quote img{ height:220px; filter:drop-shadow(0 14px 26px rgba(0,0,0,.5)); animation:bob 6s ease-in-out infinite; }
   .quote .q{ font-size:clamp(19px,2.6vw,30px); font-weight:800; color:#fff; line-height:1.55; position:relative; }
   .quote .who{ margin-top:16px; color:var(--cyan-bright); font-weight:800; font-size:14px; }
+  .quote .tip-list{ list-style:none; display:flex; flex-direction:column; gap:12px; position:relative; }
+  .quote .tip-list li{ display:flex; align-items:flex-start; gap:10px; font-size:clamp(15px,1.8vw,19px); font-weight:700; color:#fff; line-height:1.6; }
+  .quote .tip-list li::before{ content:''; width:8px;height:8px;border-radius:50%; background:var(--cyan-bright); box-shadow:0 0 8px var(--cyan-bright); margin-top:9px; flex-shrink:0; }
 
   /* لافتة حالة اليوم (عطلة / قبل البدء / بعد الانتهاء) */
   .day-notice{
@@ -1486,7 +1489,11 @@ function renderTip(){
   const text=_t(tp||{},'text');
   if(!tp || !text){ if(sec) sec.style.display='none'; return; }
   if(sec) sec.style.display='';
-  box.innerHTML=`<img src="images/robot01.png" alt="روبوت المعلومة"><div><p class="q">${_esc(text)}</p></div>`;
+  const lines=String(text).split(/\r?\n/).map(l=>l.trim().replace(/^-+\s*/,'')).filter(Boolean);
+  const body = lines.length>1
+    ? `<ul class="tip-list">${lines.map(l=>`<li>${_esc(l)}</li>`).join('')}</ul>`
+    : `<p class="q">${_esc(lines[0]||text)}</p>`;
+  box.innerHTML=`<img src="images/robot01.png" alt="روبوت المعلومة"><div>${body}</div>`;
 }
 
 
