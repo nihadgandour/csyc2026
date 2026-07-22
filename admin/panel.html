@@ -285,6 +285,19 @@
       <div id="tmrBox"></div>
     </div>
 
+    <!-- معلومة اليوم -->
+    <div class="card">
+      <h3>💡 معلومة اليوم <span style="font-size:12px;font-weight:600;color:var(--mute)">(يظهر معها كاراكتر الروبوت)</span></h3>
+      <label>النص (عربي)</label>
+      <textarea id="tipTextAr" oninput="updObj('tip','textAr',this.value)"></textarea>
+      <label>النص (إنجليزي)</label>
+      <div style="display:flex;gap:8px;align-items:flex-start">
+        <textarea id="tipTextEn" oninput="updObj('tip','textEn',this.value)" style="flex:1"></textarea>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="translateObjField('tip','textAr','textEn','renderTip')" title="ترجمة تلقائية">🌐</button>
+      </div>
+      <div class="hint">تظهر قبل ألبوم اليوم في الموقع. اتركيها فارغة لإخفاء القسم هذا اليوم.</div>
+    </div>
+
     <!-- ألبوم اليوم -->
     <div class="card">
       <h3>📸 ألبوم اليوم</h3>
@@ -553,10 +566,11 @@ async function loadAll(){
 }
 
 function dayData(){
-  if(!CONTENT[CUR]) CONTENT[CUR]={highlights:[],announcements:[],topStudents:[],feedback:{},tomorrow:{},gallery:[],attendance:{girls:0,boys:0}};
+  if(!CONTENT[CUR]) CONTENT[CUR]={highlights:[],announcements:[],topStudents:[],feedback:{},tomorrow:{},tip:{},gallery:[],attendance:{girls:0,boys:0}};
   const d=CONTENT[CUR];
   d.highlights=d.highlights||[]; d.announcements=d.announcements||[];
   d.topStudents=d.topStudents||[]; d.feedback=d.feedback||{}; d.tomorrow=d.tomorrow||{};
+  d.tip=d.tip||{};
   d.gallery=d.gallery||[];
   d.attendance=d.attendance||{girls:0,boys:0};
   d.schedule=d.schedule||{girls_13:[],girls_15:[],boys_13:[],boys_15:[]};
@@ -912,7 +926,7 @@ function moveItem(list,i,dir){
   [arr[i],arr[j]]=[arr[j],arr[i]];
   rerenderAll();
 }
-function rerenderAll(){ renderHighlights(); renderAnns(); renderFeedback(); renderTomorrow(); renderAttendance(); renderAlbum(); renderSchedule(); }
+function rerenderAll(){ renderHighlights(); renderAnns(); renderFeedback(); renderTomorrow(); renderTip(); renderAttendance(); renderAlbum(); renderSchedule(); }
 
 /* ═══════ الحضور ═══════ */
 function renderAttendance(){
@@ -1047,6 +1061,14 @@ function renderFeedback(){
     <label>عدد النجوم (1-5)</label><input type="number" min="1" max="5" value="${f.stars||5}" oninput="updObj('feedback','stars',+this.value)">
     <label>صورة الطالب</label>
     ${dropZone('fbPhoto', f.photo, null)}`;
+}
+
+/* ═══════ معلومة اليوم ═══════ */
+function renderTip(){
+  const t=dayData().tip;
+  const ta=$('tipTextAr'), te=$('tipTextEn');
+  if(ta) ta.value = t.textAr||'';
+  if(te) te.value = t.textEn||'';
 }
 
 /* ═══════ نظرة الغد ═══════ */
