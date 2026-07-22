@@ -207,6 +207,7 @@
 <div class="wrap">
   <div class="tabs">
     <button class="tab on" data-p="content">✏️ محتوى اليوم</button>
+    <button class="tab" data-p="stars">🏅 ركن الاستشارات</button>
     <button class="tab" data-p="data">📊 البيانات والزيارات</button>
     <button class="tab" data-p="report">📑 التقرير الأسبوعي</button>
     <button class="tab" data-p="help">❓ كيف أستخدمها</button>
@@ -305,6 +306,24 @@
       <div id="albDrop"></div>
       <div class="album-grid" id="albGrid"></div>
     </div>
+  </div>
+
+  <!-- ═══ ركن الاستشارات (تكريم أسبوعي) ═══ -->
+  <div class="panel" id="p-stars">
+    <div class="note">
+      <b>ملاحظة:</b> هذا القسم أسبوعي وليس يومياً — احفظيه مرة واحدة لكل أسبوع، وسيظهر على الموقع طوال الأسبوع بدون الحاجة لإعادة إدخاله كل يوم.
+    </div>
+    <div class="card">
+      <h3>📆 الأسبوع المُحرَّر</h3>
+      <div class="sched-tabs" id="starsWeekTabs" style="grid-template-columns:repeat(3,1fr)">
+        <button class="stab on" data-w="1">الأسبوع الأول</button>
+        <button class="stab" data-w="2">الأسبوع الثاني</button>
+        <button class="stab" data-w="3">الأسبوع الثالث</button>
+      </div>
+      <div class="hint">الترتيب هنا (بأزرار ↑ ↓) هو نفسه المركز الذي يظهر في الموقع — الأول بالأعلى.</div>
+    </div>
+    <div id="starsList"></div>
+    <button class="add-btn" onclick="addStar()">+ إضافة طالب</button>
   </div>
 
   <!-- ═══ البيانات ═══ -->
@@ -530,6 +549,13 @@ document.addEventListener('click',e=>{
   CUR_SGROUP=b.dataset.g; renderSchedule();
 });
 
+/* تبويبات أسابيع ركن الاستشارات */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('#starsWeekTabs .stab');
+  if(!b) return;
+  CUR_WEEK=b.dataset.w; renderStars();
+});
+
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
@@ -563,6 +589,7 @@ async function loadAll(){
   }
   switchDay();
   updateStats();
+  renderStars();
 }
 
 function dayData(){
@@ -787,6 +814,72 @@ async function translateTomorrowItems(){
   t.itemsEn=out;
   renderTomorrow();
   toast('تمت الترجمة ✓ راجعيها');
+}
+
+/* ═══════ ركن الاستشارات (تكريم أسبوعي — مستقل عن اليوم) ═══════ */
+let CUR_WEEK='1';
+function starsData(){
+  CONTENT.weeklyStars = CONTENT.weeklyStars || {1:[],2:[],3:[]};
+  ['1','2','3'].forEach(w=>{ CONTENT.weeklyStars[w]=CONTENT.weeklyStars[w]||[]; });
+  return CONTENT.weeklyStars;
+}
+const WEEK_LABELS={1:'الأسبوع الأول',2:'الأسبوع الثاني',3:'الأسبوع الثالث'};
+function renderStars(){
+  document.querySelectorAll('#starsWeekTabs .stab').forEach(b=>{
+    b.classList.toggle('on', b.dataset.w===CUR_WEEK);
+    const n=starsData()[b.dataset.w].length;
+    b.textContent = WEEK_LABELS[b.dataset.w] + (n?` (${n})`:'');
+  });
+  const list=starsData()[CUR_WEEK];
+  const box=$('starsList'); if(!box) return;
+  const RANKS=['المركز الأول','المركز الثاني','المركز الثالث','المركز الرابع','المركز الخامس','المركز السادس'];
+  box.innerHTML='';
+  list.forEach((s,i)=>{
+    const pid='star'+i;
+    regImg(pid, v=>{ starsData()[CUR_WEEK][i].photo=v; });
+    box.insertAdjacentHTML('beforeend',`
+      <div class="card" style="background:rgba(0,177,213,.04)">
+        <div class="item-tools">
+          <span class="rank-badge">${RANKS[i]||('#'+(i+1))}</span>
+          <button class="ord" onclick="moveStar(${i},-1)" ${i===0?'disabled':''} title="أعلى">↑</button>
+          <button class="ord" onclick="moveStar(${i},1)" ${i===list.length-1?'disabled':''} title="أسفل">↓</button>
+          <button class="btn btn-sm btn-del" onclick="delStar(${i})">حذف</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="row">
+          <div><label>الاسم (عربي)</label><input type="text" value="${esc(s.nameAr)}" oninput="updStar(${i},'nameAr',this.value)"></div>
+          <div><label>الاسم (إنجليزي)</label>
+            <div style="display:flex;gap:8px">
+              <input type="text" value="${esc(s.nameEn)}" oninput="updStar(${i},'nameEn',this.value)" style="flex:1">
+              <button type="button" class="btn btn-ghost btn-sm" onclick="translateStar(${i})" title="ترجمة تلقائية">🌐</button>
+            </div>
+          </div>
+        </div>
+        <label>صورة الطالب</label>
+        ${dropZone(pid, s.photo, null)}
+      </div>`);
+  });
+  if(!list.length) box.innerHTML='<div class="empty">لا يوجد طلاب هذا الأسبوع — أضيفي واحداً<br><span style="font-size:12px">الترتيب (↑↓) هو المركز الذي يظهر في الموقع</span></div>';
+}
+function addStar(){ starsData()[CUR_WEEK].push({nameAr:'',nameEn:'',photo:''}); renderStars(); }
+function updStar(i,k,v){ starsData()[CUR_WEEK][i][k]=v; }
+function moveStar(i,d){
+  const a=starsData()[CUR_WEEK], j=i+d;
+  if(j<0||j>=a.length) return;
+  [a[i],a[j]]=[a[j],a[i]]; renderStars();
+}
+function delStar(i){
+  if(!confirm('حذف هذا الطالب؟')) return;
+  starsData()[CUR_WEEK].splice(i,1); renderStars();
+}
+async function translateStar(i){
+  const list=starsData()[CUR_WEEK];
+  const src=list[i].nameAr;
+  if(!src || !src.trim()){ toast('⚠️ اكتبي الاسم بالعربي أولاً'); return; }
+  toast('جارٍ الترجمة...');
+  const en=await translateText(src);
+  if(en){ list[i].nameEn=en; renderStars(); toast('تمت الترجمة ✓ راجعيها'); }
+  else toast('⚠️ تعذّرت الترجمة — أدخليها يدوياً');
 }
 
 /* ═══════ جدول اليوم ═══════ */
