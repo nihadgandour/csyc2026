@@ -633,6 +633,8 @@
     font-size:30px; border:3px solid var(--cyan); box-shadow:var(--glow-cyan); }
   .star-card .avatar img{ width:100%; height:100%; object-fit:cover; }
   .star-card .name{ font-size:16px; font-weight:900; color:#fff; }
+  .star-card .grp{ font-size:11.5px; color:var(--text-soft); font-weight:700; margin-top:5px; }
+  .star-card .cls{ font-size:11px; color:var(--text-mute); margin-top:2px; }
   .star-card .rank{ font-size:12.5px; color:var(--cyan-bright); font-weight:700; margin-top:10px;
     background:rgba(0,177,213,.1); border-radius:var(--pill); padding:5px 12px; display:inline-block; }
   .stars-empty{ grid-column:1/-1; text-align:center; padding:50px 20px; color:var(--text-mute);
@@ -1448,6 +1450,7 @@ function renderStars(){
   grid.innerHTML=list.map((s,i)=>{
     const name=_t(s,'name');
     const rankTxt = LANG==='en' ? `Rank ${EN_ORD[i+1]||(i+1)}` : `المركز ${AR_ORD[i+1]||(i+1)}`;
+    const grpInfo = (s.ageGroup && GROUPS[s.ageGroup]) ? (LANG==='en'?GROUPS[s.ageGroup].labelEn:GROUPS[s.ageGroup].labelAr) : '';
     const avatar = s.photo
       ? `<div class="avatar"><img src="${_esc(s.photo)}" alt="${_esc(name)}" onerror="this.parentElement.textContent='🏅'"></div>`
       : `<div class="avatar">🏅</div>`;
@@ -1455,6 +1458,8 @@ function renderStars(){
       <div class="medal">${medals[i]||'🏅'}</div>
       ${avatar}
       <div class="name">${_esc(name)}</div>
+      ${grpInfo?`<div class="grp">${_esc(grpInfo)}</div>`:''}
+      ${s.className?`<div class="cls">${_esc(s.className)}</div>`:''}
       <div class="rank">${rankTxt}</div>
     </div>`;
   }).join('');
