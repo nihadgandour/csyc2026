@@ -855,13 +855,20 @@ function renderStars(){
             </div>
           </div>
         </div>
+        <div class="row">
+          <div><label>الفئة العمرية</label><select onchange="updStar(${i},'ageGroup',this.value)">
+            <option value="">— اختاري —</option>
+            ${Object.keys(GROUP_LABELS).map(k=>`<option value="${k}" ${s.ageGroup===k?'selected':''}>${GROUP_LABELS[k]}</option>`).join('')}
+          </select></div>
+          <div><label>اسم الصف</label><input type="text" value="${esc(s.className)}" oninput="updStar(${i},'className',this.value)" placeholder="مثال: الصف السابع أ"></div>
+        </div>
         <label>صورة الطالب</label>
         ${dropZone(pid, s.photo, null)}
       </div>`);
   });
   if(!list.length) box.innerHTML='<div class="empty">لا يوجد طلاب هذا الأسبوع — أضيفي واحداً<br><span style="font-size:12px">الترتيب (↑↓) هو المركز الذي يظهر في الموقع</span></div>';
 }
-function addStar(){ starsData()[CUR_WEEK].push({nameAr:'',nameEn:'',photo:''}); renderStars(); }
+function addStar(){ starsData()[CUR_WEEK].push({nameAr:'',nameEn:'',photo:'',ageGroup:'',className:''}); renderStars(); }
 function updStar(i,k,v){ starsData()[CUR_WEEK][i][k]=v; }
 function moveStar(i,d){
   const a=starsData()[CUR_WEEK], j=i+d;
