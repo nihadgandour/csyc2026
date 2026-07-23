@@ -1445,10 +1445,11 @@ function renderStars(){
   const sec=document.getElementById('starsSection'), grid=document.getElementById('starsGrid');
   if(!sec||!grid) return;
   const all=(DAY_CONTENT&&DAY_CONTENT.weeklyStars)||null;
-  const hasAny = all && Object.values(all).some(w=>w && Object.values(w).some(g=>(g||[]).length));
+  const hasAny = all && Object.values(all).some(w=>w && !Array.isArray(w) && Object.values(w).some(g=>Array.isArray(g)&&g.length));
   if(!hasAny){ sec.style.display='none'; return; }
   sec.style.display='';
-  const list = (all[STARS_WEEK] && all[STARS_WEEK][STARS_GRP]) || [];
+  const wk = all[STARS_WEEK];
+  const list = (wk && !Array.isArray(wk) && wk[STARS_GRP]) || [];
   const medals=['🥇','🥈','🥉'];
   if(!list.length){
     grid.innerHTML=`<div class="stars-empty">${LANG==='en'?'No students added for this category yet':'لم تتم إضافة طلاب لهذه الفئة بعد'}</div>`;
