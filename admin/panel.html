@@ -311,7 +311,7 @@
   <!-- ═══ ركن الاستشارات (تكريم أسبوعي) ═══ -->
   <div class="panel" id="p-stars">
     <div class="note">
-      <b>ملاحظة:</b> هذا القسم أسبوعي وليس يومياً — احفظيه مرة واحدة لكل أسبوع، وسيظهر على الموقع طوال الأسبوع بدون الحاجة لإعادة إدخاله كل يوم.
+      <b>ملاحظة:</b> هذا القسم أسبوعي وليس يومياً — احفظيه مرة واحدة لكل أسبوع، وسيظهر على الموقع طوال الأسبوع بدون الحاجة لإعادة إدخاله كل يوم. كل فئة عمرية لها 3 مراكز فقط (الأول، الثاني، الثالث).
     </div>
     <div class="card">
       <h3>📆 الأسبوع المُحرَّر</h3>
@@ -320,7 +320,14 @@
         <button class="stab" data-w="2">الأسبوع الثاني</button>
         <button class="stab" data-w="3">الأسبوع الثالث</button>
       </div>
-      <div class="hint">الترتيب هنا (بأزرار ↑ ↓) هو نفسه المركز الذي يظهر في الموقع — الأول بالأعلى.</div>
+      <label style="margin-top:16px">الفئة العمرية</label>
+      <div class="sched-tabs" id="starsGrpTabs">
+        <button class="stab on" data-g="girls_13">بنات ١٣–١٤</button>
+        <button class="stab" data-g="girls_15">بنات ١٥–١٧</button>
+        <button class="stab" data-g="boys_13">أولاد ١٣–١٤</button>
+        <button class="stab" data-g="boys_15">أولاد ١٥–١٧</button>
+      </div>
+      <div class="hint">الترتيب هنا (بأزرار ↑ ↓) هو نفسه المركز الذي يظهر في الموقع — الأول بالأعلى. 3 طلاب كحد أقصى لكل فئة.</div>
     </div>
     <div id="starsList"></div>
     <button class="add-btn" onclick="addStar()">+ إضافة طالب</button>
@@ -554,6 +561,12 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('#starsWeekTabs .stab');
   if(!b) return;
   CUR_WEEK=b.dataset.w; renderStars();
+});
+/* تبويبات فئات ركن الاستشارات */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('#starsGrpTabs .stab');
+  if(!b) return;
+  CUR_STARS_GRP=b.dataset.g; renderStars();
 });
 
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
@@ -816,27 +829,40 @@ async function translateTomorrowItems(){
   toast('تمت الترجمة ✓ راجعيها');
 }
 
-/* ═══════ ركن الاستشارات (تكريم أسبوعي — مستقل عن اليوم) ═══════ */
+/* ═══════ ركن الاستشارات (تكريم أسبوعي — 3 مراكز فقط لكل فئة عمرية) ═══════ */
 let CUR_WEEK='1';
+let CUR_STARS_GRP='girls_13';
+const STARS_MAX=3;
 function starsData(){
-  CONTENT.weeklyStars = CONTENT.weeklyStars || {1:[],2:[],3:[]};
-  ['1','2','3'].forEach(w=>{ CONTENT.weeklyStars[w]=CONTENT.weeklyStars[w]||[]; });
-  return CONTENT.weeklyStars;
+  CONTENT.weeklyStars = CONTENT.weeklyStars || {};
+  ['1','2','3'].forEach(w=>{
+    CONTENT.weeklyStars[w] = CONTENT.weeklyStars[w] || {};
+    ['girls_13','girls_15','boys_13','boys_15'].forEach(g=>{
+      CONTENT.weeklyStars[w][g] = CONTENT.weeklyStars[w][g] || [];
+    });
+  });
+  return CONTENT.weeklyStars[CUR_WEEK][CUR_STARS_GRP];
 }
 const WEEK_LABELS={1:'الأسبوع الأول',2:'الأسبوع الثاني',3:'الأسبوع الثالث'};
 function renderStars(){
   document.querySelectorAll('#starsWeekTabs .stab').forEach(b=>{
     b.classList.toggle('on', b.dataset.w===CUR_WEEK);
-    const n=starsData()[b.dataset.w].length;
-    b.textContent = WEEK_LABELS[b.dataset.w] + (n?` (${n})`:'');
   });
-  const list=starsData()[CUR_WEEK];
+  document.querySelectorAll('#starsGrpTabs .stab').forEach(b=>{
+    b.classList.toggle('on', b.dataset.g===CUR_STARS_GRP);
+    const oldWeek=CUR_WEEK, oldGrp=CUR_STARS_GRP;
+    CUR_STARS_GRP=b.dataset.g;
+    const n=starsData().length;
+    CUR_STARS_GRP=oldGrp;
+    b.textContent = GROUP_LABELS[b.dataset.g] + (n?` (${n})`:'');
+  });
+  const list=starsData();
   const box=$('starsList'); if(!box) return;
-  const RANKS=['المركز الأول','المركز الثاني','المركز الثالث','المركز الرابع','المركز الخامس','المركز السادس'];
+  const RANKS=['المركز الأول','المركز الثاني','المركز الثالث'];
   box.innerHTML='';
   list.forEach((s,i)=>{
     const pid='star'+i;
-    regImg(pid, v=>{ starsData()[CUR_WEEK][i].photo=v; });
+    regImg(pid, v=>{ starsData()[i].photo=v; });
     box.insertAdjacentHTML('beforeend',`
       <div class="card" style="background:rgba(0,177,213,.04)">
         <div class="item-tools">
@@ -855,32 +881,32 @@ function renderStars(){
             </div>
           </div>
         </div>
-        <div class="row">
-          <div><label>الفئة العمرية</label><select onchange="updStar(${i},'ageGroup',this.value)">
-            <option value="">— اختاري —</option>
-            ${Object.keys(GROUP_LABELS).map(k=>`<option value="${k}" ${s.ageGroup===k?'selected':''}>${GROUP_LABELS[k]}</option>`).join('')}
-          </select></div>
-          <div><label>اسم الصف</label><input type="text" value="${esc(s.className)}" oninput="updStar(${i},'className',this.value)" placeholder="مثال: الصف السابع أ"></div>
-        </div>
+        <label>اسم الصف</label>
+        <input type="text" value="${esc(s.className)}" oninput="updStar(${i},'className',this.value)" placeholder="مثال: الصف السابع أ">
         <label>صورة الطالب</label>
         ${dropZone(pid, s.photo, null)}
       </div>`);
   });
-  if(!list.length) box.innerHTML='<div class="empty">لا يوجد طلاب هذا الأسبوع — أضيفي واحداً<br><span style="font-size:12px">الترتيب (↑↓) هو المركز الذي يظهر في الموقع</span></div>';
+  if(!list.length) box.innerHTML=`<div class="empty">لا يوجد طلاب في ${GROUP_LABELS[CUR_STARS_GRP]} لهذا الأسبوع — أضيفي حتى 3<br><span style="font-size:12px">الترتيب (↑↓) هو المركز الذي يظهر في الموقع</span></div>`;
 }
-function addStar(){ starsData()[CUR_WEEK].push({nameAr:'',nameEn:'',photo:'',ageGroup:'',className:''}); renderStars(); }
-function updStar(i,k,v){ starsData()[CUR_WEEK][i][k]=v; }
+function addStar(){
+  const list=starsData();
+  if(list.length>=STARS_MAX){ toast(`⚠️ الحد الأقصى ${STARS_MAX} طلاب لكل فئة`); return; }
+  list.push({nameAr:'',nameEn:'',photo:'',className:''});
+  renderStars();
+}
+function updStar(i,k,v){ starsData()[i][k]=v; }
 function moveStar(i,d){
-  const a=starsData()[CUR_WEEK], j=i+d;
+  const a=starsData(), j=i+d;
   if(j<0||j>=a.length) return;
   [a[i],a[j]]=[a[j],a[i]]; renderStars();
 }
 function delStar(i){
   if(!confirm('حذف هذا الطالب؟')) return;
-  starsData()[CUR_WEEK].splice(i,1); renderStars();
+  starsData().splice(i,1); renderStars();
 }
 async function translateStar(i){
-  const list=starsData()[CUR_WEEK];
+  const list=starsData();
   const src=list[i].nameAr;
   if(!src || !src.trim()){ toast('⚠️ اكتبي الاسم بالعربي أولاً'); return; }
   toast('جارٍ الترجمة...');
