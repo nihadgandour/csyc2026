@@ -1150,6 +1150,12 @@
     <button data-week="2"><span data-en="Week 2">الأسبوع الثاني</span></button>
     <button data-week="3"><span data-en="Week 3">الأسبوع الثالث</span></button>
   </div>
+  <div class="grp-switch" id="starsGrpSwitch" role="group" aria-label="اختيار الفئة" style="margin-top:10px">
+    <button data-grp="girls_13" class="active"><span data-en="Girls 13–14">بنات ١٣–١٤</span></button>
+    <button data-grp="girls_15"><span data-en="Girls 15–17">بنات ١٥–١٧</span></button>
+    <button data-grp="boys_13"><span data-en="Boys 13–14">أولاد ١٣–١٤</span></button>
+    <button data-grp="boys_15"><span data-en="Boys 15–17">أولاد ١٥–١٧</span></button>
+  </div>
   <div class="stars-grid" id="starsGrid"></div>
 </section>
 
@@ -1432,25 +1438,25 @@ function renderDayContent(){
   if(typeof loadGallery==='function') loadGallery();   // ألبوم اليوم من اللوحة
 }
 
-/* ─── ركن الاستشارات (تكريم أسبوعي — بيانات ثابتة لكل أسبوع، لا تُدخَل يومياً) ─── */
+/* ─── ركن الاستشارات (تكريم أسبوعي — 3 مراكز فقط لكل فئة عمرية) ─── */
 let STARS_WEEK='1';
+let STARS_GRP='girls_13';
 function renderStars(){
   const sec=document.getElementById('starsSection'), grid=document.getElementById('starsGrid');
   if(!sec||!grid) return;
   const all=(DAY_CONTENT&&DAY_CONTENT.weeklyStars)||null;
-  const hasAny = all && Object.keys(all).some(k=>(all[k]||[]).length);
+  const hasAny = all && Object.values(all).some(w=>w && Object.values(w).some(g=>(g||[]).length));
   if(!hasAny){ sec.style.display='none'; return; }
   sec.style.display='';
-  const list=(all[STARS_WEEK]||[]);
-  const medals=['🥇','🥈','🥉','⭐','🎖️','🏆'];
+  const list = (all[STARS_WEEK] && all[STARS_WEEK][STARS_GRP]) || [];
+  const medals=['🥇','🥈','🥉'];
   if(!list.length){
-    grid.innerHTML=`<div class="stars-empty">${LANG==='en'?'No students added for this week yet':'لم تتم إضافة طلاب لهذا الأسبوع بعد'}</div>`;
+    grid.innerHTML=`<div class="stars-empty">${LANG==='en'?'No students added for this category yet':'لم تتم إضافة طلاب لهذه الفئة بعد'}</div>`;
     return;
   }
   grid.innerHTML=list.map((s,i)=>{
     const name=_t(s,'name');
     const rankTxt = LANG==='en' ? `Rank ${EN_ORD[i+1]||(i+1)}` : `المركز ${AR_ORD[i+1]||(i+1)}`;
-    const grpInfo = (s.ageGroup && GROUPS[s.ageGroup]) ? (LANG==='en'?GROUPS[s.ageGroup].labelEn:GROUPS[s.ageGroup].labelAr) : '';
     const avatar = s.photo
       ? `<div class="avatar"><img src="${_esc(s.photo)}" alt="${_esc(name)}" onerror="this.parentElement.textContent='🏅'"></div>`
       : `<div class="avatar">🏅</div>`;
@@ -1458,7 +1464,6 @@ function renderStars(){
       <div class="medal">${medals[i]||'🏅'}</div>
       ${avatar}
       <div class="name">${_esc(name)}</div>
-      ${grpInfo?`<div class="grp">${_esc(grpInfo)}</div>`:''}
       ${s.className?`<div class="cls">${_esc(s.className)}</div>`:''}
       <div class="rank">${rankTxt}</div>
     </div>`;
@@ -1466,11 +1471,17 @@ function renderStars(){
 }
 (function(){
   const sw=document.getElementById('starsWeekSwitch');
-  if(!sw) return;
-  sw.addEventListener('click', e=>{
+  if(sw) sw.addEventListener('click', e=>{
     const b=e.target.closest('button'); if(!b) return;
     STARS_WEEK=b.dataset.week;
     sw.querySelectorAll('button').forEach(x=>x.classList.toggle('active', x===b));
+    renderStars();
+  });
+  const sg=document.getElementById('starsGrpSwitch');
+  if(sg) sg.addEventListener('click', e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    STARS_GRP=b.dataset.grp;
+    sg.querySelectorAll('button').forEach(x=>x.classList.toggle('active', x===b));
     renderStars();
   });
 })();
