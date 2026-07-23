@@ -836,8 +836,22 @@ const STARS_MAX=3;
 function starsData(){
   CONTENT.weeklyStars = CONTENT.weeklyStars || {};
   ['1','2','3'].forEach(w=>{
-    // ترحيل الشكل القديم (قائمة واحدة مسطّحة) إلى الشكل الجديد (فئات) — يمنع فقدان الحفظ
-    if(Array.isArray(CONTENT.weeklyStars[w])) CONTENT.weeklyStars[w]={};
+    const existing = CONTENT.weeklyStars[w];
+    if(Array.isArray(existing)){
+      // ترحيل الشكل القديم (قائمة واحدة مسطّحة) إلى الفئات، باستخدام الفئة
+      // العمرية المحفوظة مسبقاً لكل طالب — لا فقدان للبيانات القديمة
+      const migrated = {girls_13:[],girls_15:[],boys_13:[],boys_15:[]};
+      existing.forEach(s=>{
+        const key = (s.ageGroup && migrated[s.ageGroup]) ? s.ageGroup : 'girls_13';
+        if(migrated[key].length < 3){
+          migrated[key].push({
+            nameAr: s.nameAr||'', nameEn: s.nameEn||'',
+            photo: s.photo||'', className: s.className||''
+          });
+        }
+      });
+      CONTENT.weeklyStars[w] = migrated;
+    }
     CONTENT.weeklyStars[w] = CONTENT.weeklyStars[w] || {};
     ['girls_13','girls_15','boys_13','boys_15'].forEach(g=>{
       CONTENT.weeklyStars[w][g] = CONTENT.weeklyStars[w][g] || [];
